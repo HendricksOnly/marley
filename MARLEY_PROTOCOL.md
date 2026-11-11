@@ -17,6 +17,7 @@ The Marley collection has one homepage and permanent URLs for all editions.
 - Edition labels: **Ed. I**, **Ed. II**, **Ed. III** (not Part I/Part II)
 - In-game phases: **Phase 1 — Your answers** and **Phase 2 — Guessing**
 - An edition's own introduction, question-per-screen flow, final answer sheet, and 100-point guessing comparison
+- Every answer question includes an **Explanation (optional)** writing box; explanations are included in the submitted answer JSON and are revealed alongside actual answers only after a guess is locked, including correctly guessed answers.
 - Light, atmospheric imagery should never obscure text
 
 ## Repository structure
@@ -52,6 +53,10 @@ Use the same Supabase project and anonymous account session, but distinct table 
 - Score guesses through a separate server RPC and save a single immutable attempt per guesser/target pairing.
 - Return comparison details only after guesses have been locked in.
 - Never expose Supabase service-role, secret, or administrator keys in public web files.
+
+## Resetting all banked answers
+
+Run [RESET_ALL_ANSWERS.sql](RESET_ALL_ANSWERS.sql) **in the Supabase SQL Editor** when the owner explicitly requests a fresh start. This clears registered players, answer sheets, and scored guesses across both live editions (and any discontinued fruit prototype tables that still exist), but leaves auth.users, the tables, functions, and site code intact. The active pages use versioned browser draft storage keys so previous drafts do not return after the reset.
 
 ## New-edition release checklist
 
