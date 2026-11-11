@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#f8f6f1">
+<meta name="theme-color" content="#1a1b24">
 <meta name="description" content="Marley Game (Beta) · answer eight questions, then guess another player's answers to score up to 100 points. Online multiplayer edition.">
-<title>Marley Game (Beta) · Online Edition</title>
+<title>Marley · Ed. I</title>
 <style>
     :root {
       color-scheme: light;
@@ -212,13 +212,83 @@
     #player-name-display{overflow-wrap:anywhere}
     @media(max-width:640px){.compact-steps,.roster,.comparison-grid{grid-template-columns:1fr}.scorevalue{font-size:55px}.browse-row>*{flex:1}.person-card{min-width:0}}
     @media print{#cover-view,#question-view,#choose-view,.results-actions,.result-edit,.private-note,#score-view .score-key{display:none!important}#sheet-view.hidden,#score-view.hidden{display:none!important}#sheet-view:not(.hidden),#score-view:not(.hidden){display:block!important}.comparison-grid{grid-template-columns:1fr 1fr}.scorehero{padding:12px}}
+
+/* MARLEY ED. I — DARK COLLECTION SKIN. Existing gameplay and database logic unchanged. */
+:root{color-scheme:dark;--ink:#f2eef8;--muted:#b7b4c5;--accent:#b08eea;--accent-dark:#8e69cb;--accent-soft:#383147;--paper:#1a1b24;--white:#272936;--line:#414052;--shadow:0 17px 60px rgba(0,0,0,.13)}
+body{background:radial-gradient(ellipse at 96% 4%,#322741 0%,transparent 36%),var(--paper);color:var(--ink)}
+.topbar,footer{border-color:#454052;color:#a6a0b8}
+.brand-mark{background:#3a304d;color:#f2e9ff;border:1px solid #8b79ad}
+.brand-word{color:#eeeaf9}.brand-sub{color:#ad9cc7}.topstatus{color:#bfbbd1}
+.preview,.player-chip{background:#39334d;border-color:#65587f;color:#c5abf3}
+.card,.cover-card{background:#272936;border-color:#454254;color:var(--ink)}
+.card-kicker,.question-count{color:#b8accb}.round-icon{background:#423451}
+h1,h2,.result-question{color:#f3eff9}h1 em{color:var(--accent);text-decoration-color:#615278}
+.subtitle,.cover-subtitle,.context,.muted-copy{color:#c4bece}.context strong{color:#eee7f8}
+.argument-card{background:#302b3c;border-color:#51435e}.argument-card:nth-child(2){background:#342f38;border-color:#574f56}
+.argument-card p,.argument-card:nth-child(2) p{color:#cbc4d4}
+.argument-card:nth-child(2) .argument-eyebrow{color:#ddbba0}
+.excerpt{color:#e0d5e8;border-color:#52465e}.excerpt-source{color:#bbb0c8}
+.excerpt-source a{color:#c3a2f4}
+.cover-note,.smallnote,.field-help{color:#aaa7ba}
+.fieldlabel,.small-label{color:#e1dceb}
+.field-input{background:#1c1e29;color:#f2eefb;border-color:#655a76}
+.field-input:focus{border-color:#b092e9;box-shadow:0 0 0 3px #5d4a764e}
+.choice{background:#222431;border-color:#4b475a;color:#f0ebf7}
+.choice:hover{border-color:#a88cdd;background:#373047}
+.choice[aria-pressed="true"]{background:#403352;border-color:#b08eea;box-shadow:0 0 0 3px #78639930}
+.choice-indicator{border-color:#8c829c;background:#272936}
+.choice[aria-pressed="true"] .choice-indicator{background:#aa8ae8;border-color:#aa8ae8;color:#271d36}
+.choice-title,.choice-meta{color:#eeeaf5}
+.literary-poles .pole,.pole{background:#302e3b;border-color:#4e485e}
+.pole strong{color:#f3edf9}.pole p{color:#c6c0d0}
+.rank-slot,.rank-slot.filled{background:#222431;border-color:#6a5e7f;color:#d6cedf}
+.rank-slot.filled{background:#393149;border-color:#9b7ccf}
+.rank-slot .rank-name{color:#f1e9fa}
+.category-heading{color:#b6afc8}
+.job-option{background:#232431;border-color:#4a475e;color:#e5deed}
+.job-option:hover{background:#373048;border-color:#a388d0}
+.job-option[aria-pressed="true"]{background:#443656;color:#e6d0ff;border-color:var(--accent)}
+.job-counter,.job-option[aria-pressed="false"] .job-counter{background:#3c354a;color:#c7b3df}
+.ranking-instruction,.notice{background:#342e47;border-color:#574a72;color:#d7c9e7}
+.notice strong{color:#e7d3fb}
+.secondary{background:#363044;border-color:#665876;color:#ebdff8}
+.secondary:hover{background:#48405e}
+.ghost{color:#c1b1d4}.track{background:#403c4b}.fill{background:linear-gradient(90deg,#8a68c5,#c19be9)}
+.result-item{background:#232431;border-color:#4c455d}
+.result-answer{color:#f3ecfa;border-left-color:#9b80c9}
+.private-note{background:#302c3b;color:#b8afc6}
+.success-icon{background:#2d4b42;color:#bce7d5}
+.compact-steps li{background:#312d3e;border-color:#514a62;color:#d0c6dd}.compact-steps b{color:#eadef8}
+.person-card{background:#232531;border-color:#4b455e;color:#eee8f6}
+.person-card:hover{background:#363046;border-color:#b08eea}
+.avatar{background:#423253;color:#dbbdff}.person-name{color:#f5eefc}.person-file{color:#b6afc3}
+.empty-roster{border-color:#675c7b;color:#bdb3cd}
+.scorehero{background:#302b42;border-color:#5b4e77}
+.scorevalue{color:#bb95f5}.scorevalue small{color:#b8a8cf}
+.score-summary p{color:#c6bdcf}
+.comparison-cell,.comparison-cell.yours{background:#252633;border-color:#4a455a}
+.comparison-cell.yours{background:#322b45}
+.comparison-cell .tag{color:#b3aac5}.comparison-cell.yours .tag{color:#c7a3ee}
+.comparison-cell .val{color:#efe8f8}.points{background:#453456;color:#d6b9ff}
+.score-key{color:#bab3c8}
+.error{color:#ffb5bd}
+.primary{background:#8e6bcf;border-color:#8e6bcf;color:#fff;box-shadow:none}
+.primary:hover{background:#a37ee6}
+@media print{
+ :root{color-scheme:light;--ink:#202b3b;--paper:#fff;--white:#fff}
+ body{background:#fff!important;color:#202b3b!important}
+ .card,.result-item,.comparison-cell,.comparison-cell.yours{background:#fff!important;color:#202b3b!important;border-color:#dcdce2!important}
+ .result-question,.result-answer,h1,h2{color:#202b3b!important}
+ .comparison-cell .val{color:#202b3b!important}
+}
+
 </style></head>
 <body><div class="shell"><header class="topbar">
-<a class="brand" href="#welcome" aria-label="Marley game home"><span class="brand-mark">m.</span><span><span class="brand-word">marley.</span><span class="brand-sub">the question game</span></span></a>
+<a class="brand" href="../" aria-label="Marley collection homepage"><span class="brand-mark">m.</span><span><span class="brand-word">marley.</span><span class="brand-sub">Ed. I · the original</span></span></a>
 <div class="topright"><span class="status-dot"></span><span class="topstatus">Online multiplayer</span><span class="preview">Beta</span></div></header>
 <main id="main">
 <section id="cover-view" class="hidden" aria-labelledby="cover-title"><div class="card cover-card"><div class="cover-content">
-<div class="cover-eyebrow">Marley · Online beta</div><h1 id="cover-title">Marley Game <em>(Beta)</em></h1>
+<div class="cover-eyebrow">Marley · Ed. I</div><h1 id="cover-title">Marley Game <em>(Beta)</em></h1>
 <p class="cover-subtitle">Answer eight questions, then try to guess someone else's answers. You'll get a score out of 100.</p>
 <label class="small-label" for="nickname">Your name or nickname</label>
 <input class="field-input" type="text" id="nickname" maxlength="40" autocomplete="nickname" placeholder="e.g. Alex" aria-describedby="nickname-help" required>
