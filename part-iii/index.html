@@ -1,0 +1,303 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#191b23"><meta name="description" content="Marley Ed. III: eight new questions, two perspectives, one guessing score."><title>Marley — Ed. III</title>
+<style>
+:root{color-scheme:dark;--bg:#191b23;--bg2:#20222d;--panel:#252734;--panel2:#2c2e3c;--line:#414253;--ink:#f3f0fa;--muted:#b4b2c3;--dim:#87899e;--accent:#ac8bea;--accent2:#8d69d4;--wash:#38334e;--gold:#e7c49c;--danger:#f2a7af}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 100% 0%,#312540 0%,transparent 32%),var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}a{color:var(--accent)}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.shell{max-width:1000px;margin:0 auto;padding:0 25px 70px}.nav{display:flex;justify-content:space-between;gap:15px;align-items:center;padding:22px 0;border-bottom:1px solid var(--line)}.brand{display:flex;gap:11px;align-items:center;color:var(--ink);text-decoration:none}.mark{display:grid;place-items:center;width:43px;height:43px;border:1px solid #8270a9;border-radius:13px;background:#342e48;color:#f2e9ff;font:bold 25px Georgia,serif;transform:rotate(-5deg)}.brandname{font-weight:850;font-size:21px;letter-spacing:-.035em}.brandname small{display:block;color:var(--dim);font-size:10px;letter-spacing:.19em;text-transform:uppercase;font-weight:800;margin-top:2px}.navlinks{display:flex;gap:22px}.navlinks a{font-size:12px;text-decoration:none;color:var(--muted)}.navlinks a:hover{color:var(--ink)}.view{padding-top:46px}.view[hidden]{display:none!important}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.18em;font-weight:900;color:var(--accent);margin:0 0 15px}h1,h2{font-family:Georgia,"Times New Roman",serif;font-weight:500;letter-spacing:-.045em;line-height:1.12;margin:0}h1{font-size:clamp(40px,7vw,69px)}h2{font-size:clamp(26px,4.5vw,38px)}em{font-style:normal;color:var(--accent)}.lead{font-size:16px;line-height:1.8;color:var(--muted);max-width:680px;margin:22px 0 28px}.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:clamp(22px,4.8vw,47px);box-shadow:0 18px 60px rgba(0,0,0,.11);margin-bottom:24px}.rule{height:1px;background:var(--line);margin:27px 0}.label{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:850;color:var(--muted);margin-bottom:13px}.field{background:#1a1b26;color:var(--ink);border:1px solid #5b536e;border-radius:9px;padding:14px 17px;font-size:16px;width:100%;max-width:470px}.error{min-height:17px;color:var(--danger);font-size:13px;line-height:1.6;margin-top:12px}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.btn{border:1px solid transparent;border-radius:10px;padding:13px 19px;font-size:13px;font-weight:850;transition:background .15s,transform .15s}.btn:hover:not(:disabled){transform:translateY(-1px)}.primary{background:var(--accent2);color:#fff}.primary:hover:not(:disabled){background:#a07de4}.secondary{background:#343044;border-color:#665878;color:#e3d8f4}.secondary:hover:not(:disabled){background:#453b5b}.ghost{background:transparent;color:var(--muted);border-color:transparent}.btn:disabled{opacity:.4;cursor:not-allowed}.progress-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px}.progress-head span{font-size:12px;font-weight:850;color:var(--dim)}.track{height:5px;background:#3a3845;border-radius:9px;overflow:hidden;margin-bottom:30px}.trackbar{height:100%;width:12.5%;background:linear-gradient(90deg,#835cce,#c5a0f7);transition:width .2s}.context{font-size:14px;color:#c6c3d0;line-height:1.85;margin:0 0 16px}.context:last-child{margin-bottom:0}.question-sub{font-size:16px;font-weight:750;line-height:1.55;color:#f1eaf9;margin:0 0 19px}.answer-header{padding-top:24px;border-top:1px solid var(--line);margin-top:31px}.choices{display:grid;gap:9px}.choice{width:100%;text-align:left;background:#222431;border:1px solid #4a485c;color:var(--ink);padding:15px 16px;display:flex;align-items:center;gap:12px;border-radius:10px;font-size:14px;line-height:1.45}.choice:hover{border-color:#a585de;background:#303047}.choice.selected{border-color:var(--accent);background:#3a3152;box-shadow:inset 0 0 0 1px #a183da}.indicator{flex:none;width:18px;height:18px;border:2px solid #6f6688;border-radius:50%;display:grid;place-items:center;font-size:11px}.choice.selected .indicator{background:var(--accent);border-color:var(--accent);color:#1d1929;font-weight:900}.select{width:100%;background:#20202d;border:1px solid #74618c;border-radius:9px;color:var(--ink);font-size:16px;padding:15px}.ranklayout{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:24px}.rank-slots{display:grid;gap:11px}.rank-slot{border:1px dashed #645c76;background:#20202d;border-radius:10px;min-height:66px;display:flex;align-items:center;gap:12px;padding:11px 13px}.rank-slot.filled{border-style:solid;border-color:#8572af;background:#35304b}.rank-num{color:var(--accent);font-size:13px;font-weight:850;min-width:30px}.rank-name{flex:1;font-size:13px;font-weight:750}.remove{background:none;border:0;color:#c8b7e8;font-size:12px;padding:4px}.option-search{width:100%;padding:12px 14px;margin-bottom:10px;background:#1f202c;color:var(--ink);border:1px solid #575064;border-radius:9px}.rank-options{max-height:370px;overflow:auto;display:grid;align-content:start;gap:7px;padding-right:4px}.rank-option{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:10px 12px;color:var(--ink);background:#222432;border:1px solid #45485a;border-radius:8px;font-size:13px;font-weight:700}.rank-option:disabled{opacity:.36}.rank-option:not(:disabled):hover{background:#38314b;border-color:var(--accent)}.rank-group{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:11px 0 4px}.chip{display:inline-flex;gap:8px;align-items:center;padding:5px 9px;border-radius:7px;background:#343049;color:#d7c5f3;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:18px}.note{font-size:12px;color:var(--dim);line-height:1.7}.banner{height:245px;background:linear-gradient(90deg,rgba(22,19,34,.13),rgba(22,19,34,.1)),url('../assets/classical.svg') center 40%/cover;border:1px solid #514667;border-radius:15px;margin-bottom:30px}.banner.explore{background-image:url('../assets/exploration.svg')}.welcome-art{min-height:180px;border-radius:13px;background:linear-gradient(90deg,rgba(30,24,40,.18),rgba(30,24,40,.28)),url('../assets/classical.svg') center 30%/cover;margin:-12px -12px 28px;border:1px solid #443c5c}.summary-list{display:grid;gap:12px}.summary-row{padding:17px 19px;background:#22232f;border:1px solid var(--line);border-radius:11px;display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:13px;align-items:start}.summary-number{font-weight:850;font-size:12px;color:var(--accent)}.summary-q{font-size:13px;color:var(--muted);margin-bottom:7px}.summary-a{font-weight:800;font-size:14px;line-height:1.55;white-space:pre-line}.smallbtn{padding:7px 11px;font-size:11px}.roster{display:grid;gap:10px}.person{display:flex;align-items:center;gap:13px;padding:13px 15px;border-radius:10px;background:#222330;border:1px solid #484658}.avatar{display:grid;place-items:center;width:38px;height:38px;flex:none;border-radius:10px;background:#45375b;color:#f2e5ff;font-weight:900}.person-details{flex:1;min-width:0}.person-name{font-weight:850;overflow-wrap:anywhere;font-size:14px}.person-meta{font-size:12px;color:var(--dim);margin-top:4px}.score-hero{display:flex;gap:23px;align-items:center;padding-bottom:25px;border-bottom:1px solid var(--line);margin-bottom:25px}.score-big{font:500 clamp(65px,12vw,102px)/1 Georgia,serif;color:var(--accent);white-space:nowrap}.score-big small{font:600 16px Inter,system-ui,sans-serif;color:var(--muted)}.comparison{display:grid;gap:12px}.comp-row{border:1px solid #4c455b;border-radius:10px;background:#232330;padding:18px}.comp-top{display:flex;justify-content:space-between;gap:12px;margin-bottom:14px}.comp-title{font-weight:850;font-size:13px}.comp-points{font-size:12px;font-weight:900;color:var(--accent)}.comp-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}.comp-pair>div{border-radius:8px;background:#2f2c3f;padding:12px;font-size:13px;white-space:pre-line;line-height:1.6;overflow-wrap:anywhere}.comp-pair small{display:block;color:#b7a4d4;letter-spacing:.06em;text-transform:uppercase;font-weight:800;font-size:10px;margin-bottom:7px}.footer{margin-top:65px;padding-top:21px;border-top:1px solid var(--line);color:var(--dim);font-size:11px;letter-spacing:.07em;display:flex;justify-content:space-between;gap:14px}.empty{color:var(--muted);font-size:14px;line-height:1.7}.score-info{margin:20px 0 0;color:var(--dim);font-size:12px;line-height:1.7}
+@media(max-width:680px){.shell{padding:0 15px 55px}.navlinks{gap:12px}.navlinks a{font-size:11px}.view{padding-top:28px}.ranklayout{grid-template-columns:1fr}.rank-options{max-height:310px}.banner{height:170px}.welcome-art{min-height:145px}.comp-pair{gap:7px}.summary-row{grid-template-columns:25px 1fr;gap:9px}.summary-row .smallbtn{grid-column:2;justify-self:start}.score-hero{gap:14px}.person{padding:11px}.footer{margin-top:35px}}
+@media print{body{background:#fff;color:#000}.nav,.footer,.actions,.smallbtn,.banner,.welcome-art{display:none!important}.card,.comp-row,.summary-row{border:1px solid #ddd;color:#000;box-shadow:none;background:#fff}.comp-pair>div{background:#f1f1f1;color:#000}em{color:#654a98}}
+
+.explanation-section{margin-top:24px;padding-top:19px;border-top:1px solid var(--line)}
+.explanation-label{display:block;color:#eee7fa;font-size:13px;font-weight:850;margin-bottom:9px}
+.explanation-label span{color:#b5adc8;font-size:11px}
+.explanation-help{font-size:12px;line-height:1.6;color:#aaa5bb;margin:0 0 11px}
+.explanation-field{width:100%;min-height:110px;resize:vertical;border-radius:10px;border:1px solid #685e81;background:#1d1e29;color:#f4eafa;padding:14px 15px;font:inherit;line-height:1.6}
+.explanation-reveal{margin-top:13px;background:#342d43;border-left:3px solid var(--accent2);padding:13px 15px;border-radius:4px}
+.explanation-reveal strong{display:block;color:#c9b1f3;font-size:11px;text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px}
+.explanation-reveal p{font-size:13px;white-space:pre-wrap;line-height:1.7;color:#e9e2f3;overflow-wrap:anywhere;margin:0}
+.explanation-reveal .unprovided{font-style:italic;color:#a9a0ba}
+
+.supplement-heading{font:500 30px/1.18 Georgia,serif;letter-spacing:-.02em;margin:31px 0 17px;color:#efe7fa}
+.source-card{border-radius:12px;background:#20212e;border:1px solid #51465f;padding:23px 25px;margin:0 0 14px}
+.source-card h3{font:500 24px/1.3 Georgia,serif;color:#f0e9fa;margin:10px 0 3px}
+.source-eyebrow{font-size:10px;letter-spacing:.12em;font-weight:850;text-transform:uppercase;color:#c3a1eb}
+.source-authors{font-size:12px;color:#b0a7bd;margin:4px 0 12px}
+.source-card p,.poem-item p{font-size:13px;line-height:1.75;color:#cac2d5;margin:11px 0}
+.paper-quote,.poem-quote{font:italic 18px/1.48 Georgia,serif;color:#e1caff;border-left:2px solid #a27add;margin:17px 0;padding-left:18px}
+.source-card a,.poem-item a,.source-links a{display:inline-block;color:#ceb1fa;font-size:12px;font-weight:750;margin-top:7px;text-decoration:underline;text-underline-offset:3px}
+.source-tension{background:#322c3b;border-left:2px solid #7e6a91;padding:11px 13px}
+.poetry-grid{display:grid;grid-template-columns:1fr 1fr;gap:17px;margin:12px 0 24px}
+.poetry-column{background:#20212d;border:1px solid #484459;border-radius:12px;padding:23px;min-width:0}
+.poem-item{padding:20px 0;border-bottom:1px solid #4b4659}.poem-item:last-child{border:0;padding-bottom:0}
+.poem-item h3{font:500 17px/1.4 Georgia,serif;color:#f1eafa;margin:0 0 11px}.poem-quote{font-size:16px;margin:8px 0 14px}
+.source-links{display:flex;flex-wrap:wrap;gap:12px 18px;margin-top:24px;padding-top:19px;border-top:1px solid #4c4559}
+.source-links span{flex-basis:100%;font-size:11px;font-weight:850;letter-spacing:.12em;text-transform:uppercase;color:#bdabc9}
+@media(max-width:680px){.poetry-grid{grid-template-columns:1fr}.source-card{padding:18px}.supplement-heading{font-size:25px}}
+</style></head><body>
+<div class="shell"><header class="nav"><a class="brand" href="../" aria-label="Marley collection"><span class="mark">m.</span><span class="brandname">marley.<small>Ed. III · Online</small></span></a><nav class="navlinks" aria-label="Site"><a href="../">All editions</a><a href="../part-i/">Ed. I</a><a href="../part-ii/">Ed. II</a></nav></header><main>
+<section class="view" id="welcome"><div class="card"><div class="welcome-art" role="img" aria-label="Illustration of a classical bust and old-world artifacts"></div><p class="eyebrow">Marley · Ed. III</p><h1>Eight new <em>provocations.</em></h1><p class="lead">Answer each question for yourself. Then predict another player's answers to see how well you know them. One question per page; your final answer sheet and guessing score come at the end.</p><div class="rule"></div><label class="label" for="nickname">Your name or nickname</label><input class="field" id="nickname" maxlength="40" autocomplete="nickname" placeholder="Enter a nickname"><div class="error" id="start-error" role="status"></div><div class="actions"><button class="btn primary" id="start">Start Ed. III</button></div><p class="note">No email required. Completed answers and guesses are final. Player names are visible, but answers are withheld until guesses are submitted. Progress is saved in your browser before publication.</p></div></section>
+<section class="view" id="question" hidden><div class="progress-head"><p class="eyebrow" id="q-step" style="margin:0">Your answers</p><span id="q-count">01 / 08</span></div><div class="track"><div class="trackbar" id="q-progress"></div></div><div class="banner" id="q-banner" role="img" aria-label="Atmospheric thematic illustration"></div><div class="card"><div class="chip" id="q-tag">Edition III</div><h1 id="q-title"></h1><div id="q-context" style="margin-top:24px"></div><div class="answer-header"><p class="question-sub" id="q-prompt"></p><div id="answer-ui"></div></div><div class="error" id="q-error" role="status"></div><div class="actions"><button class="btn secondary" id="previous">Previous</button><button class="btn primary" id="next">Continue</button></div></div></section>
+<section class="view" id="review" hidden><p class="eyebrow" id="review-tag">Phase 1 · Your answer sheet</p><h1 id="review-title">Your <em>answers.</em></h1><p class="lead" id="review-lead">Review your eight responses. You can edit them before submitting. Once published, the answers cannot be changed.</p><div class="card"><div class="summary-list" id="review-list"></div><div class="error" id="review-error"></div><div class="actions"><button class="btn primary" id="review-main">Publish my answer sheet</button><button class="btn secondary" id="review-export">Download answer sheet (.txt)</button><button class="btn secondary" id="review-print">Print</button><button class="btn ghost" id="review-back">Previous question</button></div></div></section>
+<section class="view" id="directory" hidden><p class="eyebrow">Phase 2 · Choose a player</p><h1>Whose answers <em>do you know?</em></h1><p class="lead">Choose a player who has completed this edition. Their responses will remain hidden until you lock in all eight guesses.</p><div class="card"><div class="label">Available players</div><div class="roster" id="roster"></div><div class="error" id="roster-error"></div><div class="actions"><button class="btn secondary" id="refresh">Refresh players</button><button class="btn ghost" id="return-sheet">My answer sheet</button></div></div></section>
+<section class="view" id="results" hidden><p class="eyebrow">Marley Ed. III · Guessing results</p><h1>How well did you <em>know them?</em></h1><p class="lead" id="result-intro">Your guesses have been scored.</p><div class="card"><div class="score-hero"><div class="score-big"><span id="score-number">0</span><small> / 100</small></div><div><h2 id="score-title">The results are in.</h2><p class="note">The score is calculated on the server, after your guesses are locked.</p></div></div><div class="comparison" id="comparison"></div><p class="score-info">Five-point scales: exact 10, same side 8, neutral versus moderate/strong 3 or 1, opposite sides 0. Paper ranking: exact position 10, one position away 3, two positions away 0. Pizza: exact answer 10. Maximum score: 100.</p><div class="actions"><button class="btn primary" id="another">Guess another player</button><button class="btn secondary" id="score-export">Download scorecard (.txt)</button><button class="btn secondary" id="score-print">Print</button></div></div></section>
+</main><footer class="footer"><span>Marley © 2026 · Ed. III</span><span>Eight questions. One edition.</span></footer></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="../config.js"></script><script src="./data.js"></script>
+<script>
+"use strict";
+const DATA=window.MARLEY_ED3,QUESTIONS=DATA.questions,SCHEMA="marley_iii_",cfg=window.MARLEY_CONFIG||{};
+const db=(window.supabase&&cfg.supabaseUrl&&cfg.supabasePublishableKey)?window.supabase.createClient(cfg.supabaseUrl,cfg.supabasePublishableKey):null;
+const el=id=>document.getElementById(id),views=["welcome","question","review","directory","results"];
+let uid=null,nickname="",published=false,own={},guesses={},mode="self",index=0,returnToReview=false,target=null,knownTargets=[],pastResults={},lastResult=null,lastTarget=null,visibleRankSearch="";
+function show(which){views.forEach(id=>el(id).hidden=id!==which);window.scrollTo({top:0,behavior:"instant"});}
+function setError(id,msg=""){el(id).textContent=msg;}
+function working(id,yes,msg){const b=el(id);if(yes){b.dataset.original=b.textContent;b.textContent=msg||"Working…";b.disabled=true;}else{b.textContent=b.dataset.original||b.textContent;b.disabled=false;}}
+function answers(){return mode==="self"?own:guesses;}
+function valid(q,val){if(q.type==="rank")return Array.isArray(val)&&val.length===3&&new Set(val).size===3&&val.every(x=>q.options.some(o=>(typeof o==="string"?o:o.value)===x));if(typeof val!=="string")return false;if(q.type==="likert")return DATA.likert.includes(val);return q.options.includes(val);}
+function doneCount(){return QUESTIONS.filter(q=>valid(q,answers()[q.id])).length;}
+function complete(){return QUESTIONS.every(q=>valid(q,answers()[q.id]));}
+function draftKey(){return "marley-ed3-v1-"+(uid||"unknown")+"-"+mode+(mode==="guess"&&target?"-"+target.id:"");}
+function saveDraft(){try{localStorage.setItem(draftKey(),JSON.stringify(answers()));}catch{}}
+function loadDraft(){try{const a=JSON.parse(localStorage.getItem(draftKey())||"{}");if(a&&typeof a==="object"){if(mode==="self")own=a;else guesses=a;}}catch{}}
+function explanationFor(bank,id){const v=bank&&bank.explanations&&bank.explanations[id];return typeof v==='string'?v.trim():'';}
+function dataString(q,val){return Array.isArray(val)?val.map((v,i)=>(q.rankDirection==="least-to-most"?["Least","Middle","Most"][i]:"#"+(i+1))+" — "+v).join("\n"):(val||"—");}
+function textDownload(name,text){const url=URL.createObjectURL(new Blob([text],{type:"text/plain;charset=utf-8"}));const a=document.createElement("a");a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);}
+function safeFile(s){return s.replace(/[^a-z0-9_-]/gi,"_").slice(0,35);}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+
+function renderSupplement(q,parent){
+ if(q.articles){
+  const h=document.createElement("h2");h.className="supplement-heading";h.textContent="The three papers";parent.append(h);
+  for(let i=0;i<q.articles.length;i++){
+   const item=q.articles[i],card=document.createElement("article");card.className="source-card";
+   const eyebrow=document.createElement("div");eyebrow.className="source-eyebrow";eyebrow.textContent="Paper 0"+(i+1)+" · "+item.published;
+   const title=document.createElement("h3");title.textContent=item.title;
+   const authors=document.createElement("div");authors.className="source-authors";authors.textContent=item.authors;
+   const quote=document.createElement("blockquote");quote.className="paper-quote";quote.textContent=item.quote;
+   const synopsis=document.createElement("p");synopsis.textContent=item.synopsis;
+   const tension=document.createElement("p");tension.className="source-tension";tension.textContent=item.tension;
+   const link=document.createElement("a");link.href=item.url;link.rel="noopener noreferrer";link.target="_blank";link.textContent="Read article / abstract ↗";
+   card.append(eyebrow,title,authors,quote,synopsis,tension,link);parent.append(card);
+  }
+ }
+ if(q.examples){
+  const h=document.createElement("h2");h.className="supplement-heading";h.textContent="The poets, in conversation";parent.append(h);
+  const grid=document.createElement("div");grid.className="poetry-grid";
+  for(const [side,label] of [["ordinary","The ordinary"],["extraordinary","The extraordinary"]]){
+   const col=document.createElement("div");col.className="poetry-column";
+   const header=document.createElement("div");header.className="source-eyebrow";header.textContent=label;col.append(header);
+   for(const item of q.examples.filter(p=>p.side===side)){
+    const card=document.createElement("article");card.className="poem-item";
+    const title=document.createElement("h3");title.textContent=item.title+" · "+item.author;
+    const quote=document.createElement("blockquote");quote.className="poem-quote";quote.textContent=item.quote;
+    const desc=document.createElement("p");desc.textContent=item.comment;
+    const a=document.createElement("a");a.href=item.url;a.rel="noopener noreferrer";a.target="_blank";a.textContent="Read poem ↗";
+    card.append(title,quote,desc,a);col.append(card);
+   }
+   grid.append(col);
+  }
+  parent.append(grid);
+ }
+ if(q.sourceLinks?.length){
+  const wrap=document.createElement("div");wrap.className="source-links";
+  const title=document.createElement("span");title.textContent="Further reading";wrap.append(title);
+  for(const item of q.sourceLinks){const a=document.createElement("a");a.href=item.url;a.rel="noopener noreferrer";a.target="_blank";a.textContent=item.label+" ↗";wrap.append(a);}
+  parent.append(wrap);
+ }
+}
+
+function renderQuestion(){
+ const q=QUESTIONS[index];returnToReview=false;
+ el("q-step").textContent=mode==="self"?"Phase 1 · Your answers":"Phase 2 · Guessing "+(target?target.nickname:"");
+ el("q-count").textContent=String(index+1).padStart(2,"0")+" / "+String(QUESTIONS.length).padStart(2,"0");
+ el("q-progress").style.width=(100*(index+1)/QUESTIONS.length)+"%";
+ el("q-tag").textContent=q.tag;el("q-title").innerHTML=q.title;
+ const paragraphs=el("q-context");paragraphs.replaceChildren();
+ q.context.forEach(t=>{const p=document.createElement("p");p.className="context";p.innerHTML=t;paragraphs.append(p);});
+ renderSupplement(q,paragraphs);
+ el("q-prompt").textContent=q.prompt;
+ el("q-banner").classList.toggle("explore",q.id==="technology"||q.id==="deextinction");
+ el("previous").textContent=index===0?(mode==="self"?"Introduction":"Player list"):"Previous";
+ el("next").textContent=index===7?"Review all eight":"Continue";
+ setError("q-error","");
+ renderAnswer();show("question");
+}
+
+function explanationInput(q,box){
+ const isPrediction=mode==="guess",bank=isPrediction?guesses:own;
+ if(mode==="self"&&published)return;
+ const wrap=document.createElement("div");wrap.className="explanation-section";
+ const label=document.createElement("label");label.className="explanation-label";label.htmlFor="explanation-"+q.id;
+ label.append(document.createTextNode(isPrediction?"Why do you think they would choose this? ":"Explanation "));
+ const optional=document.createElement("span");optional.textContent="(optional)";label.append(optional);
+ const help=document.createElement("p");help.className="explanation-help";help.textContent=isPrediction?"Why do you think "+target.nickname+" would answer this way? Your rationale will appear on the scorecard after you lock in your guesses.":"Why did you choose this answer? Other players can read this after they finish guessing.";
+ const field=document.createElement("textarea");field.className="explanation-field";field.id="explanation-"+q.id;field.rows=4;field.maxLength=1200;field.placeholder="Your explanation (optional)…";field.value=explanationFor(bank,q.id);
+ field.addEventListener("input",()=>{if(!bank.explanations||typeof bank.explanations!=="object")bank.explanations={};if(field.value.trim())bank.explanations[q.id]=field.value.slice(0,1200);else delete bank.explanations[q.id];saveDraft();});
+ wrap.append(label,help,field);box.append(wrap);
+}
+function explanationReveal(parent,value,label){
+ const wrap=document.createElement("div");wrap.className="explanation-reveal";
+ const title=document.createElement("strong");title.textContent=label;
+ const body=document.createElement("p");body.textContent=value||"No explanation provided.";if(!value)body.className="unprovided";
+ wrap.append(title,body);parent.append(wrap);
+}
+function changeAnswer(val){answers()[QUESTIONS[index].id]=val;saveDraft();renderAnswer();}
+function renderAnswer(){
+ const q=QUESTIONS[index],val=answers()[q.id],box=el("answer-ui");box.replaceChildren();
+ if(q.type==="select"){const field=document.createElement("select");field.className="select";field.setAttribute("aria-label",q.prompt);
+ const blank=document.createElement("option");blank.value="";blank.textContent="Select a century";field.append(blank);
+ q.options.forEach(x=>{const o=document.createElement("option");o.value=x;o.textContent=x;field.append(o);});field.value=typeof val==="string"?val:"";field.addEventListener("change",()=>changeAnswer(field.value));box.append(field);explanationInput(q,box);return;}
+ if(q.type==="rank"){renderRanking(q,box);explanationInput(q,box);return;}
+ const opts=q.type==="likert"?DATA.likert:q.options;const list=document.createElement("div");list.className="choices";opts.forEach(o=>{
+  const b=document.createElement("button");b.type="button";b.className="choice"+(val===o?" selected":"");b.setAttribute("aria-pressed",val===o?"true":"false");
+  const ring=document.createElement("span");ring.className="indicator";ring.textContent=val===o?"✓":"";
+  const label=document.createElement("span");label.textContent=o;b.append(ring,label);b.addEventListener("click",()=>changeAnswer(o));list.append(b);
+ });box.append(list);explanationInput(q,box);
+}
+function renderRanking(q,box){
+ const val=Array.isArray(answers()[q.id])?answers()[q.id]:[];
+ const frame=document.createElement("div");frame.className="ranklayout";
+ const left=document.createElement("div"),right=document.createElement("div");
+ const title1=document.createElement("div");title1.className="label";title1.textContent=q.rankDirection==="least-to-most"?"From least to most ridiculous":"Your top three";left.append(title1);
+ const slots=document.createElement("div");slots.className="rank-slots";
+ for(let i=0;i<3;i++){const line=document.createElement("div");line.className="rank-slot"+(val[i]?" filled":"");
+ const nr=document.createElement("span");nr.className="rank-num";nr.textContent=q.rankDirection==="least-to-most"?["LEAST","MIDDLE","MOST"][i]:"#"+(i+1);
+ const word=document.createElement("span");word.className="rank-name";word.textContent=val[i]||"Choose a contender";line.append(nr,word);
+ if(val[i]){const rem=document.createElement("button");rem.type="button";rem.className="remove";rem.textContent="Remove";rem.setAttribute("aria-label","Remove "+val[i]);rem.addEventListener("click",()=>{val.splice(i,1);changeAnswer([...val]);});line.append(rem);}
+ slots.append(line);}left.append(slots);
+ const title2=document.createElement("div");title2.className="label";title2.textContent="The three papers";right.append(title2);
+ const search=document.createElement("input");search.type="search";search.className="option-search";search.placeholder="Filter options…";search.setAttribute("aria-label","Filter ranking options");search.value=visibleRankSearch;right.append(search);
+ const options=document.createElement("div");options.className="rank-options";right.append(options);
+ function paintOptions(){options.replaceChildren();let prev="";
+  const filtered=q.options.filter(o=>(typeof o==="string"?o:o.value).toLowerCase().includes(search.value.toLowerCase()));
+  filtered.forEach(o=>{const name=typeof o==="string"?o:o.value,group=typeof o==="string"?"Fruits":o.group;if(group!==prev){prev=group;const h=document.createElement("div");h.className="rank-group";h.textContent=group;options.append(h);}
+   const b=document.createElement("button");b.type="button";b.className="rank-option";b.disabled=val.includes(name)||val.length>=3;
+   const em=document.createElement("span");em.textContent=typeof o==="string"?"":(o.emoji||"📄");
+   const t=document.createElement("span");t.textContent=name+(o.subtitle?" — "+o.subtitle:"");b.append(em,t);
+   b.addEventListener("click",()=>{changeAnswer([...val,name]);});options.append(b);
+  });
+  if(!filtered.length){const p=document.createElement("div");p.className="empty";p.textContent="No matching options.";options.append(p);}
+ }
+ search.addEventListener("input",()=>{visibleRankSearch=search.value;paintOptions();});paintOptions();
+ frame.append(left,right);box.append(frame);
+ const hint=document.createElement("p");hint.className="note";hint.textContent="Select first the least ridiculous paper, then the middle, then the most ridiculous. Remove a selection to change its position.";box.append(hint);
+}
+function openQuestion(i){index=i;visibleRankSearch="";renderQuestion();}
+function renderReview(){
+ const isGuess=mode==="guess";const isLocked=mode==="self"&&published;
+ el("review-tag").textContent=isGuess?"Phase 2 · Review guesses":isLocked?"Phase 1 · Published answers":"Phase 1 · Review answers";
+ el("review-title").innerHTML=isGuess?"Your <em>predictions.</em>":"Your <em>answers.</em>";
+ el("review-lead").textContent=isGuess?"Review the eight answers you think "+target.nickname+" gave. You get one scored attempt; no answers will be revealed until you submit all your guesses.":isLocked?"Your eight answers are published and final. You can download the sheet, or choose another player to guess.":"Review every answer before publishing. You may edit any response now; after publication, it becomes final.";
+ el("review-main").textContent=isGuess?"Lock in eight guesses":(isLocked?"Find someone to guess":"Publish all eight answers");
+ el("review-export").textContent=isGuess?"Download predictions (.txt)":"Download answer sheet (.txt)";
+ el("review-back").hidden=isLocked;
+ const box=el("review-list");box.replaceChildren();
+ QUESTIONS.forEach((q,i)=>{const row=document.createElement("div");row.className="summary-row";
+ const number=document.createElement("div");number.className="summary-number";number.textContent=String(i+1).padStart(2,"0");
+ const info=document.createElement("div");const label=document.createElement("div");label.className="summary-q";label.textContent=q.short;
+ const value=document.createElement("div");value.className="summary-a";value.textContent=dataString(q,answers()[q.id]);info.append(label,value);if(isGuess&&explanationFor(guesses,q.id))explanationReveal(info,explanationFor(guesses,q.id),"Your prediction reasoning");if(!isGuess&&explanationFor(own,q.id))explanationReveal(info,explanationFor(own,q.id),"Your explanation");row.append(number,info);
+ if(!isLocked){const b=document.createElement("button");b.className="btn secondary smallbtn";b.textContent="Edit";b.addEventListener("click",()=>openQuestion(i));row.append(b);}box.append(row);});
+ setError("review-error","");show("review");
+}
+async function sessionUser(){if(!db)throw new Error("The site cannot reach its configuration. Contact the site administrator.");const a=await db.auth.getSession();if(a.error)throw a.error;if(a.data.session)return a.data.session.user;const b=await db.auth.signInAnonymously();if(b.error)throw b.error;return b.data.user;}
+async function begin(){
+ const name=el("nickname").value.trim().replace(/\s+/g," ").slice(0,40);
+ if(!name){setError("start-error","Please enter a name or nickname.");return;}
+ working("start",true,"Connecting…");setError("start-error","");
+ try{
+  const u=await sessionUser();uid=u.id;
+  const existing=await db.from(SCHEMA+"players").select("nickname,completed_at").eq("id",uid).maybeSingle();if(existing.error)throw existing.error;
+  if(existing.data&&existing.data.completed_at){
+   nickname=existing.data.nickname;published=true;
+   const ownData=await db.from(SCHEMA+"answers").select("answers").eq("player_id",uid).single();if(ownData.error)throw ownData.error;
+   own=ownData.data.answers;mode="self";renderReview();return;
+  }
+  const r=existing.data
+   ? await db.from(SCHEMA+"players").update({nickname:name}).eq("id",uid)
+   : await db.from(SCHEMA+"players").insert({id:uid,nickname:name});
+  if(r.error)throw r.error;
+  nickname=name;published=false;mode="self";loadDraft();
+  openQuestion(0);
+ }catch(e){setError("start-error",e.code==="23505"?"That nickname is already taken in this edition. Choose another.":(e.message||"Could not connect. Have you installed the Ed. III database SQL?"));}
+ finally{working("start",false);}
+}
+async function publish(){
+ if(!complete()){setError("review-error","Complete all eight questions first.");return;}
+ working("review-main",true,"Publishing…");setError("review-error","");
+ try{
+  const payload={...own,explanations:Object.fromEntries(QUESTIONS.map(q=>[q.id,explanationFor(own,q.id).slice(0,1200)]).filter(x=>x[1]))};
+   const r=await db.rpc(SCHEMA+"publish",{p_answers:payload});if(r.error)throw r.error;published=true;mode="self";renderReview();
+ }catch(e){setError("review-error",e.message||"Could not publish. The Ed. III database installation may be incomplete.");}
+ finally{working("review-main",false);if(published&&mode==="self")el("review-main").textContent="Find someone to guess";}
+}
+async function directory(){
+ if(!published){setError("review-error","Publish your own answers before guessing.");return;}
+ show("directory");el("roster").textContent="Loading players…";setError("roster-error","");
+ try{
+  const [a,b]=await Promise.all([
+   db.from(SCHEMA+"players").select("id,nickname").not("completed_at","is",null).order("nickname"),
+   db.from(SCHEMA+"guesses").select("target_id,score,result").eq("guesser_id",uid)]);
+  if(a.error)throw a.error;if(b.error)throw b.error;
+  knownTargets=(a.data||[]).filter(p=>p.id!==uid);pastResults={};(b.data||[]).forEach(p=>pastResults[p.target_id]=p);renderRoster();
+ }catch(e){el("roster").textContent="Unable to load player directory.";setError("roster-error",e.message);}
+}
+function renderRoster(){const root=el("roster");root.replaceChildren();
+ if(!knownTargets.length){const p=document.createElement("p");p.className="empty";p.textContent="Nobody else has completed Ed. III yet. Invite a friend, then refresh the list.";root.append(p);return;}
+ for(const p of knownTargets){
+  const row=document.createElement("div");row.className="person";
+  const ava=document.createElement("div");ava.className="avatar";ava.textContent=p.nickname[0].toUpperCase();
+  const desc=document.createElement("div");desc.className="person-details";const title=document.createElement("div");title.className="person-name";title.textContent=p.nickname;
+  const sub=document.createElement("div");sub.className="person-meta";const prior=pastResults[p.id];sub.textContent=prior?"Previously guessed · "+prior.score+"/100":"Ready to guess";desc.append(title,sub);
+  const b=document.createElement("button");b.className="btn "+(prior?"secondary":"primary");b.textContent=prior?"View score":"Guess";
+  b.addEventListener("click",()=>{target=p;if(prior){lastTarget=p;lastResult=prior.result;renderResults();}else{mode="guess";guesses={};loadDraft();openQuestion(0);}});
+  row.append(ava,desc,b);root.append(row);
+ }
+}
+async function lockGuess(){
+ if(!complete()){setError("review-error","Finish all eight guesses.");return;}
+ working("review-main",true,"Calculating…");setError("review-error","");
+ try{
+  const r=await db.rpc(SCHEMA+"submit_guess",{p_target:target.id,p_guesses:guesses});if(r.error)throw r.error;
+  lastTarget=target;lastResult=r.data;pastResults[target.id]={target_id:target.id,score:r.data.total,result:r.data};renderResults();
+ }catch(e){setError("review-error",e.message||"Could not score guesses.");}
+ finally{working("review-main",false);}
+}
+function renderResults(){
+ const r=lastResult;if(!r)return;
+ el("score-number").textContent=r.total;el("result-intro").textContent="You predicted "+lastTarget.nickname+"'s answers across all eight questions. Here is how those predictions compare.";
+ el("score-title").textContent=r.total===100?"Perfectly predicted.":r.total>=75?"You know them well.":r.total>=50?"Not a bad effort.":"A few surprises.";
+ const box=el("comparison");box.replaceChildren();
+ QUESTIONS.forEach((q,i)=>{
+  const row=document.createElement("div");row.className="comp-row";const head=document.createElement("div");head.className="comp-top";
+  const title=document.createElement("div");title.className="comp-title";title.textContent=String(i+1).padStart(2,"0")+". "+q.short;
+  const pts=document.createElement("div");pts.className="comp-points";const got=r.points&&r.points[q.id]?r.points[q.id].earned:0;pts.textContent=got+" / "+q.points;
+  head.append(title,pts);
+  const pair=document.createElement("div");pair.className="comp-pair";
+  [ ["Your guess",r.guesses?.[q.id]],["Actual answer",r.actual?.[q.id]]].forEach(([label,val])=>{
+   const item=document.createElement("div");const small=document.createElement("small");small.textContent=label;
+   const value=document.createElement("span");value.textContent=dataString(q,val);item.append(small,value);pair.append(item);
+  });row.append(head,pair);if(explanationFor(r.guesses,q.id))explanationReveal(row,explanationFor(r.guesses,q.id),"Why you predicted this");explanationReveal(row,explanationFor(r.actual,q.id),lastTarget.nickname+"\u0027s explanation");box.append(row);
+ });show("results");
+}
+function answerTxt(){return "MARLEY · ED. III\nPLAYER: "+nickname+"\n\n"+QUESTIONS.map((q,i)=>(i+1)+". "+q.short+"\n"+dataString(q,own[q.id])+(explanationFor(own,q.id)?"\nExplanation: "+explanationFor(own,q.id):"")).join("\n\n")+"\n";}
+function guessesTxt(){return "MARLEY · ED. III · PREDICTIONS\nGUESSER: "+nickname+"\nTARGET: "+target.nickname+"\n\n"+QUESTIONS.map((q,i)=>(i+1)+". "+q.short+"\n"+dataString(q,guesses[q.id])+(explanationFor(guesses,q.id)?"\nPrediction reasoning: "+explanationFor(guesses,q.id):"")).join("\n\n")+"\n";}
+function scoreTxt(){const r=lastResult;return "MARLEY · ED. III · SCORECARD\nGUESSER: "+nickname+"\nTARGET: "+lastTarget.nickname+"\nSCORE: "+r.total+"/100\n\n"+QUESTIONS.map((q,i)=>{const v=r.points[q.id];return (i+1)+". "+q.short+" | "+v.earned+"/"+q.points+"\nGUESSED: "+dataString(q,r.guesses[q.id])+(explanationFor(r.guesses,q.id)?"\nYOUR REASONING: "+explanationFor(r.guesses,q.id):"")+"\nACTUAL: "+dataString(q,r.actual[q.id])+"\nEXPLANATION: "+(explanationFor(r.actual,q.id)||"No explanation provided.");}).join("\n\n")+"\n";}
+el("start").addEventListener("click",begin);el("nickname").addEventListener("keydown",e=>{if(e.key==="Enter")begin();});
+el("previous").addEventListener("click",()=>{if(index>0)openQuestion(index-1);else if(mode==="guess")directory();else show("welcome");});
+el("next").addEventListener("click",()=>{const q=QUESTIONS[index];if(!valid(q,answers()[q.id])){setError("q-error","Select an answer before continuing.");return;}if(index<7)openQuestion(index+1);else renderReview();});
+el("review-main").addEventListener("click",()=>{if(mode==="guess")lockGuess();else if(published)directory();else publish();});
+el("review-back").addEventListener("click",()=>openQuestion(7));
+el("review-export").addEventListener("click",()=>textDownload("Marley_Ed_III_"+safeFile(nickname)+(mode==="guess"?"_Guesses":"_Answers")+".txt",mode==="guess"?guessesTxt():answerTxt()));
+el("review-print").addEventListener("click",()=>window.print());
+el("return-sheet").addEventListener("click",()=>{mode="self";renderReview();});
+el("refresh").addEventListener("click",directory);
+el("another").addEventListener("click",directory);
+el("score-export").addEventListener("click",()=>textDownload("Marley_Ed_III_"+safeFile(lastTarget.nickname)+"_Score.txt",scoreTxt()));
+el("score-print").addEventListener("click",()=>window.print());
+(async()=>{
+ if(!db){setError("start-error","Configuration unavailable. The administrator should check config.js.");return;}
+ try{const s=await db.auth.getSession();if(!s.data.session)return;const person=s.data.session.user;const r=await db.from(SCHEMA+"players").select("nickname,completed_at").eq("id",person.id).maybeSingle();
+ if(r.data){el("nickname").value=r.data.nickname;el("start").textContent=r.data.completed_at?"Continue Ed. III":"Continue answers";}else{
+ const p=await db.from("marley_players").select("nickname").eq("id",person.id).maybeSingle();if(p.data)el("nickname").value=p.data.nickname;
+ }
+ }catch{}
+})();
+</script></body></html>
