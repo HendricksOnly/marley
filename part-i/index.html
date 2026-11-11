@@ -343,7 +343,7 @@ h1,h2,.result-question{color:#f3eff9}h1 em{color:var(--accent);text-decoration-c
 <h1 id="score-title">How well do you <em>know them?</em></h1>
 <div class="scorehero"><div class="scorevalue"><span id="score-value">0</span><small> / 100</small></div><div class="score-summary"><h2 id="score-headline"></h2><p id="score-description"></p></div></div>
 <div class="results-list" id="score-list"></div>
-<p class="score-key"><strong>Scoring:</strong> Each five-point scale is worth 10 (10 / 7 / 4 / 1 / 0 for increasing distance). Workweek and human-needs choices are worth 10 for an exact match. For professions, each position earns 10 for the same job in the same rank, or 6 for the right job in another rank. Maximum: 100.</p>
+<p class="score-key"><strong>Scoring:</strong> Each five-point scale gives 10 for exact, 8 for the same side, 3 or 1 for neutral versus moderate/extreme, and 0 across opposite sides. Workweek and human-needs choices are worth 10 for an exact match. For professions, each rank earns 10 for the exact job in the correct place, 6 for that job in another position, or 1 for a different job in the same profession category. Maximum: 100.</p>
 <div class="results-actions"><button class="primary" id="download-score" type="button">↓ Download scorecard (.txt)</button><button class="secondary" id="try-another" type="button">Guess another player</button><button class="secondary" id="print-score" type="button">Print scorecard</button><button class="ghost" id="score-home" type="button">Introduction</button></div>
 <p class="private-note">Scores are calculated and locked on the server. You get one scored attempt per person.</p></div></section>
 </main><footer><span>MARLEY © 2026 · ONLINE BETA</span><span>Eight questions. Two perspectives.</span></footer></div>
@@ -552,13 +552,15 @@ h1,h2,.result-question{color:#f3eff9}h1 em{color:var(--accent);text-decoration-c
 
   function explanationFor(bank,id){const v=bank&&bank.explanations&&bank.explanations[id];return typeof v==='string'?v.trim():'';}
   function appendExplanationInput(q){
-    if(mode!=='self')return;
+    const isPrediction=mode==='guess';
+    if((mode==='self'&&published)||(isPrediction&&lockedResult))return;
+    const bank=isPrediction?guesses:ownAnswers;
     const wrap=document.createElement('div');wrap.className='explanation-section';
-    const label=document.createElement('label');label.className='explanation-label';label.htmlFor='explain-'+q.id;label.append(document.createTextNode('Explanation '));
+    const label=document.createElement('label');label.className='explanation-label';label.htmlFor='explain-'+q.id;label.append(document.createTextNode(isPrediction?'Why do you think they would choose this? ':'Explanation '));
     const opt=document.createElement('span');opt.textContent='(optional)';label.append(opt);
-    const help=textElement('p','explanation-help','Why did you choose this answer? Your explanation is revealed to other players after they lock in their guesses.');
-    const field=document.createElement('textarea');field.className='explanation-field';field.id='explain-'+q.id;field.maxLength=1200;field.rows=4;field.placeholder='Explain your reasoning (optional)…';field.value=explanationFor(ownAnswers,q.id);
-    field.addEventListener('input',()=>{if(!ownAnswers.explanations||typeof ownAnswers.explanations!=='object')ownAnswers.explanations={};if(field.value.trim())ownAnswers.explanations[q.id]=field.value;else delete ownAnswers.explanations[q.id];saveAnswers();});
+    const help=textElement('p','explanation-help',isPrediction?'Why do you expect '+targetName+' to choose this answer? This optional note will appear alongside their explanation after your guesses are locked.':'Why did you choose this answer? Your explanation is revealed to other players after they lock in their guesses.');
+    const field=document.createElement('textarea');field.className='explanation-field';field.id='explain-'+q.id;field.maxLength=1200;field.rows=4;field.placeholder='Explain your reasoning (optional)…';field.value=explanationFor(bank,q.id);
+    field.addEventListener('input',()=>{if(!bank.explanations||typeof bank.explanations!=='object')bank.explanations={};if(field.value.trim())bank.explanations[q.id]=field.value.slice(0,1200);else delete bank.explanations[q.id];saveAnswers();});
     wrap.append(label,help,field);answerPanel.append(wrap);
   }
   function appendExplanationReveal(parent,bank,qid,label){
@@ -740,7 +742,9 @@ h1,h2,.result-question{color:#f3eff9}h1 em{color:var(--accent);text-decoration-c
       const compare=document.createElement('div');compare.className='comparison-grid';const yours=document.createElement('div');yours.className='comparison-cell yours';const theirs=document.createElement('div');theirs.className='comparison-cell';
       yours.append(textElement('div','tag','YOUR GUESS'),textElement('div','val',answerText(q,guesses[q.id])));
       theirs.append(textElement('div','tag',targetName.toUpperCase()+"'S ANSWER"),textElement('div','val',answerText(q,targetAnswers[q.id])));
-      compare.append(yours,theirs);item.append(head,textElement('h2','result-question',q.resultTitle),compare);appendExplanationReveal(item,targetAnswers,q.id,targetName+"'s explanation");list.append(item);
+      compare.append(yours,theirs);item.append(head,textElement('h2','result-question',q.resultTitle),compare);
+      if(explanationFor(guesses,q.id))appendExplanationReveal(item,guesses,q.id,'Why you predicted this');
+      appendExplanationReveal(item,targetAnswers,q.id,targetName+"'s explanation");list.append(item);
     });
     $('score-value').textContent=lockedResult.total;$('score-people').textContent=playerName+' GUESSED '+targetName.toUpperCase();
     $('score-headline').textContent=lockedResult.total===100?'A perfect read.':lockedResult.total>=85?'You know them remarkably well.':lockedResult.total>=65?'A pretty good read.':lockedResult.total>=40?'Some good instincts.':'More surprises than expected.';
@@ -871,7 +875,7 @@ h1,h2,.result-question{color:#f3eff9}h1 em{color:var(--accent);text-decoration-c
   $('back-to-sheet').addEventListener('click',()=>navigate('#answers'));
   $('refresh-players').addEventListener('click',refreshRoster);
   $('download-score').addEventListener('click',()=>{if(!lockedResult||!targetAnswers||!guessComplete())return;const scores=questions.map(q=>lockedResult.points[q.id]);
-    const txt=['MARLEY GAME (BETA) - GUESSING SCORECARD',playerName+' guessed '+targetName,'Score: '+scores.reduce((a,b)=>a+b,0)+' / 100','',...questions.flatMap((q,i)=>[(i+1)+'. '+q.resultTitle,'Your guess: '+answerText(q,guesses[q.id]),targetName+"'s answer: "+answerText(q,targetAnswers[q.id]),targetName+"'s explanation: "+(explanationFor(targetAnswers,q.id)||'No explanation provided.'),'Points: '+scores[i]+' / '+(q.type==='ranking'?30:10),''])].join('\n');download(txt,'Marley_Score_'+safeFilename(playerName)+'_vs_'+safeFilename(targetName)+'.txt');
+    const txt=['MARLEY GAME (BETA) - GUESSING SCORECARD',playerName+' guessed '+targetName,'Score: '+scores.reduce((a,b)=>a+b,0)+' / 100','',...questions.flatMap((q,i)=>[(i+1)+'. '+q.resultTitle,'Your guess: '+answerText(q,guesses[q.id]),targetName+"'s answer: "+answerText(q,targetAnswers[q.id]),...(explanationFor(guesses,q.id)?['Your prediction reasoning: '+explanationFor(guesses,q.id)]:[]),targetName+"'s explanation: "+(explanationFor(targetAnswers,q.id)||'No explanation provided.'),'Points: '+scores[i]+' / '+(q.type==='ranking'?30:10),''])].join('\n');download(txt,'Marley_Score_'+safeFilename(playerName)+'_vs_'+safeFilename(targetName)+'.txt');
   });
   $('try-another').addEventListener('click',()=>navigate('#choose-player'));
   $('print-score').addEventListener('click',()=>window.print());
