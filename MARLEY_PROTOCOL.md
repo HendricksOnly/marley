@@ -1,49 +1,70 @@
 # Marley Edition Protocol
 
-This repository is the permanent home for every Marley edition.
+The Marley collection has one homepage and permanent URLs for all editions.
 
-## Public URLs
+## Official links
 
-- Collection homepage: `https://thecorrections.github.io/marley/`
-- Part I (original eight questions): `https://thecorrections.github.io/marley/part-i/`
-- Part II (fruit): `https://thecorrections.github.io/marley/part-ii/`
+- Collection: https://hendricksonly.github.io/marley/
+- Ed. I: https://hendricksonly.github.io/marley/part-i/
+- Ed. II (eight questions): https://hendricksonly.github.io/marley/part-ii/
+- Archived fruit-only alpha: https://hendricksonly.github.io/marley/archive/fruit-alpha/
 
-## Non-negotiable rules for every future edition
+## House style
 
-1. Give each new Marley its own stable folder: `part-iii/`, `part-iv/`, and so on. Each folder contains an `index.html`.
-2. Never overwrite an older edition's released questions or scoring logic. Preserve its public URL, unless making a disclosed bug fix.
-3. Put each edition's database in separate Supabase tables and functions, with its own distinct prefix (for example, `marley_iii_`). Never drop, truncate, or rename older edition tables as part of a new release.
-4. Give each edition its own local draft storage key so progress from other editions cannot collide.
-5. All editions can use the same Supabase project, anonymous authentication, and root `config.js`. Nested editions reference the config with `../config.js`.
-6. Apply Row Level Security: other players' answer sheets must not be readable before guesses are submitted. Score and reveal answers in a server-side RPC that records each guess permanently.
-7. Add one new card to the root `index.html` to publish a new edition. Test direct URLs to all earlier editions after every change.
-8. Keep SQL migrations in version control when practical. Run **new** migrations through Supabase SQL Editor after review; do not rerun old destructive installers.
-9. Prefer fixing incomplete content before release. After a game has collected answers, meaningful question/choice changes require a new edition or an explicit versioned migration.
-10. Before launch, check anonymous sign-in, complete self-play, cross-player directory, score calculation, results confidentiality, mobile layout, and preservation of previous edition data.
+- Brand: dotted **m.** monogram with **marley.** wordmark
+- Charcoal / slate base with restrained purple accent; accessible text contrast
+- Edition labels: **Ed. I**, **Ed. II**, **Ed. III** (not Part I/Part II)
+- In-game phases: **Phase 1 — Your answers** and **Phase 2 — Guessing**
+- An edition's own introduction, question-per-screen flow, final answer sheet, and 100-point guessing comparison
+- Light, atmospheric imagery should never obscure text
 
-## Current structure
+## Repository structure
 
 ```text
-index.html             ← homepage / edition selection
-config.js              ← shared, browser-safe Supabase project URL + publishable key
-part-i/index.html      ← frozen original eight-question Marley (online beta)
-part-ii/index.html     ← fruit-ranking multiplayer edition
+index.html                         collection homepage
+config.js                          browser-safe Supabase URL + publishable key
+assets/classical.svg               classical illustration
+assets/exploration.svg             space/ocean illustration
+part-i/index.html                  frozen Ed. I (eight original questions)
+part-ii/index.html                 Ed. II app (eight new questions)
+part-ii/data.js                    Ed. II question content and answer choices
+part-ii/INSTALL.sql                ONE-TIME Ed. II database installation
+archive/fruit-alpha/index.html     original single-fruit question preserved
+MARLEY_PROTOCOL.md                 this document
 ```
 
-## Part II setup
+## Database isolation
 
-Part II requires a **one-time** Supabase SQL migration, `Marley_Part_II_Database.sql`, provided in the Marley conversation. Open Supabase → SQL Editor → New query, paste the SQL, and run it. This creates:
+- Ed. I original: `marley_players`, `marley_answers`, `marley_guesses` (do not alter).
+- Fruit-only alpha: `marley_ii_players`, `marley_ii_answers`, `marley_ii_guesses` (archive; do not alter).
+- Ed. II eight-question: `marley_ii_v2_players`, `marley_ii_v2_answers`, `marley_ii_v2_guesses`.
+- Future Ed. III: create its own `marley_iii_*` tables and scoring functions.
 
-- `marley_ii_players`
-- `marley_ii_answers`
-- `marley_ii_guesses`
+Never clear or overwrite earlier edition responses as part of publishing a new edition. New versions of an already released edition must use distinct table prefixes when their answer formats change.
 
-plus its own validation and secure scoring RPC functions. Part I's tables and scores remain untouched.
+Use the same Supabase project and anonymous account session, but distinct table sets and per-edition browser draft keys. Anonymous sessions are per browser/site origin, not permanent verified identities.
 
-## Player identity note
+## Security and scoring
 
-Anonymous sessions are browser-scoped. Different browser profiles, devices, or cleared site data may produce new user IDs. Nicknames are not verified identities; this is appropriate for casual friends' games but not a secure ranked competition.
+- Completed player nicknames may appear in the directory.
+- Other people's answers must never be available via browser SELECT before submission.
+- Use Row Level Security for all personal data.
+- Publish complete answers through an authenticated server RPC with immutable final submissions.
+- Score guesses through a separate server RPC and save a single immutable attempt per guesser/target pairing.
+- Return comparison details only after guesses have been locked in.
+- Never expose Supabase service-role, secret, or administrator keys in public web files.
 
-## Release routine
+## New-edition release checklist
 
-For a new edition: draft the question(s), agree on fixed answers/scoring, create unique tables and server functions, build `part-N/index.html`, run/test the database migration, add the homepage card, test both new and old links, then announce the launch.
+1. Prepare questions and choices; explicitly decide how ranking, Likert, and single choices score. Total 100.
+2. Build the edition in its own directory, e.g. `part-iii/`, without replacing `part-ii/`.
+3. Add a new database installer or migration file to that edition; validate all choices and lock guesses on the server.
+4. Review and run that installer in Supabase SQL Editor **once**. Check tables and RPCs.
+5. Play all questions locally as both respondent and guesser.
+6. Publish the app, add a homepage card, and test the live URL.
+7. Test two different signed-in browsers, including a completed answer sheet, player directory, guess submission, scoring, printing/export, and mobile layout.
+8. Verify older editions and old data still work.
+
+## Ed. II (November 2026)
+
+The fruit-only version remains archived. The currently published Ed. II replaces its content with eight new questions and needs the one-time migration in `part-ii/INSTALL.sql`. Do not re-run the fruit alpha installer for this release. Questions are in `part-ii/data.js`, kept in sync with the SQL validation lists. If any answer choices change after collecting responses, release a separate versioned data migration instead of silently changing stored semantics.
