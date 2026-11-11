@@ -81,3 +81,14 @@ The collection homepage links to `matrix/index.html`. The matrix switches betwee
 The Supabase read-only RPC `public.marley_relationship_matrix(text)` is installed using `RELATIONSHIP_MATRIX.sql`. It is executable only by authenticated sessions that have submitted their own answers for the requested edition. Its `SECURITY DEFINER` access is intentionally limited to a hardcoded pair of edition-specific table sets and sanitized score fields; no arbitrary SQL or caller-supplied table names are accepted. `anon` and `PUBLIC` cannot execute it. When changing the schema, review these privacy guarantees.
 
 Empty cells mean no scored attempt, not a zero score. Averages are calculated only from recorded guesses; comparisons are directional. No data was inserted to populate the matrix, and the matrix is expected to be empty after a reset until players finish and guess.
+
+## Scoring Version 2 (November 2026)
+
+Scoring is calculated by the two authenticated server-side functions and their helper functions, installed from [SCORING_V2.sql](SCORING_V2.sql). This migration also re-scores previously locked guesses without altering either player's answers or explanation text.
+
+- Agreement and prose five-point scales: **10 exact, 8 same side (moderate/strong), 3 neutral vs moderate, 1 neutral vs strong, 0 opposite sides**. There is no credit for being on the wrong side of the issue.
+- Edition I professions: 10 for correct item and rank; 6 for correct item in another rank; 1 for different item of the same profession group in the same rank; otherwise 0.
+- Edition II sports and fruits: position weights 8/7/5, unchanged. Right item at wrong rank earns half of the position weight (rounded down); different items from the same category in that position earn 1; unrelated 0. Sport categories follow the visible sports groups. Fruit categories use a smaller, curated grouping, not the one general "contenders" label.
+- Other single-choice questions remain all-or-nothing. Every edition still totals at most 100 points.
+
+During the guessing round, each question also offers **Why do you think they would choose this? (optional)**, up to 1,200 characters. These prediction rationales are saved in the guesses JSON, and are shown after scoring alongside the target player's own optional explanation. They do not affect points. Existing answer sheets are unchanged.
