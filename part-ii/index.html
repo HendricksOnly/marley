@@ -63,7 +63,7 @@ function renderQuestion(){
 
 function explanationInput(q,box){
  const isPrediction=mode==="guess",bank=isPrediction?guesses:own;
- if((mode==="self"&&published)||(isPrediction&&lastResult))return;
+ if(mode==="self"&&published)return;
  const wrap=document.createElement("div");wrap.className="explanation-section";
  const label=document.createElement("label");label.className="explanation-label";label.htmlFor="explanation-"+q.id;
  label.append(document.createTextNode(isPrediction?"Why do you think they would choose this? ":"Explanation "));
