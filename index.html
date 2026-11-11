@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#f8f6f1">
-<meta name="description" content="Marley Game (Alpha) · answer eight questions, then guess another player's answers to score up to 100 points. Offline and self-contained.">
-<title>Marley Game (Alpha) · Complete Edition</title>
+<meta name="description" content="Marley Game (Beta) · answer eight questions, then guess another player's answers to score up to 100 points. Online multiplayer edition.">
+<title>Marley Game (Beta) · Online Edition</title>
 <style>
     :root {
       color-scheme: light;
@@ -157,6 +157,7 @@
       .result-item { padding:21px 17px; }
       footer { font-size:10px; }
     }
+    .result-edit{display:none!important}
     @media print {
       @page { margin:15mm; }
       body { background:#fff; }
@@ -214,16 +215,16 @@
 </style></head>
 <body><div class="shell"><header class="topbar">
 <a class="brand" href="#welcome" aria-label="Marley game home"><span class="brand-mark">m.</span><span><span class="brand-word">marley.</span><span class="brand-sub">the question game</span></span></a>
-<div class="topright"><span class="status-dot"></span><span class="topstatus">Two-part edition</span><span class="preview">Alpha</span></div></header>
+<div class="topright"><span class="status-dot"></span><span class="topstatus">Online multiplayer</span><span class="preview">Beta</span></div></header>
 <main id="main">
 <section id="cover-view" class="hidden" aria-labelledby="cover-title"><div class="card cover-card"><div class="cover-content">
-<div class="cover-eyebrow">Marley · Alpha edition</div><h1 id="cover-title">Marley Game <em>(Alpha)</em></h1>
+<div class="cover-eyebrow">Marley · Online beta</div><h1 id="cover-title">Marley Game <em>(Beta)</em></h1>
 <p class="cover-subtitle">Answer eight questions, then try to guess someone else's answers. You'll get a score out of 100.</p>
 <label class="small-label" for="nickname">Your name or nickname</label>
 <input class="field-input" type="text" id="nickname" maxlength="40" autocomplete="nickname" placeholder="e.g. Alex" aria-describedby="nickname-help" required>
 <div class="error" id="nickname-error" role="status" aria-live="polite"></div>
 <div class="cover-actions"><button class="primary" id="cover-start" type="button">Start Part I <span class="arrow">→</span></button><button class="secondary hidden" id="cover-resume" type="button">Resume game</button><button class="ghost hidden" id="cover-reset" type="button">Start a new game</button></div>
-<p class="cover-note" id="nickname-help">Everything works offline. You can download a named answer file to share with friends.</p>
+<p class="cover-note" id="nickname-help">Your nickname will appear in the player directory once you finish. Your answers stay hidden until another player submits their guesses. Beta uses a browser-based guest account; keep using the same browser/device to retain access.</p>
 </div></div></section>
 <section id="question-view" class="hidden" aria-labelledby="question-title">
 <div class="progressline"><span class="eyebrow" id="phase-label">PART I · YOUR ANSWERS</span><span class="question-count" id="question-count">01 / 08</span></div>
@@ -238,23 +239,21 @@
 <section id="sheet-view" class="hidden" aria-labelledby="sheet-title">
 <div class="progressline"><span class="eyebrow">Part I complete · Your answers</span><span class="question-count">08 / 08</span></div>
 <div class="card results-card"><div class="success-icon">✓</div><div class="card-kicker" id="sheet-name">MARLEY GAME · YOUR RESPONSES</div>
-<h1 id="sheet-title">Your answer <em>sheet.</em></h1><p class="subtitle">All eight of your answers. Download your named <strong>.txt</strong> file so someone else can import it into their Marley game and guess how you responded.</p>
+<h1 id="sheet-title">Your answer <em>sheet.</em></h1><p class="subtitle">Your eight answers have been saved online. They are now final. Other players can find your nickname and try to predict them.</p>
 <div class="results-list" id="results-list"></div>
 <div class="results-actions"><button class="primary" id="continue-to-guess" type="button">Continue to Part II: Guess someone <span class="arrow">→</span></button>
-<button class="secondary" id="download-button" type="button">↓ Download my named answers (.txt)</button><button class="secondary" id="copy-button" type="button">Copy answers</button><button class="secondary" id="print-sheet" type="button">Print answer sheet</button>
+<button class="secondary" id="download-button" type="button">↓ Download my answers (.txt)</button><button class="secondary" id="copy-button" type="button">Copy answers</button><button class="secondary" id="print-sheet" type="button">Print answer sheet</button>
 <button class="ghost" id="return-home" type="button">Introduction</button></div>
-<p class="private-note">Your answers stay on this device unless you share the exported file. The named text file includes a machine-readable Marley marker, so the guessing game can detect you by nickname.</p></div></section>
+<p class="private-note">Your answers are stored securely in Supabase. Other players cannot directly read them; they are revealed after they submit a complete prediction.</p></div></section>
 <section id="choose-view" class="hidden" aria-labelledby="choose-title">
 <div class="progressline"><span class="eyebrow">Part II · Guess another player</span><span class="question-count">SELECT PLAYER</span></div>
 <div class="card"><div class="part-marker">Part II of II</div><h1 id="choose-title">Who are you <em>guessing?</em></h1>
-<p class="subtitle">Find a friend's exported Marley answer file. Select the folder where you keep answer sheets (such as Desktop or Downloads), and Marley will identify everyone in it by nickname.</p>
-<div class="notice"><strong>How to share:</strong> Each person completes Part I and downloads their named <code>Marley_Answers_*.txt</code> file. Put everyone's files in one folder. Choose that folder below, then pick a name.</div>
-<div class="browse-row"><button class="primary" type="button" id="choose-folder">⌕ Find players in a folder</button><button class="secondary" type="button" id="choose-files">Import file(s) instead</button></div>
-<input class="file-field" type="file" id="folder-input" webkitdirectory directory multiple aria-label="Choose folder with Marley answers">
-<input class="file-field" type="file" id="files-input" accept=".txt,.md,.html,.htm,.json" multiple aria-label="Choose Marley answer files">
+<p class="subtitle">Select someone who has completed Part I. Make your eight predictions before their answers are revealed.</p>
+<div class="notice"><strong>Online player directory:</strong> Every completed player appears here automatically. You can guess each person only once; your score is locked in when you submit.</div>
+<div class="browse-row"><button class="primary" type="button" id="refresh-players">↻ Refresh player list</button></div>
 <div class="import-status" id="import-status" role="status" aria-live="polite"></div>
-<div class="result-item-header" style="margin-top:26px"><span class="eyebrow">Available players</span><button class="ghost" id="clear-players" type="button">Clear imported players</button></div>
-<div class="roster" id="player-roster"></div><p class="muted-copy" style="margin-top:22px">A browser cannot search your desktop without permission. Selecting the folder is the only step you need to do manually; names are found automatically, and imported names are remembered in this browser.</p>
+<div class="result-item-header" style="margin-top:26px"><span class="eyebrow">Available players</span><span class="smallnote">Answers hidden until submission</span></div>
+<div class="roster" id="player-roster"></div><p class="muted-copy" style="margin-top:22px">Only nicknames of players who completed Part I are visible. Selecting someone does not reveal their responses.</p>
 <div class="results-actions"><button class="secondary" id="back-to-sheet" type="button">← My answer sheet</button></div></div></section>
 <section id="score-view" class="hidden" aria-labelledby="score-title">
 <div class="progressline"><span class="eyebrow">Part II complete · Results</span><span class="question-count">08 / 08</span></div>
@@ -263,9 +262,11 @@
 <div class="scorehero"><div class="scorevalue"><span id="score-value">0</span><small> / 100</small></div><div class="score-summary"><h2 id="score-headline"></h2><p id="score-description"></p></div></div>
 <div class="results-list" id="score-list"></div>
 <p class="score-key"><strong>Scoring:</strong> Each five-point scale is worth 10 (10 / 7 / 4 / 1 / 0 for increasing distance). Workweek and human-needs choices are worth 10 for an exact match. For professions, each position earns 10 for the same job in the same rank, or 6 for the right job in another rank. Maximum: 100.</p>
-<div class="results-actions"><button class="primary" id="download-score" type="button">↓ Download scorecard (.txt)</button><button class="secondary" id="try-another" type="button">Guess another player</button><button class="secondary" id="edit-guesses" type="button">Edit my guesses</button><button class="secondary" id="print-score" type="button">Print scorecard</button><button class="ghost" id="score-home" type="button">Introduction</button></div>
-<p class="private-note">All scores are calculated locally. No database, account, or web hosting required.</p></div></section>
-</main><footer><span>MARLEY © 2026 · MADE FOR GOOD CONVERSATION</span><span>Eight questions. Two perspectives.</span></footer></div>
+<div class="results-actions"><button class="primary" id="download-score" type="button">↓ Download scorecard (.txt)</button><button class="secondary" id="try-another" type="button">Guess another player</button><button class="secondary" id="print-score" type="button">Print scorecard</button><button class="ghost" id="score-home" type="button">Introduction</button></div>
+<p class="private-note">Scores are calculated and locked on the server. You get one scored attempt per person.</p></div></section>
+</main><footer><span>MARLEY © 2026 · ONLINE BETA</span><span>Eight questions. Two perspectives.</span></footer></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="./config.js"></script>
 <script>
 'use strict';
   const questions = [
@@ -408,8 +409,12 @@
 
 
 
-  const STORE='marley-complete-alpha-v1';
-  const ROSTER_STORE='marley-complete-alpha-roster-v1';
+  const STORE='marley-online-beta-v1';
+  const cfg=window.MARLEY_CONFIG||{};
+  const db=(window.supabase&&cfg.supabaseUrl&&cfg.supabasePublishableKey && !cfg.supabaseUrl.includes('YOUR-PROJECT'))
+    ? window.supabase.createClient(cfg.supabaseUrl,cfg.supabasePublishableKey) : null;
+  let userId=null,published=false,targetId=null,lockedResult=null;
+  let guessedById={};
   const $=id=>document.getElementById(id);
   const coverView=$('cover-view'),questionView=$('question-view'),sheetView=$('sheet-view'),chooseView=$('choose-view'),scoreView=$('score-view');
   const answerPanel=$('answer-panel'),error=$('answer-error');
@@ -421,12 +426,8 @@
   ownAnswers=previous.own&&typeof previous.own==='object'?previous.own:{};
   guesses=previous.guesses&&typeof previous.guesses==='object'?previous.guesses:{};
   targetName=typeof previous.targetName==='string'?previous.targetName:'';
-  roster=readJson(ROSTER_STORE,{});
-  if(!roster||Array.isArray(roster))roster={};
-  if(targetName&&roster[targetName])targetAnswers=roster[targetName].answers;
   answers=ownAnswers;
-  function saveAnswers(){try{localStorage.setItem(STORE,JSON.stringify({name:playerName,own:ownAnswers,guesses,targetName}))}catch{}}
-  function saveRoster(){try{localStorage.setItem(ROSTER_STORE,JSON.stringify(roster))}catch{}}
+  function saveAnswers(){try{localStorage.setItem(STORE,JSON.stringify({uid:userId,name:playerName,own:ownAnswers,guesses,targetName}))}catch{}}
   function setMode(which){mode=which;answers=which==='guess'?guesses:ownAnswers;}
   function clearError(){error.textContent='';}
   function validAnswer(q,value){
@@ -442,7 +443,7 @@
   function guessComplete(){return questions.every(q=>validAnswer(q,guesses[q.id]));}
   function firstUnanswered(){return questions.findIndex(q=>!isAnswered(q));}
   function navigate(hash){if(location.hash===hash)render();else location.hash=hash;}
-  function choose(value){answers[questions[activeIndex].id]=value;saveAnswers();clearError();renderAnswerPanel();const selected=[...answerPanel.querySelectorAll('button[data-value]')].find(b=>b.dataset.value===value);if(selected)selected.focus({preventScroll:true});}
+  function choose(value){if(mode==='self'&&published)return;if(mode==='guess'&&lockedResult)return;answers[questions[activeIndex].id]=value;saveAnswers();clearError();renderAnswerPanel();const selected=[...answerPanel.querySelectorAll('button[data-value]')].find(b=>b.dataset.value===value);if(selected)selected.focus({preventScroll:true});}
     function makeChoice(option, currentValue, showDescription = false, showMeta = false) {
     const selected = option.value === currentValue;
     const button = document.createElement('button');
@@ -505,7 +506,7 @@
     filledCount.setAttribute('aria-live','polite');
     answerPanel.append(filledCount);
   }
-  function updateRank(job) {
+  function updateRank(job) {if(mode==='self'&&published)return;if(mode==='guess'&&lockedResult)return;
     const q = questions[activeIndex];
     const current = Array.isArray(answers[q.id]) ? [...answers[q.id]] : [];
     const i = current.indexOf(job);
@@ -561,119 +562,205 @@
     const percent=Math.round((activeIndex+1)/8*100);$('progress-fill').style.width=percent+'%';$('progress').setAttribute('aria-valuenow',String(percent));
     $('back-button').textContent=activeIndex===0?(mode==='self'?'← Introduction':'← Choose player'):'← Previous';
     $('submit-label').textContent=activeIndex===7?(mode==='self'?'See my answer sheet':'Reveal the score'):'Next question';
-    $('answer-note').textContent=mode==='self'?'Your choices stay on this device.':`Predicting ${targetName}'s answers.`;
+    $('answer-note').textContent=mode==='self'?'Your answers are uploaded after question eight.':`Predicting ${targetName}'s answers.`;
     clearError();renderAnswerPanel();document.title=(mode==='guess'?'Guess ':'Question ')+(activeIndex+1)+' of 8 · Marley Game';
   }
   function answerText(q,value){return q.type==='ranking'?(Array.isArray(value)?value:[]).map((item,i)=>(i+1)+'. '+item).join('\n'):String(value||'');}
-  function readableSheet(){return ['MARLEY GAME (ALPHA) — PLAYER ANSWERS','NAME: '+playerName,'',...questions.flatMap((q,i)=>[(i+1)+'. '+q.resultTitle,answerText(q,ownAnswers[q.id]),''])].join('\n');}
+  function readableSheet(){return ['MARLEY GAME (BETA) — PLAYER ANSWERS','NAME: '+playerName,'',...questions.flatMap((q,i)=>[(i+1)+'. '+q.resultTitle,answerText(q,ownAnswers[q.id]),''])].join('\n');}
   function dataText(){
     const data={kind:'marley-alpha-player',version:2,name:playerName,answers:Object.fromEntries(questions.map(q=>[q.id,ownAnswers[q.id]]))};
-    return ['MARLEY GAME (ALPHA) - PLAYER ANSWERS','NAME: '+playerName,'','--- MARLEY PLAYER DATA START ---',JSON.stringify(data),'--- MARLEY PLAYER DATA END ---','','ANSWERS',...questions.flatMap((q,i)=>[(i+1)+'. '+q.resultTitle,answerText(q,ownAnswers[q.id]),''])].join('\n');
+    return ['MARLEY GAME (BETA) - PLAYER ANSWERS','NAME: '+playerName,'','--- MARLEY PLAYER DATA START ---',JSON.stringify(data),'--- MARLEY PLAYER DATA END ---','','ANSWERS',...questions.flatMap((q,i)=>[(i+1)+'. '+q.resultTitle,answerText(q,ownAnswers[q.id]),''])].join('\n');
   }
   function download(content,filename){const url=URL.createObjectURL(new Blob([content],{type:'text/plain;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200);}
   function safeFilename(name){return name.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9_-]+/g,'_').replace(/^_+|_+$/g,'').slice(0,35)||'Player';}
-  function renderSheet(){if(!ownComplete())return navigate('#question-'+(questions.findIndex(q=>!validAnswer(q,ownAnswers[q.id]))+1));setMode('self');show(sheetView);
+  function renderSheet(){if(!published)return navigate('#welcome');if(!ownComplete())return navigate('#question-'+(questions.findIndex(q=>!validAnswer(q,ownAnswers[q.id]))+1));setMode('self');show(sheetView);
     $('sheet-name').textContent='PART I · '+playerName.toUpperCase()+"'S ANSWERS";
     const list=$('results-list');list.replaceChildren();
     questions.forEach((q,i)=>{
       const item=document.createElement('article');item.className='result-item';const header=document.createElement('div');header.className='result-item-header';
       header.append(textElement('span','result-number','Question '+String(i+1).padStart(2,'0')));
-      const edit=document.createElement('button');edit.type='button';edit.className='result-edit';edit.textContent='Edit answer →';edit.addEventListener('click',()=>{editingFromResults=true;navigate('#question-'+(i+1))});header.append(edit);
       const response=textElement('div','result-answer',answerText(q,ownAnswers[q.id]));response.style.whiteSpace='pre-line';
       item.append(header,textElement('h2','result-question',q.resultTitle),response);list.append(item);
     });document.title=playerName+' · My Answer Sheet · Marley Game';
   }
   function renderCover(){show(coverView);$('nickname').value=playerName;const done=questions.filter(q=>validAnswer(q,ownAnswers[q.id])).length;
-    $('cover-resume').classList.toggle('hidden',!playerName||done===0);$('cover-reset').classList.toggle('hidden',!playerName||done===0);
-    $('cover-resume').textContent=ownComplete()?'Continue my game':'Resume at question '+(questions.findIndex(q=>!validAnswer(q,ownAnswers[q.id]))+1);
-    $('nickname-error').textContent='';document.title='Marley Game (Alpha) · Welcome';
+    $('cover-resume').classList.toggle('hidden',!playerName||done===0);$('cover-reset').classList.toggle('hidden',published||!playerName||done===0);
+    $('cover-start').innerHTML=published?'View my answers <span class="arrow">→</span>':'Start Part I <span class="arrow">→</span>';
+    $('cover-resume').textContent=published?'My answer sheet':ownComplete()?'Continue my game':'Resume at question '+(questions.findIndex(q=>!validAnswer(q,ownAnswers[q.id]))+1);
+    $('nickname-error').textContent='';document.title='Marley Game (Beta) · Welcome';
   }
-  function renderChooser(){if(!ownComplete())return navigate('#welcome');show(chooseView);drawRoster();document.title='Choose another player · Marley Game';}
-  function drawRoster(){const el=$('player-roster');el.replaceChildren();const people=Object.keys(roster).filter(name=>roster[name]&&roster[name].answers&&questions.every(q=>validAnswer(q,roster[name].answers[q.id]))).sort((a,b)=>a.localeCompare(b));
-    if(!people.length){const empty=textElement('div','empty-roster','No players imported yet. Select a folder or individual answer files to find your friends.');empty.style.gridColumn='1/-1';el.append(empty);return;}
-    people.forEach(name=>{
-      const card=document.createElement('button');card.type='button';card.className='person-card';const avatar=textElement('span','avatar',name.trim()[0].toUpperCase());const info=document.createElement('span');info.style.minWidth='0';
-      info.append(textElement('span','person-name',name),textElement('span','person-file',roster[name].filename||'Imported Marley answer file'));card.append(avatar,info);
-      card.setAttribute('aria-label','Guess answers for '+name);card.addEventListener('click',()=>startGuessing(name));el.append(card);
-    });
-  }
-  function parseLegacyText(content){const lines=content.replace(/\r\n?/g,'\n').split('\n');const record={};const positions=[];
-    for(let i=0;i<questions.length;i++){const pos=lines.findIndex(line=>line.trim()===(i+1)+'. '+questions[i].resultTitle);if(pos<0)throw Error('Not a completed Marley answer sheet.');positions.push(pos);}
-    for(let i=0;i<questions.length;i++){const q=questions[i];const next=i+1<questions.length?positions[i+1]:lines.length;let block=lines.slice(positions[i]+1,next).map(x=>x.trim()).filter(Boolean);record[q.id]=q.type==='ranking'?block.slice(0,3).map(x=>x.replace(/^\d+\.\s*/,'')):block[0];}
-    return record;
-  }
-  function parsePlayerFile(content,filename){let parsed=null;const start='--- MARLEY PLAYER DATA START ---',end='--- MARLEY PLAYER DATA END ---';
-    if(content.includes(start)&&content.includes(end)){
-      const json=content.split(start)[1].split(end)[0].trim();parsed=JSON.parse(json);
-      if(parsed.kind!=='marley-alpha-player')throw Error('Unexpected Marley file marker');
-    }else if(/\.json$/i.test(filename)){parsed=JSON.parse(content);
-    }else if(/\.html?$/i.test(filename)){
-      const doc=new DOMParser().parseFromString(content,'text/html');const node=doc.querySelector('#marley-answer-data');if(!node)throw Error('No Marley answer marker');parsed=JSON.parse(node.textContent);
-    }else if(/\.(txt|md)$/i.test(filename)){
-      const match=content.match(/^NAME:\s*(.+)$/mi);parsed={name:match?match[1].trim():'',answers:parseLegacyText(content)};
-    }else throw Error('Unsupported extension');
-    if(!parsed||!parsed.answers||typeof parsed.answers!=='object')throw Error('Missing answer data');
-    for(const q of questions)if(!validAnswer(q,parsed.answers[q.id]))throw Error('Incomplete or incompatible response for '+q.id);
-    const name=(typeof parsed.name==='string'&&parsed.name.trim()?parsed.name.trim():filename.replace(/\.(txt|md|html?|json)$/i,'').replace(/^Marley[_ -]*(?:Alpha[_ -]*)?(?:Answer[_ -]*Sheet|Answers)?[_ -]*/i,'').replace(/[_-]/g,' ')).slice(0,40);
-    if(!name)throw Error('Missing nickname');
-    return {name,answers:Object.fromEntries(questions.map(q=>[q.id,parsed.answers[q.id]])),filename};
-  }
-  async function importFiles(files){const candidates=[...files].filter(f=>/\.(txt|md|html?|json)$/i.test(f.name)&&f.size<=512000);const status=$('import-status');
-    if(!candidates.length){status.textContent='No supported .txt, .md, .html, or .json files were found.';status.className='import-status error-state';return;}
-    status.textContent='Looking for Marley answer files…';status.className='import-status';let found=0,duplicates=0,ignored=0;
-    // Scan selected folder contents only. Never attempt arbitrary file-system access.
-    for(let i=0;i<Math.min(candidates.length,2500);i+=30){
-      const batch=candidates.slice(i,i+30);const outcomes=await Promise.all(batch.map(async f=>{try{return parsePlayerFile(await f.text(),f.name)}catch{return null}}));
-      outcomes.forEach(row=>{if(!row){ignored++;return;}if(roster[row.name])duplicates++;roster[row.name]={answers:row.answers,filename:row.filename};found++;});
+  function renderChooser(){if(!published)return navigate('#welcome');show(chooseView);drawRoster();refreshRoster();document.title='Choose another player · Marley Game';}
+  function drawRoster(){
+    const el=$('player-roster');el.replaceChildren();
+    const people=Object.keys(roster).sort((a,b)=>a.localeCompare(b));
+    if(!people.length){const empty=textElement('div','empty-roster','No completed players found yet. Ask a friend to finish Part I and refresh the player list.');empty.style.gridColumn='1/-1';el.append(empty);return;}
+    for(const name of people){
+      const p=roster[name],already=guessedById[p.id];
+      const card=document.createElement('button');card.type='button';card.className='person-card';
+      const avatar=textElement('span','avatar',name.trim()[0].toUpperCase());
+      const info=document.createElement('span');info.style.minWidth='0';
+      info.append(textElement('span','person-name',name),textElement('span','person-file',already?'View previous score: '+already.score+'/100':'Ready to guess'));
+      card.append(avatar,info);
+      card.setAttribute('aria-label',(already?'View score for ':'Guess answers for ')+name);
+      card.addEventListener('click',()=>startGuessing(name));el.append(card);
     }
-    saveRoster();drawRoster();
-    const limit=candidates.length>2500?' Only the first 2,500 supported files were scanned.':'';
-    status.textContent=found?`Found ${found} valid Marley answer file${found===1?'':'s'} (${Object.keys(roster).length} available player${Object.keys(roster).length===1?'':'s'}). Choose a name below.${duplicates?' Newer duplicate names replaced existing entries.':''}${limit}`:`No valid Marley answer sheets found in that selection. Make sure the files were exported from a completed game.${limit}`;
-    status.className='import-status '+(found?'success-state':'error-state');
   }
-  function startGuessing(name){const player=roster[name];if(!player)return;targetName=name;targetAnswers=player.answers;guesses={};setMode('guess');saveAnswers();navigate('#guess-1');}
-  function scoreQuestion(q,guess,actual){if(q.type==='ranking')return guess.reduce((sum,job,i)=>sum+(actual[i]===job?10:actual.includes(job)?6:0),0);
-    if(q.type==='likert'||q.type==='prose'){const options=q.type==='likert'?likertOptions:proseOptions;const a=options.findIndex(o=>o.value===actual),b=options.findIndex(o=>o.value===guess);return [10,7,4,1,0][Math.abs(a-b)]||0;}
-    return guess===actual?10:0;
+  async function refreshRoster(){
+    const status=$('import-status');if(!db||!userId){status.textContent='Database connection is not ready.';return;}
+    status.textContent='Finding completed players…';status.className='import-status';
+    try{
+      const [p,g]=await Promise.all([
+        db.from('marley_players').select('id,nickname').not('completed_at','is',null).order('nickname'),
+        db.from('marley_guesses').select('target_id,score,result,guesses').eq('guesser_id',userId)
+      ]);
+      if(p.error)throw p.error;if(g.error)throw g.error;
+      roster={};for(const person of p.data||[]){if(person.id!==userId)roster[person.nickname]={id:person.id};}
+      guessedById={};for(const score of g.data||[])guessedById[score.target_id]=score;
+      drawRoster();
+      const count=Object.keys(roster).length;
+      status.textContent=count===0?'No other completed players yet.':count+' completed player'+(count===1?'':'s')+' found.';
+      status.className='import-status success-state';
+    }catch(e){status.textContent=e.message||'Could not load players.';status.className='import-status error-state';}
   }
-  function renderScore(){if(!targetAnswers||!guessComplete())return navigate('#choose-player');show(scoreView);let total=0;
-    const list=$('score-list');list.replaceChildren();questions.forEach((q,i)=>{const points=scoreQuestion(q,guesses[q.id],targetAnswers[q.id]);total+=points;
+  function startGuessing(name){
+    const player=roster[name];if(!player)return;
+    targetName=name;targetId=player.id;
+    const previousResult=guessedById[targetId];
+    if(previousResult){
+      lockedResult=previousResult.result;
+      targetAnswers=lockedResult.actual;
+      guesses=previousResult.guesses;
+      setMode('guess');saveAnswers();navigate('#score');return;
+    }
+    lockedResult=null;targetAnswers={};guesses={};
+    setMode('guess');saveAnswers();navigate('#guess-1');
+  }
+  function renderScore(){if(!lockedResult||!targetAnswers||!guessComplete())return navigate('#choose-player');show(scoreView);let total=0;
+    const list=$('score-list');list.replaceChildren();questions.forEach((q,i)=>{const points=lockedResult.points[q.id];total+=points;
       const item=document.createElement('article');item.className='result-item';const head=document.createElement('div');head.className='result-item-header';head.append(textElement('span','result-number','QUESTION '+String(i+1).padStart(2,'0')),textElement('span','points','+'+points+' / '+(q.type==='ranking'?'30':'10')));
       const compare=document.createElement('div');compare.className='comparison-grid';const yours=document.createElement('div');yours.className='comparison-cell yours';const theirs=document.createElement('div');theirs.className='comparison-cell';
       yours.append(textElement('div','tag','YOUR GUESS'),textElement('div','val',answerText(q,guesses[q.id])));
       theirs.append(textElement('div','tag',targetName.toUpperCase()+"'S ANSWER"),textElement('div','val',answerText(q,targetAnswers[q.id])));
       compare.append(yours,theirs);item.append(head,textElement('h2','result-question',q.resultTitle),compare);list.append(item);
     });
-    $('score-value').textContent=total;$('score-people').textContent=playerName+' GUESSED '+targetName.toUpperCase();
-    $('score-headline').textContent=total===100?'A perfect read.':total>=85?'You know them remarkably well.':total>=65?'A pretty good read.':total>=40?'Some good instincts.':'More surprises than expected.';
-    $('score-description').textContent=`You scored ${total} out of 100 predicting ${targetName}'s choices. Your guesses and their actual answers appear below.`;
-    document.title=`${total}/100 · ${playerName} guesses ${targetName} · Marley`;
+    $('score-value').textContent=lockedResult.total;$('score-people').textContent=playerName+' GUESSED '+targetName.toUpperCase();
+    $('score-headline').textContent=lockedResult.total===100?'A perfect read.':lockedResult.total>=85?'You know them remarkably well.':lockedResult.total>=65?'A pretty good read.':lockedResult.total>=40?'Some good instincts.':'More surprises than expected.';
+    $('score-description').textContent=`You scored ${lockedResult.total} out of 100 predicting ${targetName}'s choices. Your guesses and their actual answers appear below.`;
+    document.title=`${lockedResult.total}/100 · ${playerName} guesses ${targetName} · Marley`;
   }
   function render(){const hash=location.hash||'#welcome';
     if(hash==='#welcome'||hash==='#cover'){renderCover();}
     else if(hash==='#answers'){renderSheet();}
     else if(hash==='#choose-player'){renderChooser();}
     else if(hash==='#score'){renderScore();}
-    else if(/^#question-\d+$/.test(hash)){setMode('self');activeIndex=Math.max(0,Math.min(7,Number(hash.split('-')[1])-1));renderQuestion();}
+    else if(/^#question-\d+$/.test(hash)){if(published)return navigate('#answers');setMode('self');activeIndex=Math.max(0,Math.min(7,Number(hash.split('-')[1])-1));renderQuestion();}
     else if(/^#guess-\d+$/.test(hash)){
-      if(!ownComplete())return navigate('#welcome');
+      if(!published)return navigate('#welcome');
+      if(lockedResult)return navigate('#score');
       if(!targetAnswers||!roster[targetName])return navigate('#choose-player');
       setMode('guess');activeIndex=Math.max(0,Math.min(7,Number(hash.split('-')[1])-1));renderQuestion();
     }else navigate('#welcome');
     window.scrollTo({top:0,behavior:'instant'});
   }
-  function commitName(){const name=$('nickname').value.trim().replace(/\s+/g,' ').slice(0,40);if(!name){$('nickname-error').textContent='Enter a name or nickname to begin.';$('nickname').focus();return false;}
-    if(playerName&&name!==playerName&&Object.keys(ownAnswers).length){if(!confirm('Change player from '+playerName+' to '+name+'? This starts a fresh set of answers.'))return false;ownAnswers={};guesses={};targetName='';targetAnswers=null;}
-    playerName=name;saveAnswers();$('nickname-error').textContent='';return true;
+  async function initializeSession(){
+    if(!db){$('nickname-error').textContent='Connection settings could not load. Refresh the page or contact the Marley administrator.';return;}
+    try{
+      const {data,error:e}=await db.auth.getSession();if(e)throw e;
+      if(data.session){userId=data.session.user.id;await loadMyProfile();}
+    }catch(e){$('nickname-error').textContent='Could not connect to Supabase: '+e.message;return;}
+    if(location.hash==='#welcome'||location.hash==='#cover')renderCover();
   }
-  $('nickname').addEventListener('keydown',ev=>{if(ev.key==='Enter'){$('cover-start').click()}});
-  $('cover-start').addEventListener('click',()=>{if(!commitName())return;setMode('self');navigate(ownComplete()?'#answers':'#question-'+(questions.findIndex(q=>!validAnswer(q,ownAnswers[q.id]))+1));});
-  $('cover-resume').addEventListener('click',()=>{if(!commitName())return;navigate(ownComplete()?(targetAnswers&&guessComplete()?'#score':'#answers'):'#question-'+(questions.findIndex(q=>!validAnswer(q,ownAnswers[q.id]))+1));});
-  $('cover-reset').addEventListener('click',()=>{if(!confirm('Clear your own answers and guesses and start again? Imported player files will remain.'))return;ownAnswers={};guesses={};targetAnswers=null;targetName='';saveAnswers();navigate('#question-1');});
-  $('answer-form').addEventListener('submit',ev=>{ev.preventDefault();const q=questions[activeIndex];if(!isAnswered(q)){error.textContent=q.type==='ranking'?'Select exactly three professions.':'Choose an answer to continue.';const first=answerPanel.querySelector('button');if(first)first.focus();return;}
-    const returnToSheet=editingFromResults&&mode==='self'&&ownComplete();editingFromResults=false;
-    if(mode==='self')navigate(returnToSheet||activeIndex===7?'#answers':'#question-'+(activeIndex+2));
-    else navigate(activeIndex===7?'#score':'#guess-'+(activeIndex+2));
+  async function loadMyProfile(){
+    if(!db||!userId)return;
+    published=false;
+    const {data,error:e}=await db.from('marley_players').select('nickname,completed_at').eq('id',userId).maybeSingle();
+    if(e)throw e;
+    if(previous.uid!==userId){ownAnswers={};guesses={};targetName='';targetAnswers=null;setMode('self');}
+    if(data){
+      playerName=data.nickname;
+      if(data.completed_at){
+        const {data:answerRecord,error:er}=await db.from('marley_answers').select('answers').eq('player_id',userId).single();
+        if(er)throw er;
+        ownAnswers=answerRecord.answers;published=true;
+      }
+    }
+    saveAnswers();
+  }
+  async function commitName(){
+    const name=$('nickname').value.trim().replace(/\s+/g,' ').slice(0,40);
+    if(!name){$('nickname-error').textContent='Enter a name or nickname to begin.';return false;}
+    if(!db){$('nickname-error').textContent='Marley is not connected. Add your Supabase URL and publishable key to config.js first.';return false;}
+    const start=$('cover-start');start.disabled=true;start.textContent='Connecting…';
+    try{
+      if(!userId){
+        let {data:session,error:e}=await db.auth.getSession();if(e)throw e;
+        if(!session.session){const r=await db.auth.signInAnonymously();if(r.error)throw r.error;session=r.data;}
+        userId=(session.session&&session.session.user.id)||(session.user&&session.user.id);
+        if(!userId)throw Error('Could not create your player account.');
+        await loadMyProfile();
+      }
+      const {data:existing,error:readError}=await db.from('marley_players').select('id,nickname').eq('id',userId).maybeSingle();
+      if(readError)throw readError;
+      const r=existing
+        ? await db.from('marley_players').update({nickname:name}).eq('id',userId)
+        : await db.from('marley_players').insert({id:userId,nickname:name});
+      if(r.error)throw r.error;
+      playerName=name;saveAnswers();$('nickname-error').textContent='';return true;
+    }catch(e){$('nickname-error').textContent=e.code==='23505'?'That nickname is already taken. Please choose another.':(e.message||'Could not register nickname.');return false;}
+    finally{start.disabled=false;start.innerHTML=published?'View my answers <span class="arrow">→</span>':'Start Part I <span class="arrow">→</span>';}
+  }
+  async function publishMyAnswers(){
+    if(published)return;
+    if(!db||!userId)throw Error('Not connected to the database.');
+    if(!ownComplete())throw Error('Finish all eight questions first.');
+    const payload=Object.fromEntries(questions.map(q=>[q.id,ownAnswers[q.id]]));
+    const {error:e}=await db.from('marley_answers').insert({player_id:userId,answers:payload});
+    if(e)throw e;
+    published=true;saveAnswers();
+  }
+  async function submitOnlineGuess(){
+    if(!guessComplete())throw Error('Complete all eight predictions first.');
+    if(!db||!targetId)throw Error('Select a player before guessing.');
+    const {data,error:e}=await db.rpc('marley_submit_guess',{p_target:targetId,p_guesses:guesses});
+    if(e)throw e;
+    lockedResult=data;targetAnswers=data.actual;
+    guessedById[targetId]={target_id:targetId,score:data.total,result:data,guesses:structuredClone(guesses)};
+    saveAnswers();
+  }
+  $('nickname').addEventListener('keydown',ev=>{if(ev.key==='Enter')$('cover-start').click()});
+  $('cover-start').addEventListener('click',async()=>{
+    if(!await commitName())return;
+    setMode('self');
+    if(ownComplete()&&!published){try{await publishMyAnswers()}catch(e){$('nickname-error').textContent=e.message;return;}}
+    navigate(published?'#answers':'#question-'+(questions.findIndex(q=>!validAnswer(q,ownAnswers[q.id]))+1));
+  });
+  $('cover-resume').addEventListener('click',async()=>{
+    if(!await commitName())return;
+    navigate(published?'#answers':'#question-'+Math.max(1,questions.findIndex(q=>!validAnswer(q,ownAnswers[q.id]))+1));
+  });
+  $('cover-reset').addEventListener('click',()=>{
+    if(published){alert('Your online answer sheet is final and cannot be reset.');return;}
+    if(!confirm('Clear your unfinished answers and start again?'))return;
+    ownAnswers={};guesses={};saveAnswers();navigate('#question-1');
+  });
+  $('answer-form').addEventListener('submit',async ev=>{
+    ev.preventDefault();const q=questions[activeIndex];
+    if(!isAnswered(q)){error.textContent=q.type==='ranking'?'Select exactly three professions.':'Choose an answer to continue.';return;}
+    const button=$('submit-button');button.disabled=true;
+    try{
+      if(mode==='self'){
+        if(activeIndex===7){
+          error.textContent='Saving your completed answers online…';
+          await publishMyAnswers();navigate('#answers');
+        } else navigate('#question-'+(activeIndex+2));
+      }else{
+        if(activeIndex===7){
+          error.textContent='Scoring your predictions…';
+          await submitOnlineGuess();navigate('#score');
+        } else navigate('#guess-'+(activeIndex+2));
+      }
+    }catch(e){error.textContent='Could not submit: '+(e.message||'Try again.');}
+    finally{button.disabled=false;}
   });
   $('back-button').addEventListener('click',()=>{if(mode==='self'){editingFromResults=false;navigate(activeIndex===0?'#welcome':'#question-'+activeIndex)}else navigate(activeIndex===0?'#choose-player':'#guess-'+activeIndex)});
   $('download-button').addEventListener('click',()=>{if(ownComplete())download(dataText(),'Marley_Answers_'+safeFilename(playerName)+'.txt')});
@@ -682,19 +769,16 @@
   $('continue-to-guess').addEventListener('click',()=>navigate('#choose-player'));
   $('return-home').addEventListener('click',()=>navigate('#welcome'));
   $('back-to-sheet').addEventListener('click',()=>navigate('#answers'));
-  $('choose-folder').addEventListener('click',()=>$('folder-input').click());$('choose-files').addEventListener('click',()=>$('files-input').click());
-  $('folder-input').addEventListener('change',async ev=>{await importFiles(ev.target.files);ev.target.value=''});
-  $('files-input').addEventListener('change',async ev=>{await importFiles(ev.target.files);ev.target.value=''});
-  $('clear-players').addEventListener('click',()=>{if(!Object.keys(roster).length)return;if(!confirm('Clear all imported player files from this browser? Your own answers will stay saved.'))return;roster={};saveRoster();targetAnswers=null;targetName='';guesses={};saveAnswers();drawRoster();$('import-status').textContent='Imported players cleared.'});
-  $('download-score').addEventListener('click',()=>{if(!targetAnswers||!guessComplete())return;const scores=questions.map(q=>scoreQuestion(q,guesses[q.id],targetAnswers[q.id]));
-    const txt=['MARLEY GAME (ALPHA) - GUESSING SCORECARD',playerName+' guessed '+targetName,'Score: '+scores.reduce((a,b)=>a+b,0)+' / 100','',...questions.flatMap((q,i)=>[(i+1)+'. '+q.resultTitle,'Your guess: '+answerText(q,guesses[q.id]),targetName+"'s answer: "+answerText(q,targetAnswers[q.id]),'Points: '+scores[i]+' / '+(q.type==='ranking'?30:10),''])].join('\n');download(txt,'Marley_Score_'+safeFilename(playerName)+'_vs_'+safeFilename(targetName)+'.txt');
+  $('refresh-players').addEventListener('click',refreshRoster);
+  $('download-score').addEventListener('click',()=>{if(!lockedResult||!targetAnswers||!guessComplete())return;const scores=questions.map(q=>lockedResult.points[q.id]);
+    const txt=['MARLEY GAME (BETA) - GUESSING SCORECARD',playerName+' guessed '+targetName,'Score: '+scores.reduce((a,b)=>a+b,0)+' / 100','',...questions.flatMap((q,i)=>[(i+1)+'. '+q.resultTitle,'Your guess: '+answerText(q,guesses[q.id]),targetName+"'s answer: "+answerText(q,targetAnswers[q.id]),'Points: '+scores[i]+' / '+(q.type==='ranking'?30:10),''])].join('\n');download(txt,'Marley_Score_'+safeFilename(playerName)+'_vs_'+safeFilename(targetName)+'.txt');
   });
   $('try-another').addEventListener('click',()=>navigate('#choose-player'));
-  $('edit-guesses').addEventListener('click',()=>navigate('#guess-1'));
   $('print-score').addEventListener('click',()=>window.print());
   $('score-home').addEventListener('click',()=>navigate('#welcome'));
   window.addEventListener('hashchange',render);
   if(!location.hash)location.hash='#welcome';
   render();
+  initializeSession();
 
 </script></body></html>
