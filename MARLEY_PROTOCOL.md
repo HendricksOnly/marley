@@ -7,6 +7,7 @@ The Marley collection has one homepage and permanent URLs for all editions.
 - Collection: https://hendricksonly.github.io/marley/
 - Ed. I: https://hendricksonly.github.io/marley/part-i/
 - Ed. II (eight questions): https://hendricksonly.github.io/marley/part-ii/
+- Relationship Matrix: https://hendricksonly.github.io/marley/matrix/
 
 ## House style
 
@@ -72,3 +73,11 @@ Run [RESET_ALL_ANSWERS.sql](RESET_ALL_ANSWERS.sql) **in the Supabase SQL Editor*
 ## Ed. II (November 2026)
 
 Ed. II consists of eight questions and requires the one-time migration in `part-ii/INSTALL.sql`. It uses separate versioned database tables, preserving existing rows. Questions are in `part-ii/data.js`, kept in sync with the SQL validation lists. If any answer choices change after collecting responses, release a separate versioned data migration instead of silently changing stored semantics.
+
+## Relationship Matrix
+
+The collection homepage links to `matrix/index.html`. The matrix switches between Editions I and II and displays only completed player nicknames, locked pair scores, and averages. It never displays answer JSON, written explanations, or guess JSON.
+
+The Supabase read-only RPC `public.marley_relationship_matrix(text)` is installed using `RELATIONSHIP_MATRIX.sql`. It is executable only by authenticated sessions that have submitted their own answers for the requested edition. Its `SECURITY DEFINER` access is intentionally limited to a hardcoded pair of edition-specific table sets and sanitized score fields; no arbitrary SQL or caller-supplied table names are accepted. `anon` and `PUBLIC` cannot execute it. When changing the schema, review these privacy guarantees.
+
+Empty cells mean no scored attempt, not a zero score. Averages are calculated only from recorded guesses; comparisons are directional. No data was inserted to populate the matrix, and the matrix is expected to be empty after a reset until players finish and guess.
