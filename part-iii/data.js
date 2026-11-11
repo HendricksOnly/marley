@@ -91,7 +91,7 @@ window.MARLEY_ED3 = {
           "title": "Possible Girls",
           "authors": "Neil Sinhababu",
           "published": "Pacific Philosophical Quarterly · 2008",
-          "quote": "“modal realists from different possible worlds can fall in love with each other”",
+          "quote": "“I argue that if David Lewis’ modal realism is true, modal realists from different possible worlds can fall in love with each other.”",
           "synopsis": "Assume David Lewis's modal realism, under which countless concrete worlds exist and alternate people really inhabit them. Sinhababu asks an unexpectedly romantic question: could someone in our world love a person who exists only in another possible world? The paper considers how one might pick out a particular possible beloved, distinguish that individual from counterpart figures, and make sense of a love relation when the lovers cannot meet, speak, or causally interact. It even addresses the morality of ending such an otherworldly relationship to date an actual person.",
           "tension": "Its appeal is its playful but surprisingly disciplined application of a serious metaphysical thesis. Its weakness may be that stretching the notion of a relationship this far confuses imagining someone with actually loving someone.",
           "url": "https://doi.org/10.1111/j.1468-0114.2008.00319.x"
@@ -100,7 +100,7 @@ window.MARLEY_ED3 = {
           "title": "After-birth abortion: why should the baby live?",
           "authors": "Alberto Giubilini and Francesca Minerva",
           "published": "Journal of Medical Ethics · online 2012, print 2013",
-          "quote": "“neither can be considered a ‘person’ in a morally relevant sense”",
+          "quote": "“what we call ‘after-birth abortion’ (killing a newborn) should be permissible in all the cases where abortion is”",
           "synopsis": "The authors argue that a newborn infant and a fetus lack the same moral standing as a developed person because neither yet possesses the relevant self-conscious aims and capacities. They distinguish a merely potential person from an existing person and argue that, under circumstances in which abortion would be permissible, killing a newborn should also be permissible—even if the newborn is healthy and might have a worthwhile life. They further contend that the availability of adoption does not automatically defeat the interests of the actual people involved.",
           "tension": "The challenge is whether an account of personhood can coherently sever the right not to be killed from humanity, infancy, vulnerability, and potential development. The piece deliberately carries a controversial moral premise to a deeply disturbing conclusion; judging it requires confronting that premise.",
           "url": "https://doi.org/10.1136/medethics-2011-100411"
@@ -109,7 +109,7 @@ window.MARLEY_ED3 = {
           "title": "Antinatalism—Solving everything everywhere all at once?",
           "authors": "Joona Räsänen and Matti Häyry",
           "published": "Bioethics · editorial, 2023",
-          "quote": "“Life, thus, bears a resemblance to a pyramid scheme”",
+          "quote": "“Life, thus, bears a resemblance to a pyramid scheme, where new participants work for the well-being of the previous ‘victims’ of the scheme”",
           "synopsis": "This short editorial considers antinatalism, the view that bringing new people into existence is morally wrong, and pushes it toward voluntary human extinction. If human reproduction ceased, so would many human-caused evils: war, discrimination, violence against animals, and environmental destruction. The writers acknowledge that extinction could not resolve everything immediately: the last generation would lack young people to provide care, sustain institutions, and alleviate isolation. They use the image of a pyramid scheme in which each new generation supports the previous one while inheriting the burden.",
           "tension": "Is the disappearance of all future suffering a moral victory if it also prevents every future human good? And is the editorial making a serious practical proposal, or testing a provocative implication of antinatalist principles? Its deliberately extravagant framing is part of what you are being asked to judge.",
           "url": "https://doi.org/10.1111/bioe.13230"
