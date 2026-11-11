@@ -7,9 +7,10 @@ The Marley collection has one homepage and permanent URLs for all editions.
 - Collection: https://hendricksonly.github.io/marley/
 - Ed. I: https://hendricksonly.github.io/marley/part-i/
 - Ed. II (eight questions): https://hendricksonly.github.io/marley/part-ii/
-- Archived fruit-only alpha: https://hendricksonly.github.io/marley/archive/fruit-alpha/
 
 ## House style
+
+- Homepage cards are simply **Edition I** and **Edition II**, with Hemingway and Djokovic quotations respectively. Do not preview or spoil the question topics in edition cards.
 
 - Brand: dotted **m.** monogram with **marley.** wordmark
 - Charcoal / slate base with restrained purple accent; accessible text contrast
@@ -29,14 +30,12 @@ part-i/index.html                  frozen Ed. I (eight original questions)
 part-ii/index.html                 Ed. II app (eight new questions)
 part-ii/data.js                    Ed. II question content and answer choices
 part-ii/INSTALL.sql                ONE-TIME Ed. II database installation
-archive/fruit-alpha/index.html     original single-fruit question preserved
 MARLEY_PROTOCOL.md                 this document
 ```
 
 ## Database isolation
 
 - Ed. I original: `marley_players`, `marley_answers`, `marley_guesses` (do not alter).
-- Fruit-only alpha: `marley_ii_players`, `marley_ii_answers`, `marley_ii_guesses` (archive; do not alter).
 - Ed. II eight-question: `marley_ii_v2_players`, `marley_ii_v2_answers`, `marley_ii_v2_guesses`.
 - Future Ed. III: create its own `marley_iii_*` tables and scoring functions.
 
@@ -67,4 +66,4 @@ Use the same Supabase project and anonymous account session, but distinct table 
 
 ## Ed. II (November 2026)
 
-The fruit-only version remains archived. The currently published Ed. II replaces its content with eight new questions and needs the one-time migration in `part-ii/INSTALL.sql`. Do not re-run the fruit alpha installer for this release. Questions are in `part-ii/data.js`, kept in sync with the SQL validation lists. If any answer choices change after collecting responses, release a separate versioned data migration instead of silently changing stored semantics.
+Ed. II consists of eight questions and requires the one-time migration in `part-ii/INSTALL.sql`. It uses separate versioned database tables, preserving existing rows. Questions are in `part-ii/data.js`, kept in sync with the SQL validation lists. If any answer choices change after collecting responses, release a separate versioned data migration instead of silently changing stored semantics.
