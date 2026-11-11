@@ -7,6 +7,7 @@ The Marley collection has one homepage and permanent URLs for all editions.
 - Collection: https://hendricksonly.github.io/marley/
 - Ed. I: https://hendricksonly.github.io/marley/part-i/
 - Ed. II (eight questions): https://hendricksonly.github.io/marley/part-ii/
+- Ed. III (eight questions): https://hendricksonly.github.io/marley/part-iii/
 - Relationship Matrix: https://hendricksonly.github.io/marley/matrix/
 
 ## House style
@@ -32,6 +33,9 @@ part-i/index.html                  frozen Ed. I (eight original questions)
 part-ii/index.html                 Ed. II app (eight new questions)
 part-ii/data.js                    Ed. II question content and answer choices
 part-ii/INSTALL.sql                ONE-TIME Ed. II database installation
+part-iii/index.html                Ed. III standalone game
+part-iii/data.js                   Ed. III questions, sources, and choices
+part-iii/INSTALL.sql               Ed. III independent database installer
 MARLEY_PROTOCOL.md                 this document
 ```
 
@@ -39,7 +43,8 @@ MARLEY_PROTOCOL.md                 this document
 
 - Ed. I original: `marley_players`, `marley_answers`, `marley_guesses` (do not alter).
 - Ed. II eight-question: `marley_ii_v2_players`, `marley_ii_v2_answers`, `marley_ii_v2_guesses`.
-- Future Ed. III: create its own `marley_iii_*` tables and scoring functions.
+- Ed. III: `marley_iii_players`, `marley_iii_answers`, `marley_iii_guesses`. Independent server scoring and private explanations.
+- Future Ed. IV and beyond: create their own `marley_iv_*` tables and scoring functions.
 
 Never clear or overwrite earlier edition responses as part of publishing a new edition. New versions of an already released edition must use distinct table prefixes when their answer formats change.
 
@@ -92,3 +97,13 @@ Scoring is calculated by the two authenticated server-side functions and their h
 - Other single-choice questions remain all-or-nothing. Every edition still totals at most 100 points.
 
 During the guessing round, each question also offers **Why do you think they would choose this? (optional)**, up to 1,200 characters. These prediction rationales are saved in the guesses JSON, and are shown after scoring alongside the target player's own optional explanation. They do not affect points. Existing answer sheets are unchanged.
+
+## Edition III (November 2026)
+
+Edition III contains eight questions: first principles/common sense, ethics of de-extinction, a three-paper scholarly absurdity ranking, ordinary versus extraordinary poetry, technology and ethical progress, athletic prestige and compensation, comedians as philosophers, and square versus triangular pizza. The ranking is explicitly **least stupid to most stupid**. Philosophical and scientific claims are framed as competing arguments, not predetermined answers. Sources and short quotations are included directly in `part-iii/data.js`.
+
+The new database was installed on the existing Marley Supabase project using `part-iii/INSTALL.sql`. It does not change Edition I or II. The new game preserves user nicknames, anonymous browser sessions, resumable draft answers, one-time final submissions, private answers and optional explanations, one-time guesses with optional prediction reasoning, downloadable answer sheets, printable scorecards, and 100-point server-side scoring.
+
+Scoring: six five-position preference/agreement questions worth 10 each, one three-paper ranking worth 30, one pizza choice worth 10, for a maximum of 100. Five-position scoring uses the same conviction-aware scale as previous editions: 10 exact / 8 same side / 3 or 1 neutral near/far / 0 opposite sides. Paper ranking awards 10 exact, 3 one position away, 0 two positions away, for each of the three ranked papers. A complete self-comparison scores 100/100.
+
+The relationship-matrix RPC and matrix website now support Edition III with the same complete-player permission rules as Editions I and II. The main collection homepage carries a third understated edition card.
