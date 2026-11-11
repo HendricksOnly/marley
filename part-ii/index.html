@@ -132,7 +132,7 @@ function renderReview(){
  QUESTIONS.forEach((q,i)=>{const row=document.createElement("div");row.className="summary-row";
  const number=document.createElement("div");number.className="summary-number";number.textContent=String(i+1).padStart(2,"0");
  const info=document.createElement("div");const label=document.createElement("div");label.className="summary-q";label.textContent=q.short;
- const value=document.createElement("div");value.className="summary-a";value.textContent=dataString(q,answers()[q.id]);info.append(label,value);row.append(number,info);
+ const value=document.createElement("div");value.className="summary-a";value.textContent=dataString(q,answers()[q.id]);info.append(label,value);if(!isGuess&&explanationFor(own,q.id))explanationReveal(info,explanationFor(own,q.id),"Your explanation");row.append(number,info);
  if(!isLocked){const b=document.createElement("button");b.className="btn secondary smallbtn";b.textContent="Edit";b.addEventListener("click",()=>openQuestion(i));row.append(b);}box.append(row);});
  setError("review-error","");show("review");
 }
@@ -162,7 +162,8 @@ async function publish(){
  if(!complete()){setError("review-error","Complete all eight questions first.");return;}
  working("review-main",true,"Publishing…");setError("review-error","");
  try{
-  const r=await db.rpc(SCHEMA+"publish",{p_answers:own});if(r.error)throw r.error;published=true;mode="self";renderReview();
+  const payload={...own,explanations:Object.fromEntries(QUESTIONS.map(q=>[q.id,explanationFor(own,q.id).slice(0,1200)]).filter(x=>x[1]))};
+   const r=await db.rpc(SCHEMA+"publish",{p_answers:payload});if(r.error)throw r.error;published=true;mode="self";renderReview();
  }catch(e){setError("review-error",e.message||"Could not publish. The Ed. II database installation may be incomplete.");}
  finally{working("review-main",false);if(published&&mode==="self")el("review-main").textContent="Find someone to guess";}
 }
@@ -212,12 +213,12 @@ function renderResults(){
   [ ["Your guess",r.guesses?.[q.id]],["Actual answer",r.actual?.[q.id]]].forEach(([label,val])=>{
    const item=document.createElement("div");const small=document.createElement("small");small.textContent=label;
    const value=document.createElement("span");value.textContent=dataString(q,val);item.append(small,value);pair.append(item);
-  });row.append(head,pair);box.append(row);
+  });row.append(head,pair);explanationReveal(row,explanationFor(r.actual,q.id),lastTarget.nickname+"\u0027s explanation");box.append(row);
  });show("results");
 }
-function answerTxt(){return "MARLEY · ED. II\nPLAYER: "+nickname+"\n\n"+QUESTIONS.map((q,i)=>(i+1)+". "+q.short+"\n"+dataString(q,own[q.id])).join("\n\n")+"\n";}
+function answerTxt(){return "MARLEY · ED. II\nPLAYER: "+nickname+"\n\n"+QUESTIONS.map((q,i)=>(i+1)+". "+q.short+"\n"+dataString(q,own[q.id])+(explanationFor(own,q.id)?"\nExplanation: "+explanationFor(own,q.id):"")).join("\n\n")+"\n";}
 function guessesTxt(){return "MARLEY · ED. II · PREDICTIONS\nGUESSER: "+nickname+"\nTARGET: "+target.nickname+"\n\n"+QUESTIONS.map((q,i)=>(i+1)+". "+q.short+"\n"+dataString(q,guesses[q.id])).join("\n\n")+"\n";}
-function scoreTxt(){const r=lastResult;return "MARLEY · ED. II · SCORECARD\nGUESSER: "+nickname+"\nTARGET: "+lastTarget.nickname+"\nSCORE: "+r.total+"/100\n\n"+QUESTIONS.map((q,i)=>{const v=r.points[q.id];return (i+1)+". "+q.short+" | "+v.earned+"/"+q.points+"\nGUESSED: "+dataString(q,r.guesses[q.id])+"\nACTUAL: "+dataString(q,r.actual[q.id]);}).join("\n\n")+"\n";}
+function scoreTxt(){const r=lastResult;return "MARLEY · ED. II · SCORECARD\nGUESSER: "+nickname+"\nTARGET: "+lastTarget.nickname+"\nSCORE: "+r.total+"/100\n\n"+QUESTIONS.map((q,i)=>{const v=r.points[q.id];return (i+1)+". "+q.short+" | "+v.earned+"/"+q.points+"\nGUESSED: "+dataString(q,r.guesses[q.id])+"\nACTUAL: "+dataString(q,r.actual[q.id])+"\nEXPLANATION: "+(explanationFor(r.actual,q.id)||"No explanation provided.");}).join("\n\n")+"\n";}
 el("start").addEventListener("click",begin);el("nickname").addEventListener("keydown",e=>{if(e.key==="Enter")begin();});
 el("previous").addEventListener("click",()=>{if(index>0)openQuestion(index-1);else if(mode==="guess")directory();else show("welcome");});
 el("next").addEventListener("click",()=>{const q=QUESTIONS[index];if(!valid(q,answers()[q.id])){setError("q-error","Select an answer before continuing.");return;}if(index<7)openQuestion(index+1);else renderReview();});
