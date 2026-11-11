@@ -21,10 +21,10 @@ create or replace function public.marley_job_group(v text)
 returns text language plpgsql immutable set search_path = '' as $group$
 begin
   case
-    when v = any(array['Surgeon','Nurse','Paramedic','Research scientist','Astronaut','Physician','Civil engineer','University professor']::text[]) then 'Medicine & science'
-    when v = any(array['Judge','Public defender','Firefighter','Diplomat','Military officer','Teacher','Police detective','Elected official','Social worker']::text[]) then 'Public service & leadership'
-    when v = any(array['Novelist','Investigative journalist','Musician','Film director','Religious leader','Architect','Philosopher']::text[]) then 'Arts, culture & ideas'
-    when v = any(array['Entrepreneur','Farmer','Airline pilot','Skilled tradesperson','Software engineer','Chef','Small-business owner']::text[]) then 'Commerce, craft & daily life'
+    when v = any(array['Surgeon','Nurse','Paramedic','Research scientist','Astronaut','Physician','Civil engineer','University professor']::text[]) then return 'Medicine & science';
+    when v = any(array['Judge','Public defender','Firefighter','Diplomat','Military officer','Teacher','Police detective','Elected official','Social worker']::text[]) then return 'Public service & leadership';
+    when v = any(array['Novelist','Investigative journalist','Musician','Film director','Religious leader','Architect','Philosopher']::text[]) then return 'Arts, culture & ideas';
+    when v = any(array['Entrepreneur','Farmer','Airline pilot','Skilled tradesperson','Software engineer','Chef','Small-business owner']::text[]) then return 'Commerce, craft & daily life';
     else return null;
   end case;
 end;
@@ -34,10 +34,10 @@ create or replace function public.marley_sport_group(v text)
 returns text language plpgsql immutable set search_path = '' as $group$
 begin
   case
-    when v = any(array['Soccer / association football','American football','Basketball','Baseball','Ice hockey','Cricket','Rugby union','Rugby league','Volleyball','Beach volleyball','Handball','Field hockey','Lacrosse','Australian rules football','Gaelic football','Hurling','Water polo']::text[]) then 'Team sports'
-    when v = any(array['Tennis','Badminton','Table tennis','Squash','Golf','Snooker / billiards','Darts']::text[]) then 'Racquet & precision'
-    when v = any(array['Boxing','Mixed martial arts (MMA)','Amateur wrestling','Professional wrestling','Gymnastics','Figure skating','Athletics / track and field','Swimming']::text[]) then 'Combat & performance'
-    when v = any(array['Formula 1','NASCAR','MotoGP','Cycling','Horse racing','Skiing','Snowboarding','Surfing','Skateboarding','Esports']::text[]) then 'Racing & outdoors'
+    when v = any(array['Soccer / association football','American football','Basketball','Baseball','Ice hockey','Cricket','Rugby union','Rugby league','Volleyball','Beach volleyball','Handball','Field hockey','Lacrosse','Australian rules football','Gaelic football','Hurling','Water polo']::text[]) then return 'Team sports';
+    when v = any(array['Tennis','Badminton','Table tennis','Squash','Golf','Snooker / billiards','Darts']::text[]) then return 'Racquet & precision';
+    when v = any(array['Boxing','Mixed martial arts (MMA)','Amateur wrestling','Professional wrestling','Gymnastics','Figure skating','Athletics / track and field','Swimming']::text[]) then return 'Combat & performance';
+    when v = any(array['Formula 1','NASCAR','MotoGP','Cycling','Horse racing','Skiing','Snowboarding','Surfing','Skateboarding','Esports']::text[]) then return 'Racing & outdoors';
     else return null;
   end case;
 end;
@@ -47,14 +47,14 @@ create or replace function public.marley_fruit_group(v text)
 returns text language plpgsql immutable set search_path = '' as $group$
 begin
   case
-    when v = any(array['Apple','Pear']::text[]) then 'Orchard fruit'
-    when v = any(array['Orange','Grapefruit']::text[]) then 'Citrus'
-    when v = any(array['Mango','Peach','Cherry','Plum']::text[]) then 'Stone fruit'
-    when v = any(array['Strawberry','Raspberry','Blueberry','Grape']::text[]) then 'Berries & grapes'
-    when v = any(array['Watermelon','Cantaloupe']::text[]) then 'Melons'
-    when v = any(array['Banana','Pineapple','Coconut','Kiwi']::text[]) then 'Tropical fruit'
-    when v = any(array['Pomegranate']::text[]) then 'Pomegranate'
-    when v = any(array['Fig']::text[]) then 'Fig'
+    when v = any(array['Apple','Pear']::text[]) then return 'Orchard fruit';
+    when v = any(array['Orange','Grapefruit']::text[]) then return 'Citrus';
+    when v = any(array['Mango','Peach','Cherry','Plum']::text[]) then return 'Stone fruit';
+    when v = any(array['Strawberry','Raspberry','Blueberry','Grape']::text[]) then return 'Berries & grapes';
+    when v = any(array['Watermelon','Cantaloupe']::text[]) then return 'Melons';
+    when v = any(array['Banana','Pineapple','Coconut','Kiwi']::text[]) then return 'Tropical fruit';
+    when v = any(array['Pomegranate']::text[]) then return 'Pomegranate';
+    when v = any(array['Fig']::text[]) then return 'Fig';
     else return null;
   end case;
 end;
