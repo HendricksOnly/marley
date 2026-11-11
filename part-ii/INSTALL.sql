@@ -1,7 +1,6 @@
 -- MARLEY ED. II (EIGHT-QUESTION EDITION) · VERSIONED INSTALLER
--- Run ONCE in Supabase SQL Editor, after reviewing. Does not alter Ed. I or the older fruit-only alpha tables.
--- Existing fruit alpha tables remain marley_ii_players / marley_ii_answers / marley_ii_guesses.
--- This edition uses distinct marley_ii_v2_* tables to preserve all existing data.
+-- Run ONCE in Supabase SQL Editor, after reviewing. The migration does not alter Ed. I or any older tables.
+-- This edition uses distinct marley_ii_v2_* tables to preserve existing data.
 --
 -- Before launch: Supabase Dashboard > Authentication > Providers > Anonymous Sign-ins > Enabled.
 
