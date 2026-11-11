@@ -1,279 +1,212 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#f8f6f1">
-<meta name="description" content="Marley Part II: one consequential question about fruit. Rank your top three, then guess a friend's.">
-<title>Marley Part II — Fruit</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#191b23"><meta name="description" content="Marley Ed. II: eight new questions, two perspectives, one guessing score."><title>Marley — Ed. II</title>
 <style>
-:root{color-scheme:light;--ink:#202b3b;--muted:#6e7989;--purple:#4e46b8;--deep:#37308f;--pale:#efedff;--paper:#f8f6f1;--white:#fff;--line:#e4e4e1;--shadow:0 20px 70px rgba(34,31,55,.065)}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}a{color:var(--purple)}button,input{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.45}button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid #a6a0f5;outline-offset:4px}
-.wrap{max-width:900px;margin:0 auto;padding:24px 24px 70px}.top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 0 54px;padding-bottom:22px;border-bottom:1px solid var(--line)}.brand{font-size:13px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;color:var(--ink)}.brand span{color:var(--purple)}.toplinks{display:flex;gap:18px;align-items:center}.toplinks a{color:var(--muted);font-size:13px;text-decoration:none}.toplinks a:hover{text-decoration:underline}.step{font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--purple);margin:0 0 18px}h1{font-family:Georgia,"Times New Roman",serif;font-weight:500;line-height:1.09;letter-spacing:-.042em;font-size:clamp(40px,7vw,72px);margin:0 0 17px}h1 em{color:var(--purple);font-weight:400}h2{font-family:Georgia,"Times New Roman",serif;font-weight:500;letter-spacing:-.022em;font-size:clamp(26px,4vw,39px);margin:0 0 12px}.lead{font-size:17px;line-height:1.75;color:#566274;max-width:650px;margin:0 0 28px}.card{background:var(--white);border:1px solid #e7e7e4;box-shadow:var(--shadow);border-radius:18px;padding:clamp(24px,5vw,46px);margin-bottom:24px}.section-caption{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:800;margin:0 0 13px}.muted{color:var(--muted);font-size:14px;line-height:1.65}.label{display:block;font-size:13px;font-weight:750;margin:0 0 9px}.field{border:1px solid #d5d7dd;padding:16px 17px;font-size:17px;border-radius:10px;width:100%;background:#fff;color:var(--ink);max-width:440px}.buttons{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:25px}.btn{padding:13px 21px;border-radius:10px;border:1px solid transparent;font-weight:750;font-size:14px;transition:transform .14s,background .14s}.btn:hover:not(:disabled){transform:translateY(-1px)}.primary{background:var(--purple);color:white}.primary:hover{background:var(--deep)}.secondary{background:#fff;color:var(--purple);border-color:#cfcde9}.tertiary{background:transparent;border-color:transparent;color:#687386}.tag{display:inline-block;background:var(--pale);color:var(--purple);padding:7px 10px;border-radius:7px;font-size:12px;font-weight:800;letter-spacing:.04em;margin:0 0 18px}.footnote{font-size:12px;color:#8d939d;line-height:1.6;margin:24px 0 0}.error{color:#9d303e;min-height:18px;font-size:13px;line-height:1.5;margin:12px 0 0}.view[hidden]{display:none!important}.rank-board{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:25px}.slots{display:grid;gap:10px}.slot{min-height:69px;display:flex;align-items:center;gap:14px;border:1px dashed #cac8d5;border-radius:11px;padding:12px 13px;background:#faf9fe}.slot.filled{border-style:solid;background:#f2f0ff;border-color:#cfcaf2}.slotnum{font-size:13px;font-weight:800;color:var(--purple);width:22px;flex:none}.slotname{flex:1;font-weight:750;font-size:14px}.remove{border:0;background:transparent;color:#706c9d;padding:4px 7px;border-radius:6px;font-weight:750}.fruits{display:grid;grid-template-columns:1fr 1fr;gap:9px}.fruit{border:1px solid #dfdfe3;background:#fff;border-radius:9px;min-height:47px;display:flex;gap:9px;align-items:center;padding:9px 12px;text-align:left;color:var(--ink);font-size:13px;font-weight:700}.fruit:hover:not(:disabled){border-color:#aaa5e9;background:#faf9ff}.fruit.selected{border-color:var(--purple);background:var(--pale);color:var(--deep)}.fruit .emoji{font-size:19px;line-height:1}.tiny{font-size:12px;line-height:1.65;color:#717b8b}.rules{border-top:1px solid var(--line);margin-top:30px;padding-top:20px}.progress{height:5px;background:#eae9f0;border-radius:999px;margin:10px 0 25px;overflow:hidden}.bar{height:100%;width:50%;background:var(--purple);border-radius:999px;transition:width .2s}.ranked{display:grid;gap:10px}.rankline{padding:14px 16px;border:1px solid #e5e5e6;border-radius:10px;display:flex;align-items:center;gap:13px;font-weight:700}.rankline b{color:var(--purple);font-size:12px;width:29px}.num{font-size:14px;color:var(--purple);font-weight:800}.roster{display:grid;gap:10px}.person{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid #e6e6e8;border-radius:11px;padding:15px 16px}.avatar{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:var(--pale);color:var(--purple);font-weight:900}.person-main{flex:1;min-width:0}.person-name{font-size:15px;font-weight:800;overflow-wrap:anywhere}.person-sub{font-size:12px;color:var(--muted);margin-top:3px}.scoreline{display:flex;gap:25px;align-items:center;padding-bottom:22px;border-bottom:1px solid var(--line);margin-bottom:23px}.scorebig{font-family:Georgia,"Times New Roman",serif;font-size:clamp(70px,13vw,110px);line-height:1;color:var(--purple);letter-spacing:-.07em}.scorebig small{font-family:Inter,system-ui,sans-serif;font-size:17px;letter-spacing:0;color:var(--muted)}.compare{border:1px solid #e6e6e7;border-radius:12px;overflow:hidden}.comparison{display:grid;grid-template-columns:47px 1fr 1fr 68px;align-items:center;gap:10px;padding:15px 17px;border-bottom:1px solid #e8e8e8;font-size:14px}.comparison:last-child{border-bottom:0}.comparison.head{font-size:11px;text-transform:uppercase;letter-spacing:.07em;font-weight:800;background:#f7f6fb;color:var(--muted)}.points{font-weight:900;color:var(--purple);text-align:right}.status{font-size:13px;color:#667388;line-height:1.6}.helper{padding:12px 14px;border-left:3px solid var(--purple);background:#f5f3ff;border-radius:4px;font-size:13px;color:#626079;line-height:1.65;margin-top:20px}.footer{border-top:1px solid var(--line);padding-top:23px;color:#9299a4;font-size:11px;letter-spacing:.09em;text-transform:uppercase;display:flex;justify-content:space-between;gap:15px;margin-top:60px}.loading{opacity:.75}
-@media(max-width:640px){.wrap{padding:20px 16px 50px}.top{margin-bottom:35px}.toplinks{gap:10px}.toplinks a{font-size:12px}.rank-board{grid-template-columns:1fr}.comparison{grid-template-columns:28px 1fr 1fr 44px;font-size:12px;padding:14px 9px;gap:7px}.person{padding:12px 10px}.btn{padding:12px 15px}.card{border-radius:14px}.scoreline{gap:16px}.scorebig{font-size:80px}}
-@media print{.top,.buttons,.footer,.fruit,.remove,.step{display:none!important}body{background:#fff}.card{border:0;box-shadow:none;padding:0}}
-</style>
-</head>
-<body>
-<div class="wrap">
-<header class="top"><a class="brand" href="../">MARLEY <span>· PART II</span></a><div class="toplinks"><a href="../part-i/">Part I</a><a href="../">All editions</a></div></header>
-<main>
-<section class="view" id="welcome">
-  <div class="step">Marley Game · Part II</div>
-  <h1>An important question<br>about <em>fruit.</em></h1>
-  <p class="lead">Rank your top three fruits. Then predict somebody else's ranking. There is no correct answer, but there will be a score.</p>
-  <div class="card">
-    <p class="section-caption">Before we begin</p>
-    <label class="label" for="nickname">Name or nickname</label>
-    <input class="field" id="nickname" type="text" maxlength="40" placeholder="Your name" autocomplete="nickname" aria-describedby="start-error">
-    <div class="error" id="start-error" role="status"></div>
-    <div class="buttons"><button class="btn primary" id="start" type="button">Begin Part II</button></div>
-    <p class="footnote">One ranking per player. Your choices remain private until another person locks in their guesses. This edition uses the same Supabase account session as Part I when you're on the same browser.</p>
-  </div>
-</section>
-<section class="view" id="question" hidden>
-  <p class="step" id="question-step">Part I · Your answer</p>
-  <h1 id="question-title">The fruit <em>question.</em></h1>
-  <p class="lead" id="question-lead">You have been appointed Supreme Arbiter of Fruit. Choose exactly three fruits, in order of greatness. The consequences are, thankfully, nonexistent.</p>
-  <div class="progress"><div class="bar" id="progress-bar"></div></div>
-  <div class="card">
-    <span class="tag">RANK YOUR TOP THREE</span>
-    <h2>What are the three best fruits?</h2>
-    <p class="muted">Select your #1, #2, and #3. The precise ordering matters. A fourth fruit is not permitted to attend.</p>
-    <div class="rank-board">
-      <div><p class="section-caption">Your ranking</p><div class="slots" id="slots"></div></div>
-      <div><p class="section-caption">The contenders</p><div class="fruits" id="fruit-options"></div></div>
-    </div>
-    <div class="helper" id="question-helper">Once you submit, your ranking becomes final. Other people can guess it, but cannot read it beforehand.</div>
-    <div class="error" id="question-error" role="status"></div>
-    <div class="buttons"><button class="btn primary" id="submit" disabled>Publish ranking</button><button class="btn tertiary" id="question-back">Back</button></div>
-  </div>
-</section>
-<section class="view" id="sheet" hidden>
-  <p class="step">Part I · Complete</p>
-  <h1>Your answer <em>sheet.</em></h1>
-  <p class="lead">You have resolved the fruit question. Your ranking is saved and cannot be revised. Now you can attempt the much harder task of understanding somebody else.</p>
-  <div class="card">
-    <p class="section-caption" id="sheet-name">Your three fruits</p>
-    <div class="ranked" id="my-ranking"></div>
-    <div class="buttons"><button class="btn primary" id="find-players">Guess somebody else's ranking</button><button class="btn secondary" id="download-my">Save answer sheet (.txt)</button></div>
-  </div>
-</section>
-<section class="view" id="directory" hidden>
-  <p class="step">Part II · Guess someone</p>
-  <h1>Who knows <em>whom?</em></h1>
-  <p class="lead">Choose a player who has completed Marley Part II. You can see their name, but their fruit preferences remain classified until your guess is submitted.</p>
-  <div class="card">
-    <div class="section-caption">Available players</div>
-    <div id="roster" class="roster"><p class="muted">Loading players…</p></div>
-    <div class="error" id="roster-error"></div>
-    <div class="buttons"><button class="btn secondary" id="refresh">Refresh players</button><button class="btn tertiary" id="to-sheet">My ranking</button></div>
-  </div>
-</section>
-<section class="view" id="results" hidden>
-  <p class="step">Marley Part II · Results</p>
-  <h1>Did you <em>know?</em></h1>
-  <p class="lead" id="result-intro">Your prediction has been scored.</p>
-  <div class="card">
-    <p class="section-caption" id="result-kicker">Marley guessing score</p>
-    <div class="scoreline"><div class="scorebig"><span id="score">0</span><small> / 100</small></div><div><h2 id="score-title">The results are in.</h2><p class="muted">One locked-in guess. Three fruits. One rather questionable measure of friendship.</p></div></div>
-    <div class="compare" id="comparison"></div>
-    <p class="tiny" style="margin-top:16px">Scoring: #1 is worth 40 points, #2 is worth 35, and #3 is worth 25. The correct fruit in the wrong rank earns half of that position's points (rounded down).</p>
-    <div class="buttons"><button class="btn primary" id="another">Guess another player</button><button class="btn secondary" id="download-score">Download score (.txt)</button><button class="btn secondary" id="print-score">Print</button></div>
-  </div>
-</section>
-</main>
-<footer class="footer"><span>Marley Game · Part II · 2026</span><span>The Fruit Question</span></footer>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="../config.js"></script>
+:root{color-scheme:dark;--bg:#191b23;--bg2:#20222d;--panel:#252734;--panel2:#2c2e3c;--line:#414253;--ink:#f3f0fa;--muted:#b4b2c3;--dim:#87899e;--accent:#ac8bea;--accent2:#8d69d4;--wash:#38334e;--gold:#e7c49c;--danger:#f2a7af}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 100% 0%,#312540 0%,transparent 32%),var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}a{color:var(--accent)}button,input,select{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.shell{max-width:1000px;margin:0 auto;padding:0 25px 70px}.nav{display:flex;justify-content:space-between;gap:15px;align-items:center;padding:22px 0;border-bottom:1px solid var(--line)}.brand{display:flex;gap:11px;align-items:center;color:var(--ink);text-decoration:none}.mark{display:grid;place-items:center;width:43px;height:43px;border:1px solid #8270a9;border-radius:13px;background:#342e48;color:#f2e9ff;font:bold 25px Georgia,serif;transform:rotate(-5deg)}.brandname{font-weight:850;font-size:21px;letter-spacing:-.035em}.brandname small{display:block;color:var(--dim);font-size:10px;letter-spacing:.19em;text-transform:uppercase;font-weight:800;margin-top:2px}.navlinks{display:flex;gap:22px}.navlinks a{font-size:12px;text-decoration:none;color:var(--muted)}.navlinks a:hover{color:var(--ink)}.view{padding-top:46px}.view[hidden]{display:none!important}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.18em;font-weight:900;color:var(--accent);margin:0 0 15px}h1,h2{font-family:Georgia,"Times New Roman",serif;font-weight:500;letter-spacing:-.045em;line-height:1.12;margin:0}h1{font-size:clamp(40px,7vw,69px)}h2{font-size:clamp(26px,4.5vw,38px)}em{font-style:normal;color:var(--accent)}.lead{font-size:16px;line-height:1.8;color:var(--muted);max-width:680px;margin:22px 0 28px}.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:clamp(22px,4.8vw,47px);box-shadow:0 18px 60px rgba(0,0,0,.11);margin-bottom:24px}.rule{height:1px;background:var(--line);margin:27px 0}.label{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.08em;font-weight:850;color:var(--muted);margin-bottom:13px}.field{background:#1a1b26;color:var(--ink);border:1px solid #5b536e;border-radius:9px;padding:14px 17px;font-size:16px;width:100%;max-width:470px}.error{min-height:17px;color:var(--danger);font-size:13px;line-height:1.6;margin-top:12px}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.btn{border:1px solid transparent;border-radius:10px;padding:13px 19px;font-size:13px;font-weight:850;transition:background .15s,transform .15s}.btn:hover:not(:disabled){transform:translateY(-1px)}.primary{background:var(--accent2);color:#fff}.primary:hover:not(:disabled){background:#a07de4}.secondary{background:#343044;border-color:#665878;color:#e3d8f4}.secondary:hover:not(:disabled){background:#453b5b}.ghost{background:transparent;color:var(--muted);border-color:transparent}.btn:disabled{opacity:.4;cursor:not-allowed}.progress-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px}.progress-head span{font-size:12px;font-weight:850;color:var(--dim)}.track{height:5px;background:#3a3845;border-radius:9px;overflow:hidden;margin-bottom:30px}.trackbar{height:100%;width:12.5%;background:linear-gradient(90deg,#835cce,#c5a0f7);transition:width .2s}.context{font-size:14px;color:#c6c3d0;line-height:1.85;margin:0 0 16px}.context:last-child{margin-bottom:0}.question-sub{font-size:16px;font-weight:750;line-height:1.55;color:#f1eaf9;margin:0 0 19px}.answer-header{padding-top:24px;border-top:1px solid var(--line);margin-top:31px}.choices{display:grid;gap:9px}.choice{width:100%;text-align:left;background:#222431;border:1px solid #4a485c;color:var(--ink);padding:15px 16px;display:flex;align-items:center;gap:12px;border-radius:10px;font-size:14px;line-height:1.45}.choice:hover{border-color:#a585de;background:#303047}.choice.selected{border-color:var(--accent);background:#3a3152;box-shadow:inset 0 0 0 1px #a183da}.indicator{flex:none;width:18px;height:18px;border:2px solid #6f6688;border-radius:50%;display:grid;place-items:center;font-size:11px}.choice.selected .indicator{background:var(--accent);border-color:var(--accent);color:#1d1929;font-weight:900}.select{width:100%;background:#20202d;border:1px solid #74618c;border-radius:9px;color:var(--ink);font-size:16px;padding:15px}.ranklayout{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:24px}.rank-slots{display:grid;gap:11px}.rank-slot{border:1px dashed #645c76;background:#20202d;border-radius:10px;min-height:66px;display:flex;align-items:center;gap:12px;padding:11px 13px}.rank-slot.filled{border-style:solid;border-color:#8572af;background:#35304b}.rank-num{color:var(--accent);font-size:13px;font-weight:850;min-width:30px}.rank-name{flex:1;font-size:13px;font-weight:750}.remove{background:none;border:0;color:#c8b7e8;font-size:12px;padding:4px}.option-search{width:100%;padding:12px 14px;margin-bottom:10px;background:#1f202c;color:var(--ink);border:1px solid #575064;border-radius:9px}.rank-options{max-height:370px;overflow:auto;display:grid;align-content:start;gap:7px;padding-right:4px}.rank-option{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:10px 12px;color:var(--ink);background:#222432;border:1px solid #45485a;border-radius:8px;font-size:13px;font-weight:700}.rank-option:disabled{opacity:.36}.rank-option:not(:disabled):hover{background:#38314b;border-color:var(--accent)}.rank-group{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin:11px 0 4px}.chip{display:inline-flex;gap:8px;align-items:center;padding:5px 9px;border-radius:7px;background:#343049;color:#d7c5f3;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:18px}.note{font-size:12px;color:var(--dim);line-height:1.7}.banner{height:245px;background:linear-gradient(90deg,rgba(22,19,34,.13),rgba(22,19,34,.1)),url('../assets/classical.svg') center 40%/cover;border:1px solid #514667;border-radius:15px;margin-bottom:30px}.banner.explore{background-image:url('../assets/exploration.svg')}.welcome-art{min-height:180px;border-radius:13px;background:linear-gradient(90deg,rgba(30,24,40,.18),rgba(30,24,40,.28)),url('../assets/classical.svg') center 30%/cover;margin:-12px -12px 28px;border:1px solid #443c5c}.summary-list{display:grid;gap:12px}.summary-row{padding:17px 19px;background:#22232f;border:1px solid var(--line);border-radius:11px;display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:13px;align-items:start}.summary-number{font-weight:850;font-size:12px;color:var(--accent)}.summary-q{font-size:13px;color:var(--muted);margin-bottom:7px}.summary-a{font-weight:800;font-size:14px;line-height:1.55;white-space:pre-line}.smallbtn{padding:7px 11px;font-size:11px}.roster{display:grid;gap:10px}.person{display:flex;align-items:center;gap:13px;padding:13px 15px;border-radius:10px;background:#222330;border:1px solid #484658}.avatar{display:grid;place-items:center;width:38px;height:38px;flex:none;border-radius:10px;background:#45375b;color:#f2e5ff;font-weight:900}.person-details{flex:1;min-width:0}.person-name{font-weight:850;overflow-wrap:anywhere;font-size:14px}.person-meta{font-size:12px;color:var(--dim);margin-top:4px}.score-hero{display:flex;gap:23px;align-items:center;padding-bottom:25px;border-bottom:1px solid var(--line);margin-bottom:25px}.score-big{font:500 clamp(65px,12vw,102px)/1 Georgia,serif;color:var(--accent);white-space:nowrap}.score-big small{font:600 16px Inter,system-ui,sans-serif;color:var(--muted)}.comparison{display:grid;gap:12px}.comp-row{border:1px solid #4c455b;border-radius:10px;background:#232330;padding:18px}.comp-top{display:flex;justify-content:space-between;gap:12px;margin-bottom:14px}.comp-title{font-weight:850;font-size:13px}.comp-points{font-size:12px;font-weight:900;color:var(--accent)}.comp-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}.comp-pair>div{border-radius:8px;background:#2f2c3f;padding:12px;font-size:13px;white-space:pre-line;line-height:1.6;overflow-wrap:anywhere}.comp-pair small{display:block;color:#b7a4d4;letter-spacing:.06em;text-transform:uppercase;font-weight:800;font-size:10px;margin-bottom:7px}.footer{margin-top:65px;padding-top:21px;border-top:1px solid var(--line);color:var(--dim);font-size:11px;letter-spacing:.07em;display:flex;justify-content:space-between;gap:14px}.empty{color:var(--muted);font-size:14px;line-height:1.7}.score-info{margin:20px 0 0;color:var(--dim);font-size:12px;line-height:1.7}
+@media(max-width:680px){.shell{padding:0 15px 55px}.navlinks{gap:12px}.navlinks a{font-size:11px}.view{padding-top:28px}.ranklayout{grid-template-columns:1fr}.rank-options{max-height:310px}.banner{height:170px}.welcome-art{min-height:145px}.comp-pair{gap:7px}.summary-row{grid-template-columns:25px 1fr;gap:9px}.summary-row .smallbtn{grid-column:2;justify-self:start}.score-hero{gap:14px}.person{padding:11px}.footer{margin-top:35px}}
+@media print{body{background:#fff;color:#000}.nav,.footer,.actions,.smallbtn,.banner,.welcome-art{display:none!important}.card,.comp-row,.summary-row{border:1px solid #ddd;color:#000;box-shadow:none;background:#fff}.comp-pair>div{background:#f1f1f1;color:#000}em{color:#654a98}}
+</style></head><body>
+<div class="shell"><header class="nav"><a class="brand" href="../" aria-label="Marley collection"><span class="mark">m.</span><span class="brandname">marley.<small>Ed. II · Online</small></span></a><nav class="navlinks" aria-label="Site"><a href="../">All editions</a><a href="../part-i/">Ed. I</a></nav></header><main>
+<section class="view" id="welcome"><div class="card"><div class="welcome-art" role="img" aria-label="Illustration of a classical bust and old-world artifacts"></div><p class="eyebrow">Marley · Ed. II</p><h1>Eight more <em>questions.</em></h1><p class="lead">Answer each question for yourself. Then predict another player's answers to see how well you know them. One question per page; your final answer sheet and guessing score come at the end.</p><div class="rule"></div><label class="label" for="nickname">Your name or nickname</label><input class="field" id="nickname" maxlength="40" autocomplete="nickname" placeholder="Enter a nickname"><div class="error" id="start-error" role="status"></div><div class="actions"><button class="btn primary" id="start">Start Ed. II</button></div><p class="note">No email required. Completed answers and guesses are final. Player names are visible, but answers are withheld until guesses are submitted. Progress is saved in your browser before publication.</p></div></section>
+<section class="view" id="question" hidden><div class="progress-head"><p class="eyebrow" id="q-step" style="margin:0">Your answers</p><span id="q-count">01 / 08</span></div><div class="track"><div class="trackbar" id="q-progress"></div></div><div class="banner" id="q-banner" role="img" aria-label="Atmospheric thematic illustration"></div><div class="card"><div class="chip" id="q-tag">Edition II</div><h1 id="q-title"></h1><div id="q-context" style="margin-top:24px"></div><div class="answer-header"><p class="question-sub" id="q-prompt"></p><div id="answer-ui"></div></div><div class="error" id="q-error" role="status"></div><div class="actions"><button class="btn secondary" id="previous">Previous</button><button class="btn primary" id="next">Continue</button></div></div></section>
+<section class="view" id="review" hidden><p class="eyebrow" id="review-tag">Part I · Your answer sheet</p><h1 id="review-title">Your <em>answers.</em></h1><p class="lead" id="review-lead">Review your eight responses. You can edit them before submitting. Once published, the answers cannot be changed.</p><div class="card"><div class="summary-list" id="review-list"></div><div class="error" id="review-error"></div><div class="actions"><button class="btn primary" id="review-main">Publish my answer sheet</button><button class="btn secondary" id="review-export">Download answer sheet (.txt)</button><button class="btn secondary" id="review-print">Print</button><button class="btn ghost" id="review-back">Previous question</button></div></div></section>
+<section class="view" id="directory" hidden><p class="eyebrow">Part II · Choose a player</p><h1>Whose answers <em>do you know?</em></h1><p class="lead">Choose a player who has completed this edition. Their responses will remain hidden until you lock in all eight guesses.</p><div class="card"><div class="label">Available players</div><div class="roster" id="roster"></div><div class="error" id="roster-error"></div><div class="actions"><button class="btn secondary" id="refresh">Refresh players</button><button class="btn ghost" id="return-sheet">My answer sheet</button></div></div></section>
+<section class="view" id="results" hidden><p class="eyebrow">Marley Ed. II · Guessing results</p><h1>How well did you <em>know them?</em></h1><p class="lead" id="result-intro">Your guesses have been scored.</p><div class="card"><div class="score-hero"><div class="score-big"><span id="score-number">0</span><small> / 100</small></div><div><h2 id="score-title">The results are in.</h2><p class="note">The score is calculated on the server, after your guesses are locked.</p></div></div><div class="comparison" id="comparison"></div><p class="score-info">Five-point scales: 10 / 7 / 4 / 1 / 0 for increasing distance. Single choices: 10 for an exact match. Sports and fruit rankings: 8 / 7 / 5 points by position, with half credit (rounded down) for the right item in another position.</p><div class="actions"><button class="btn primary" id="another">Guess another player</button><button class="btn secondary" id="score-export">Download scorecard (.txt)</button><button class="btn secondary" id="score-print">Print</button></div></div></section>
+</main><footer class="footer"><span>Marley © 2026 · Ed. II</span><span>Eight questions. One edition.</span></footer></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="../config.js"></script><script src="./data.js"></script>
 <script>
-'use strict';
-const FRUITS=[
- ['Apple','🍎'],['Banana','🍌'],['Strawberry','🍓'],['Mango','🥭'],
- ['Watermelon','🍉'],['Pineapple','🍍'],['Peach','🍑'],['Orange','🍊'],
- ['Grape','🍇'],['Cherry','🍒'],['Blueberry','🫐'],['Raspberry','🫐']
-];
-const cfg=window.MARLEY_CONFIG||{};
-const db=window.supabase&&cfg.supabaseUrl&&cfg.supabasePublishableKey
- ? window.supabase.createClient(cfg.supabaseUrl,cfg.supabasePublishableKey) : null;
-const el=id=>document.getElementById(id);
-const VIEWS=['welcome','question','sheet','directory','results'];
-let uid=null,nickname='',published=false,myRanking=[],guessRanking=[],mode='self',target=null,lastScore=null,lastTarget=null,roster=[],pastGuesses={};
-function show(id){VIEWS.forEach(x=>el(x).hidden=x!==id);window.scrollTo(0,0);}
-function errorAt(id,text){el(id).textContent=text||'';}
-function markWorking(id,on,text){const b=el(id);if(on){b.dataset.label=b.textContent;b.disabled=true;b.textContent=text||'Working…';}else{b.disabled=false;if(b.dataset.label)b.textContent=b.dataset.label;}}
-function escapeHTML(value){return String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function fruitEmoji(n){return (FRUITS.find(x=>x[0]===n)||['','🍉'])[1];}
-function localDraft(name){try{return JSON.parse(localStorage.getItem('marley-part-ii-draft')||'null')||{};}catch{return {};}}
-function saveDraft(){try{localStorage.setItem('marley-part-ii-draft',JSON.stringify({uid,ranking:myRanking}));}catch{}}
-function renderRanking(){
-  const list=mode==='self'?myRanking:guessRanking;
-  el('question-step').textContent=mode==='self'?'Part I · Your answer':'Part II · Predict';
-  el('question-title').innerHTML=mode==='self'?'The fruit <em>question.</em>':'Guess their <em>fruit.</em>';
-  el('question-lead').textContent=mode==='self'
-    ? 'You have been appointed Supreme Arbiter of Fruit. Choose exactly three fruits, in order of greatness. The consequences are, thankfully, nonexistent.'
-    : 'How would '+(target?target.nickname:'this player')+' answer? Rank the same three positions in the order you think they chose.';
-  el('question-helper').textContent=mode==='self'
-    ? 'This ranking becomes final when published. Others cannot see your choices until they complete their guesses.'
-    : 'Your guess is final after submission. The actual ranking and your score will then be revealed.';
-  el('progress-bar').style.width=mode==='self'?'50%':'95%';
-  el('submit').textContent=mode==='self'?'Publish ranking':'Lock in guess and score';
-  el('submit').disabled=list.length!==3;
-  errorAt('question-error','');
-  const slots=el('slots');slots.replaceChildren();
-  [0,1,2].forEach(i=>{
-    const wrap=document.createElement('div');wrap.className='slot'+(list[i]?' filled':'');
-    const n=document.createElement('span');n.className='slotnum';n.textContent='#'+(i+1);wrap.append(n);
-    const label=document.createElement('span');label.className='slotname';label.textContent=list[i]||'Choose a fruit';wrap.append(label);
-    if(list[i]){const rem=document.createElement('button');rem.className='remove';rem.type='button';rem.textContent='Remove';rem.setAttribute('aria-label','Remove '+list[i]);rem.addEventListener('click',()=>{list.splice(i,1);if(mode==='self')saveDraft();renderRanking();});wrap.append(rem);}
-    slots.append(wrap);
+"use strict";
+const DATA=window.MARLEY_ED2,QUESTIONS=DATA.questions,SCHEMA="marley_ii_v2_",cfg=window.MARLEY_CONFIG||{};
+const db=(window.supabase&&cfg.supabaseUrl&&cfg.supabasePublishableKey)?window.supabase.createClient(cfg.supabaseUrl,cfg.supabasePublishableKey):null;
+const el=id=>document.getElementById(id),views=["welcome","question","review","directory","results"];
+let uid=null,nickname="",published=false,own={},guesses={},mode="self",index=0,returnToReview=false,target=null,knownTargets=[],pastResults={},lastResult=null,lastTarget=null,visibleRankSearch="";
+function show(which){views.forEach(id=>el(id).hidden=id!==which);window.scrollTo({top:0,behavior:"instant"});}
+function setError(id,msg=""){el(id).textContent=msg;}
+function working(id,yes,msg){const b=el(id);if(yes){b.dataset.original=b.textContent;b.textContent=msg||"Working…";b.disabled=true;}else{b.textContent=b.dataset.original||b.textContent;b.disabled=false;}}
+function answers(){return mode==="self"?own:guesses;}
+function valid(q,val){if(q.type==="rank")return Array.isArray(val)&&val.length===3&&new Set(val).size===3&&val.every(x=>q.options.some(o=>(typeof o==="string"?o:o.value)===x));if(typeof val!=="string")return false;if(q.type==="likert")return DATA.likert.includes(val);return q.options.includes(val);}
+function doneCount(){return QUESTIONS.filter(q=>valid(q,answers()[q.id])).length;}
+function complete(){return QUESTIONS.every(q=>valid(q,answers()[q.id]));}
+function draftKey(){return "marley-ed2-v2-"+(uid||"unknown")+"-"+mode+(mode==="guess"&&target?"-"+target.id:"");}
+function saveDraft(){try{localStorage.setItem(draftKey(),JSON.stringify(answers()));}catch{}}
+function loadDraft(){try{const a=JSON.parse(localStorage.getItem(draftKey())||"{}");if(a&&typeof a==="object"){if(mode==="self")own=a;else guesses=a;}}catch{}}
+function dataString(q,val){return Array.isArray(val)?val.map((v,i)=>"#"+(i+1)+" "+v).join("\n"):(val||"—");}
+function textDownload(name,text){const url=URL.createObjectURL(new Blob([text],{type:"text/plain;charset=utf-8"}));const a=document.createElement("a");a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);}
+function safeFile(s){return s.replace(/[^a-z0-9_-]/gi,"_").slice(0,35);}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function renderQuestion(){
+ const q=QUESTIONS[index];returnToReview=false;
+ el("q-step").textContent=mode==="self"?"Part I · Your answers":"Part II · Guessing "+(target?target.nickname:"");
+ el("q-count").textContent=String(index+1).padStart(2,"0")+" / "+String(QUESTIONS.length).padStart(2,"0");
+ el("q-progress").style.width=(100*(index+1)/QUESTIONS.length)+"%";
+ el("q-tag").textContent=q.tag;el("q-title").innerHTML=q.title;
+ const paragraphs=el("q-context");paragraphs.replaceChildren();
+ q.context.forEach(t=>{const p=document.createElement("p");p.className="context";p.innerHTML=t;paragraphs.append(p);});
+ el("q-prompt").textContent=q.prompt;
+ el("q-banner").classList.toggle("explore",q.id==="exploration"||q.id==="deterrence");
+ el("previous").textContent=index===0?(mode==="self"?"Introduction":"Player list"):"Previous";
+ el("next").textContent=index===7?"Review all eight":"Continue";
+ setError("q-error","");
+ renderAnswer();show("question");
+}
+function changeAnswer(val){answers()[QUESTIONS[index].id]=val;saveDraft();renderAnswer();}
+function renderAnswer(){
+ const q=QUESTIONS[index],val=answers()[q.id],box=el("answer-ui");box.replaceChildren();
+ if(q.type==="select"){const field=document.createElement("select");field.className="select";field.setAttribute("aria-label",q.prompt);
+ const blank=document.createElement("option");blank.value="";blank.textContent="Select a century";field.append(blank);
+ q.options.forEach(x=>{const o=document.createElement("option");o.value=x;o.textContent=x;field.append(o);});field.value=typeof val==="string"?val:"";field.addEventListener("change",()=>changeAnswer(field.value));box.append(field);return;}
+ if(q.type==="rank"){renderRanking(q,box);return;}
+ const opts=q.type==="likert"?DATA.likert:q.options;const list=document.createElement("div");list.className="choices";opts.forEach(o=>{
+  const b=document.createElement("button");b.type="button";b.className="choice"+(val===o?" selected":"");b.setAttribute("aria-pressed",val===o?"true":"false");
+  const ring=document.createElement("span");ring.className="indicator";ring.textContent=val===o?"✓":"";
+  const label=document.createElement("span");label.textContent=o;b.append(ring,label);b.addEventListener("click",()=>changeAnswer(o));list.append(b);
+ });box.append(list);
+}
+function renderRanking(q,box){
+ const val=Array.isArray(answers()[q.id])?answers()[q.id]:[];
+ const frame=document.createElement("div");frame.className="ranklayout";
+ const left=document.createElement("div"),right=document.createElement("div");
+ const title1=document.createElement("div");title1.className="label";title1.textContent="Your top three";left.append(title1);
+ const slots=document.createElement("div");slots.className="rank-slots";
+ for(let i=0;i<3;i++){const line=document.createElement("div");line.className="rank-slot"+(val[i]?" filled":"");
+ const nr=document.createElement("span");nr.className="rank-num";nr.textContent="#"+(i+1);
+ const word=document.createElement("span");word.className="rank-name";word.textContent=val[i]||"Choose a contender";line.append(nr,word);
+ if(val[i]){const rem=document.createElement("button");rem.type="button";rem.className="remove";rem.textContent="Remove";rem.setAttribute("aria-label","Remove "+val[i]);rem.addEventListener("click",()=>{val.splice(i,1);changeAnswer([...val]);});line.append(rem);}
+ slots.append(line);}left.append(slots);
+ const title2=document.createElement("div");title2.className="label";title2.textContent=q.id==="sports"?"Choose from the sports":"Choose from the fruits";right.append(title2);
+ const search=document.createElement("input");search.type="search";search.className="option-search";search.placeholder="Filter options…";search.setAttribute("aria-label","Filter ranking options");search.value=visibleRankSearch;right.append(search);
+ const options=document.createElement("div");options.className="rank-options";right.append(options);
+ function paintOptions(){options.replaceChildren();let prev="";
+  const filtered=q.options.filter(o=>(typeof o==="string"?o:o.value).toLowerCase().includes(search.value.toLowerCase()));
+  filtered.forEach(o=>{const name=typeof o==="string"?o:o.value,group=typeof o==="string"?"Fruits":o.group;if(group!==prev){prev=group;const h=document.createElement("div");h.className="rank-group";h.textContent=group;options.append(h);}
+   const b=document.createElement("button");b.type="button";b.className="rank-option";b.disabled=val.includes(name)||val.length>=3;
+   const em=document.createElement("span");em.textContent=typeof o==="string"?"":(o.emoji||"");
+   const t=document.createElement("span");t.textContent=name;b.append(em,t);
+   b.addEventListener("click",()=>{changeAnswer([...val,name]);});options.append(b);
   });
-  const buttons=el('fruit-options');buttons.replaceChildren();
-  FRUITS.forEach(([fruit,emoji])=>{
-    const chosen=list.includes(fruit);const b=document.createElement('button');
-    b.type='button';b.className='fruit'+(chosen?' selected':'');b.disabled=chosen||list.length===3;
-    const ico=document.createElement('span');ico.className='emoji';ico.textContent=emoji;
-    const title=document.createElement('span');title.textContent=fruit;
-    b.append(ico,title);
-    b.addEventListener('click',()=>{if(list.length<3&&!list.includes(fruit)){list.push(fruit);if(mode==='self')saveDraft();renderRanking();}});
-    buttons.append(b);
-  });
+  if(!filtered.length){const p=document.createElement("div");p.className="empty";p.textContent="No matching options.";options.append(p);}
+ }
+ search.addEventListener("input",()=>{visibleRankSearch=search.value;paintOptions();});paintOptions();
+ frame.append(left,right);box.append(frame);
+ const hint=document.createElement("p");hint.className="note";hint.textContent="Select in order: first, second, third. Remove an entry to change your ranking.";box.append(hint);
 }
-function rankRows(list){const out=document.createDocumentFragment();list.forEach((name,i)=>{const row=document.createElement('div');row.className='rankline';const n=document.createElement('b');n.textContent='#'+(i+1);const emo=document.createElement('span');emo.textContent=fruitEmoji(name);const t=document.createElement('span');t.textContent=name;row.append(n,emo,t);out.append(row);});return out;}
-function sheet(){el('sheet-name').textContent=nickname+' · official ranking';el('my-ranking').replaceChildren(rankRows(myRanking));show('sheet');}
-function makeTextDownload(filename,text){
-  const file=new Blob([text],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(file);const a=document.createElement('a');a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+function openQuestion(i){index=i;visibleRankSearch="";renderQuestion();}
+function renderReview(){
+ const isGuess=mode==="guess";const isLocked=mode==="self"&&published;
+ el("review-tag").textContent=isGuess?"Part II · Review guesses":isLocked?"Part I · Published answers":"Part I · Review answers";
+ el("review-title").innerHTML=isGuess?"Your <em>predictions.</em>":"Your <em>answers.</em>";
+ el("review-lead").textContent=isGuess?"Review the eight answers you think "+target.nickname+" gave. You get one scored attempt; no answers will be revealed until you submit all your guesses.":isLocked?"Your eight answers are published and final. You can download the sheet, or choose another player to guess.":"Review every answer before publishing. You may edit any response now; after publication, it becomes final.";
+ el("review-main").textContent=isGuess?"Lock in eight guesses":" "+(isLocked?"Find someone to guess":"Publish all eight answers");
+ el("review-export").textContent=isGuess?"Download predictions (.txt)":"Download answer sheet (.txt)";
+ el("review-back").hidden=isLocked;
+ const box=el("review-list");box.replaceChildren();
+ QUESTIONS.forEach((q,i)=>{const row=document.createElement("div");row.className="summary-row";
+ const number=document.createElement("div");number.className="summary-number";number.textContent=String(i+1).padStart(2,"0");
+ const info=document.createElement("div");const label=document.createElement("div");label.className="summary-q";label.textContent=q.short;
+ const value=document.createElement("div");value.className="summary-a";value.textContent=dataString(q,answers()[q.id]);info.append(label,value);row.append(number,info);
+ if(!isLocked){const b=document.createElement("button");b.className="btn secondary smallbtn";b.textContent="Edit";b.addEventListener("click",()=>openQuestion(i));row.append(b);}box.append(row);});
+ setError("review-error","");show("review");
 }
-function safeFilename(name){return String(name).replace(/[^a-z0-9_-]+/gi,'_').slice(0,35);}
-async function getSession(){
-  if(!db)throw new Error('Supabase is not configured. Ask the Marley administrator to check the site.');
-  const r=await db.auth.getSession();if(r.error)throw r.error;
-  if(r.data.session)return r.data.session.user;
-  const s=await db.auth.signInAnonymously();if(s.error)throw s.error;
-  return s.data.user;
-}
-async function start(){
-  const input=el('nickname').value.trim().replace(/\s+/g,' ').slice(0,40);
-  if(!input){errorAt('start-error','Enter a name or nickname.');return;}
-  markWorking('start',true,'Connecting…');errorAt('start-error','');
-  try{
-    const user=await getSession();uid=user.id;
-    const current=await db.from('marley_ii_players').select('nickname,completed_at').eq('id',uid).maybeSingle();
-    if(current.error)throw current.error;
-    if(current.data&&current.data.completed_at){
-      nickname=current.data.nickname;published=true;
-      const saved=await db.from('marley_ii_answers').select('ranking').eq('player_id',uid).single();
-      if(saved.error)throw saved.error;
-      myRanking=saved.data.ranking||[];sheet();return;
-    }
-    const savedName=current.data&&current.data.nickname;
-    const op=savedName
-      ? await db.from('marley_ii_players').update({nickname:input}).eq('id',uid)
-      : await db.from('marley_ii_players').insert({id:uid,nickname:input});
-    if(op.error)throw op.error;
-    nickname=input;published=false;
-    const draft=localDraft();
-    myRanking=draft.uid===uid&&Array.isArray(draft.ranking)&&draft.ranking.every(x=>FRUITS.some(f=>f[0]===x))?draft.ranking.slice(0,3):[];
-    mode='self';renderRanking();show('question');
-  }catch(e){errorAt('start-error',e.code==='23505'?'That nickname is already used in Part II. Choose another.':(e.message||'Could not start Marley. Did the administrator run the Part II database setup?'));}
-  finally{markWorking('start',false);}
+async function sessionUser(){if(!db)throw new Error("The site cannot reach its configuration. Contact the site administrator.");const a=await db.auth.getSession();if(a.error)throw a.error;if(a.data.session)return a.data.session.user;const b=await db.auth.signInAnonymously();if(b.error)throw b.error;return b.data.user;}
+async function begin(){
+ const name=el("nickname").value.trim().replace(/\s+/g," ").slice(0,40);
+ if(!name){setError("start-error","Please enter a name or nickname.");return;}
+ working("start",true,"Connecting…");setError("start-error","");
+ try{
+  const u=await sessionUser();uid=u.id;
+  const existing=await db.from(SCHEMA+"players").select("nickname,completed_at").eq("id",uid).maybeSingle();if(existing.error)throw existing.error;
+  if(existing.data&&existing.data.completed_at){
+   nickname=existing.data.nickname;published=true;
+   const ownData=await db.from(SCHEMA+"answers").select("answers").eq("player_id",uid).single();if(ownData.error)throw ownData.error;
+   own=ownData.data.answers;mode="self";renderReview();return;
+  }
+  const r=existing.data
+   ? await db.from(SCHEMA+"players").update({nickname:name}).eq("id",uid)
+   : await db.from(SCHEMA+"players").insert({id:uid,nickname:name});
+  if(r.error)throw r.error;
+  nickname=name;published=false;mode="self";loadDraft();
+  openQuestion(0);
+ }catch(e){setError("start-error",e.code==="23505"?"That nickname is already taken in this edition. Choose another.":(e.message||"Could not connect. Have you installed the Ed. II database SQL?"));}
+ finally{working("start",false);}
 }
 async function publish(){
-  markWorking('submit',true,'Publishing…');errorAt('question-error','');
-  try{
-    const r=await db.rpc('marley_ii_publish',{p_ranking:myRanking});
-    if(r.error)throw r.error;
-    published=true;saveDraft();sheet();
-  }catch(e){errorAt('question-error',e.message||'Could not publish. Make sure the Part II SQL installer has run.');}
-  finally{markWorking('submit',false);el('submit').disabled=(mode==='self'?myRanking:guessRanking).length!==3;}
+ if(!complete()){setError("review-error","Complete all eight questions first.");return;}
+ working("review-main",true,"Publishing…");setError("review-error","");
+ try{
+  const r=await db.rpc(SCHEMA+"publish",{p_answers:own});if(r.error)throw r.error;published=true;mode="self";renderReview();
+ }catch(e){setError("review-error",e.message||"Could not publish. The Ed. II database installation may be incomplete.");}
+ finally{working("review-main",false);}
 }
-async function loadRoster(){
-  show('directory');el('roster').textContent='Loading players…';errorAt('roster-error','');
-  try{
-    const r=await Promise.all([
-      db.from('marley_ii_players').select('id,nickname').not('completed_at','is',null).order('nickname'),
-      db.from('marley_ii_guesses').select('target_id,score,result').eq('guesser_id',uid)
-    ]);
-    if(r[0].error)throw r[0].error;if(r[1].error)throw r[1].error;
-    roster=(r[0].data||[]).filter(x=>x.id!==uid);pastGuesses={};
-    (r[1].data||[]).forEach(x=>{pastGuesses[x.target_id]=x;});
-    renderRoster();
-  }catch(e){el('roster').textContent='Could not load players.';errorAt('roster-error',e.message||'Please try again.');}
+async function directory(){
+ if(!published){setError("review-error","Publish your own answers before guessing.");return;}
+ show("directory");el("roster").textContent="Loading players…";setError("roster-error","");
+ try{
+  const [a,b]=await Promise.all([
+   db.from(SCHEMA+"players").select("id,nickname").not("completed_at","is",null).order("nickname"),
+   db.from(SCHEMA+"guesses").select("target_id,score,result").eq("guesser_id",uid)]);
+  if(a.error)throw a.error;if(b.error)throw b.error;
+  knownTargets=(a.data||[]).filter(p=>p.id!==uid);pastResults={};(b.data||[]).forEach(p=>pastResults[p.target_id]=p);renderRoster();
+ }catch(e){el("roster").textContent="Unable to load player directory.";setError("roster-error",e.message);}
 }
-function renderRoster(){
-  const box=el('roster');box.replaceChildren();
-  if(!roster.length){const p=document.createElement('p');p.className='muted';p.textContent='No other players have completed Part II yet. Share the link with a friend, then refresh this page.';box.append(p);return;}
-  roster.forEach(person=>{
-    const row=document.createElement('div');row.className='person';
-    const avatar=document.createElement('div');avatar.className='avatar';avatar.textContent=person.nickname.charAt(0).toUpperCase();
-    const main=document.createElement('div');main.className='person-main';
-    const name=document.createElement('div');name.className='person-name';name.textContent=person.nickname;
-    const sub=document.createElement('div');sub.className='person-sub';
-    const previous=pastGuesses[person.id];
-    sub.textContent=previous?'Previously guessed · '+previous.score+'/100':'Awaiting your prediction';
-    main.append(name,sub);
-    const b=document.createElement('button');b.type='button';b.className='btn '+(previous?'secondary':'primary');b.textContent=previous?'View score':'Guess';
-    b.addEventListener('click',()=>{target=person;if(previous){lastTarget=person;lastScore=previous.result;renderScore();}else{guessRanking=[];mode='guess';renderRanking();show('question');}});
-    row.append(avatar,main,b);box.append(row);
-  });
+function renderRoster(){const root=el("roster");root.replaceChildren();
+ if(!knownTargets.length){const p=document.createElement("p");p.className="empty";p.textContent="Nobody else has completed Ed. II yet. Invite a friend, then refresh the list.";root.append(p);return;}
+ for(const p of knownTargets){
+  const row=document.createElement("div");row.className="person";
+  const ava=document.createElement("div");ava.className="avatar";ava.textContent=p.nickname[0].toUpperCase();
+  const desc=document.createElement("div");desc.className="person-details";const title=document.createElement("div");title.className="person-name";title.textContent=p.nickname;
+  const sub=document.createElement("div");sub.className="person-meta";const prior=pastResults[p.id];sub.textContent=prior?"Previously guessed · "+prior.score+"/100":"Ready to guess";desc.append(title,sub);
+  const b=document.createElement("button");b.className="btn "+(prior?"secondary":"primary");b.textContent=prior?"View score":"Guess";
+  b.addEventListener("click",()=>{target=p;if(prior){lastTarget=p;lastResult=prior.result;renderResults();}else{mode="guess";guesses={};loadDraft();openQuestion(0);}});
+  row.append(ava,desc,b);root.append(row);
+ }
 }
-async function submitGuess(){
-  if(!target)return;
-  markWorking('submit',true,'Scoring…');errorAt('question-error','');
-  try{
-    const r=await db.rpc('marley_ii_submit_guess',{p_target:target.id,p_ranking:guessRanking});
-    if(r.error)throw r.error;
-    lastTarget=target;lastScore=r.data;pastGuesses[target.id]={target_id:target.id,score:r.data.total,result:r.data};renderScore();
-  }catch(e){errorAt('question-error',e.message||'Could not save the prediction.');}
-  finally{markWorking('submit',false);el('submit').disabled=(mode==='self'?myRanking:guessRanking).length!==3;}
+async function lockGuess(){
+ if(!complete()){setError("review-error","Finish all eight guesses.");return;}
+ working("review-main",true,"Calculating…");setError("review-error","");
+ try{
+  const r=await db.rpc(SCHEMA+"submit_guess",{p_target:target.id,p_guesses:guesses});if(r.error)throw r.error;
+  lastTarget=target;lastResult=r.data;pastResults[target.id]={target_id:target.id,score:r.data.total,result:r.data};renderResults();
+ }catch(e){setError("review-error",e.message||"Could not score guesses.");}
+ finally{working("review-main",false);}
 }
-function renderScore(){
-  const r=lastScore;if(!r||!lastTarget)return;
-  const actual=r.actual||[],guessed=r.guess||[],points=r.points||[];
-  el('score').textContent=r.total;
-  el('result-intro').textContent='Your prediction for '+lastTarget.nickname+' has been locked in and compared with their actual ranking.';
-  el('result-kicker').textContent=nickname+' guessing '+lastTarget.nickname;
-  el('score-title').textContent=r.total===100?'An astonishing knowledge of fruit.':r.total>=70?'You know their fruit.':r.total>=35?'A respectable effort.':'Consider asking them about fruit.';
-  const box=el('comparison');box.replaceChildren();
-  function makeRow(cls,values){const row=document.createElement('div');row.className='comparison '+cls;values.forEach((text,i)=>{const span=document.createElement('div');span.textContent=text;if(i===3)span.className='points';row.append(span);});box.append(row);}
-  makeRow('head',['Rank','Your guess','Actual answer','Points']);
-  for(let i=0;i<3;i++){makeRow('', ['#'+(i+1),guessed[i]||'—',actual[i]||'—',String(points[i]||0)]);}
-  show('results');
+function renderResults(){
+ const r=lastResult;if(!r)return;
+ el("score-number").textContent=r.total;el("result-intro").textContent="You predicted "+lastTarget.nickname+"'s answers across all eight questions. Here is how those predictions compare.";
+ el("score-title").textContent=r.total===100?"Perfectly predicted.":r.total>=75?"You know them well.":r.total>=50?"Not a bad effort.":"A few surprises.";
+ const box=el("comparison");box.replaceChildren();
+ QUESTIONS.forEach((q,i)=>{
+  const row=document.createElement("div");row.className="comp-row";const head=document.createElement("div");head.className="comp-top";
+  const title=document.createElement("div");title.className="comp-title";title.textContent=String(i+1).padStart(2,"0")+". "+q.short;
+  const pts=document.createElement("div");pts.className="comp-points";const got=r.points&&r.points[q.id]?r.points[q.id].earned:0;pts.textContent=got+" / "+q.points;
+  head.append(title,pts);
+  const pair=document.createElement("div");pair.className="comp-pair";
+  [ ["Your guess",r.guesses?.[q.id]],["Actual answer",r.actual?.[q.id]]].forEach(([label,val])=>{
+   const item=document.createElement("div");const small=document.createElement("small");small.textContent=label;
+   const value=document.createElement("span");value.textContent=dataString(q,val);item.append(small,value);pair.append(item);
+  });row.append(head,pair);box.append(row);
+ });show("results");
 }
-async function warmWelcome(){
-  if(!db){errorAt('start-error','Supabase configuration is missing.');return;}
-  try{
-    const session=await db.auth.getSession();
-    if(session.error||!session.data.session)return;
-    const me=session.data.session.user.id;
-    const part2=await db.from('marley_ii_players').select('nickname,completed_at').eq('id',me).maybeSingle();
-    if(part2.data){if(!el('nickname').value)el('nickname').value=part2.data.nickname;el('start').textContent=part2.data.completed_at?'Continue Part II':'Continue ranking';}
-    else{
-      const part1=await db.from('marley_players').select('nickname').eq('id',me).maybeSingle();
-      if(part1.data&&!el('nickname').value)el('nickname').value=part1.data.nickname;
-    }
-  }catch(e){/* The page remains usable if the profile lookup fails. */}
-}
-el('start').addEventListener('click',start);
-el('nickname').addEventListener('keydown',e=>{if(e.key==='Enter')start();});
-el('submit').addEventListener('click',()=>{if((mode==='self'?myRanking:guessRanking).length!==3)return;if(mode==='self')publish();else submitGuess();});
-el('question-back').addEventListener('click',()=>{if(mode==='self')show('welcome');else show('directory');});
-el('find-players').addEventListener('click',loadRoster);
-el('refresh').addEventListener('click',loadRoster);
-el('to-sheet').addEventListener('click',sheet);
-el('another').addEventListener('click',loadRoster);
-el('print-score').addEventListener('click',()=>window.print());
-el('download-my').addEventListener('click',()=>makeTextDownload('Marley_Part_II_'+safeFilename(nickname)+'.txt',
-  'MARLEY PART II — THE FRUIT QUESTION\nPlayer: '+nickname+'\n\n'+myRanking.map((x,i)=>(i+1)+'. '+x).join('\n')+'\n'));
-el('download-score').addEventListener('click',()=>{
-  if(!lastScore||!lastTarget)return;
-  const s=lastScore;
-  makeTextDownload('Marley_Part_II_Score_'+safeFilename(lastTarget.nickname)+'.txt',
-    'MARLEY PART II — GUESSING SCORE\nGuesser: '+nickname+'\nTarget: '+lastTarget.nickname+'\nScore: '+s.total+'/100\n\n'+
-    [0,1,2].map(i=>'#'+(i+1)+' — Guessed: '+s.guess[i]+' | Actual: '+s.actual[i]+' | Points: '+s.points[i]).join('\n')+'\n');
-});
-warmWelcome();
-</script>
-</body>
-</html>
+function answerTxt(){return "MARLEY · ED. II\nPLAYER: "+nickname+"\n\n"+QUESTIONS.map((q,i)=>(i+1)+". "+q.short+"\n"+dataString(q,own[q.id])).join("\n\n")+"\n";}
+function guessesTxt(){return "MARLEY · ED. II · PREDICTIONS\nGUESSER: "+nickname+"\nTARGET: "+target.nickname+"\n\n"+QUESTIONS.map((q,i)=>(i+1)+". "+q.short+"\n"+dataString(q,guesses[q.id])).join("\n\n")+"\n";}
+function scoreTxt(){const r=lastResult;return "MARLEY · ED. II · SCORECARD\nGUESSER: "+nickname+"\nTARGET: "+lastTarget.nickname+"\nSCORE: "+r.total+"/100\n\n"+QUESTIONS.map((q,i)=>{const v=r.points[q.id];return (i+1)+". "+q.short+" | "+v.earned+"/"+q.points+"\nGUESSED: "+dataString(q,r.guesses[q.id])+"\nACTUAL: "+dataString(q,r.actual[q.id]);}).join("\n\n")+"\n";}
+el("start").addEventListener("click",begin);el("nickname").addEventListener("keydown",e=>{if(e.key==="Enter")begin();});
+el("previous").addEventListener("click",()=>{if(index>0)openQuestion(index-1);else if(mode==="guess")directory();else show("welcome");});
+el("next").addEventListener("click",()=>{const q=QUESTIONS[index];if(!valid(q,answers()[q.id])){setError("q-error","Select an answer before continuing.");return;}if(index<7)openQuestion(index+1);else renderReview();});
+el("review-main").addEventListener("click",()=>{if(mode==="guess")lockGuess();else if(published)directory();else publish();});
+el("review-back").addEventListener("click",()=>openQuestion(7));
+el("review-export").addEventListener("click",()=>textDownload("Marley_Ed_II_"+safeFile(nickname)+(mode==="guess"?"_Guesses":"_Answers")+".txt",mode==="guess"?guessesTxt():answerTxt()));
+el("review-print").addEventListener("click",()=>window.print());
+el("return-sheet").addEventListener("click",()=>{mode="self";renderReview();});
+el("refresh").addEventListener("click",directory);
+el("another").addEventListener("click",directory);
+el("score-export").addEventListener("click",()=>textDownload("Marley_Ed_II_"+safeFile(lastTarget.nickname)+"_Score.txt",scoreTxt()));
+el("score-print").addEventListener("click",()=>window.print());
+(async()=>{
+ if(!db){setError("start-error","Configuration unavailable. The administrator should check config.js.");return;}
+ try{const s=await db.auth.getSession();if(!s.data.session)return;const person=s.data.session.user;const r=await db.from(SCHEMA+"players").select("nickname,completed_at").eq("id",person.id).maybeSingle();
+ if(r.data){el("nickname").value=r.data.nickname;el("start").textContent=r.data.completed_at?"Continue Ed. II":"Continue answers";}else{
+ const p=await db.from("marley_players").select("nickname").eq("id",person.id).maybeSingle();if(p.data)el("nickname").value=p.data.nickname;
+ }
+ }catch{}
+})();
+</script></body></html>
