@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#1b1d26">
-<meta name="description" content="The Marley relationship matrix: see how accurately players know one another across two editions.">
+<meta name="description" content="The Marley relationship matrix: see how accurately players know one another across all Marley editions.">
 <title>Relationship Matrix · Marley</title>
 <style>
 :root{color-scheme:dark;--bg:#1b1d26;--panel:#272835;--panel2:#2f2b40;--ink:#f3eff9;--sub:#c5bed2;--dim:#a8a1b5;--line:#484156;--accent:#b89af0}
@@ -61,7 +61,7 @@ tbody td{font-size:14px;font-weight:850;font-variant-numeric:tabular-nums}
 <body><main>
 <nav><a class="brand" href="../" aria-label="Marley collection"><span class="mark">m.</span><span class="word">marley.<small>the relationship matrix</small></span></a><div class="navlinks"><a href="../">Collection</a><a href="../part-i/">Ed. I</a><a href="../part-ii/">Ed. II</a></div></nav>
 <section class="hero"><p class="eyebrow">Marley · Group results</p><h1>Who knows <em>whom?</em></h1><p class="lead">A map of how accurately people predict one another. Read across a row to see whom someone understands; read down a column to see how predictable someone is.</p></section>
-<div class="controls"><div class="segment" aria-label="Select edition"><button id="edition-i" class="selected" aria-pressed="true" type="button">Edition I</button><button id="edition-ii" aria-pressed="false" type="button">Edition II</button></div><button id="refresh" class="btn" type="button">Refresh scores</button></div>
+<div class="controls"><div class="segment" aria-label="Select edition"><button id="edition-i" class="selected" aria-pressed="true" type="button">Edition I</button><button id="edition-ii" aria-pressed="false" type="button">Edition II</button><button id="edition-iii" aria-pressed="false" type="button">Edition III</button></div><button id="refresh" class="btn" type="button">Refresh scores</button></div>
 <div id="status" class="status" role="status" aria-live="polite">Checking your Marley session…</div>
 <div class="card">
 <div class="matrix-header"><div><p class="eyebrow" id="edition-heading">Edition I</p><h2>The relationship matrix</h2></div><p class="hint">Rows = guesser · Columns = person guessed</p></div>
@@ -82,7 +82,7 @@ tbody td{font-size:14px;font-weight:850;font-variant-numeric:tabular-nums}
 "use strict";
 const cfg=window.MARLEY_CONFIG||{};
 const db=(window.supabase&&cfg.supabaseUrl&&cfg.supabasePublishableKey)?window.supabase.createClient(cfg.supabaseUrl,cfg.supabasePublishableKey):null;
-let currentEdition="I",loading=false,lastData=null;
+let currentEdition="I",loading=false,lastData=null,queuedEdition=null;
 const el=id=>document.getElementById(id);
 const node=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=String(text);if(cls)n.className=cls;return n;};
 function status(message,error=false){const box=el("status");box.hidden=!message;box.textContent=message||"";box.classList.toggle("error",error);}
@@ -91,7 +91,7 @@ function avg(values){return values.length?Math.round(values.reduce((x,y)=>x+y,0)
 function fmt(num){return num===null?"—":num+"/100";}
 function setEdition(edition){
  currentEdition=edition;
- for(const x of ["I","II"]){const b=el("edition-"+x.toLowerCase());b.classList.toggle("selected",x===edition);b.setAttribute("aria-pressed",String(x===edition));}
+ for(const x of ["I","II","III"]){const b=el("edition-"+x.toLowerCase());b.classList.toggle("selected",x===edition);b.setAttribute("aria-pressed",String(x===edition));}
  el("edition-heading").textContent="Edition "+edition;
  const url=new URL(window.location.href);url.searchParams.set("edition",edition.toLowerCase());window.history.replaceState(null,"",url);
  loadMatrix();
@@ -104,7 +104,7 @@ async function session(){
 }
 function renderEmpty(message){const box=el("matrix-area");clear(box);const empty=node("div",undefined,"empty");empty.append(node("h2","No scores yet."),node("p",message));box.append(empty);clear(el("summary"));}
 async function loadMatrix(){
- if(loading)return;loading=true;status("Loading scores…");el("refresh").disabled=true;
+ if(loading){queuedEdition=currentEdition;return;}loading=true;status("Loading scores…");el("refresh").disabled=true;
  const edition=currentEdition;
  try{
   const user=await session();
@@ -119,7 +119,7 @@ async function loadMatrix(){
   renderEmpty("Complete this edition to unlock the matrix. If you already have, check that your browser still has your session.");
   const msg=e&&e.message?e.message:"Unable to load the relationship matrix.";
   status(msg,true);
- }finally{loading=false;el("refresh").disabled=false;}
+ }finally{loading=false;el("refresh").disabled=false;if(queuedEdition!==null){queuedEdition=null;loadMatrix();}}
 }
 function renderMatrix(data){
  const players=Array.isArray(data?.players)?data.players:[];
@@ -175,7 +175,9 @@ function renderMatrix(data){
 }
 el("edition-i").addEventListener("click",()=>setEdition("I"));
 el("edition-ii").addEventListener("click",()=>setEdition("II"));
+el("edition-iii").addEventListener("click",()=>setEdition("III"));
 el("refresh").addEventListener("click",loadMatrix);
-currentEdition=new URLSearchParams(window.location.search).get("edition")==="ii"?"II":"I";
+const savedEdition=new URLSearchParams(window.location.search).get("edition");
+currentEdition=savedEdition==="iii"?"III":savedEdition==="ii"?"II":"I";
 setEdition(currentEdition);
 </script></body></html>
