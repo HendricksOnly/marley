@@ -19,10 +19,10 @@ declare
 begin
   if a is null or jsonb_typeof(a) <> 'object' then return false; end if;
   if not (a ?& array['century','deterrence','sports','college','classics','exploration','movies','fruit']) then return false; end if;
-  if a->>'century' <> all(allowed_centuries) then return false; end if;
-  if not (a->>'deterrence' = any(allowed_likert) and a->>'college' = any(allowed_likert) and a->>'classics' = any(allowed_likert)) then return false; end if;
-  if not (a->>'exploration' = any(array['Outer space','The deep sea'])) then return false; end if;
-  if not (a->>'movies' = any(array['Mob movies','Westerns'])) then return false; end if;
+  if not coalesce(a->>'century' = any(allowed_centuries),false) then return false; end if;
+  if not coalesce(a->>'deterrence' = any(allowed_likert),false) or not coalesce(a->>'college' = any(allowed_likert),false) or not coalesce(a->>'classics' = any(allowed_likert),false) then return false; end if;
+  if not coalesce(a->>'exploration' = any(array['Outer space','The deep sea']),false) then return false; end if;
+  if not coalesce(a->>'movies' = any(array['Mob movies','Westerns']),false) then return false; end if;
   foreach choice in array array['sports','fruit'] loop
     if jsonb_typeof(a->choice) <> 'array' or jsonb_array_length(a->choice) <> 3 then return false; end if;
     select count(*),count(distinct z.v) into c,dc from jsonb_array_elements_text(a->choice) z(v);
