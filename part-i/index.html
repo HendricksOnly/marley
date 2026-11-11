@@ -173,6 +173,18 @@
     @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto !important; transition-duration:.001ms !important; animation-duration:.001ms !important; } }
   
 
+
+    .explanation-section{margin-top:26px;padding-top:21px;border-top:1px solid var(--line)}
+    .explanation-label{display:block;font-size:13px;font-weight:850;color:#f1e9f8;margin-bottom:8px}
+    .explanation-label span{color:#b5abc6;font-size:11px;font-weight:650}
+    .explanation-help{margin:0 0 11px;color:#b3afc0;font-size:12px;line-height:1.6}
+    .explanation-field{width:100%;min-height:112px;resize:vertical;border-radius:10px;border:1px solid #675d7a;padding:14px 15px;background:#20212d;color:#f3eefa;font:inherit;line-height:1.6}
+    .explanation-field:focus{outline:2px solid #a88ee1;outline-offset:2px}
+    .explanation-reveal{margin-top:16px;border-left:3px solid #9c7ddb;background:#322d42;padding:14px 16px;border-radius:3px}
+    .explanation-reveal strong{display:block;color:#c6aaf0;font-size:11px;letter-spacing:.07em;text-transform:uppercase;margin-bottom:6px}
+    .explanation-reveal p{color:#e9e1f4;font-size:13px;line-height:1.7;margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+    .explanation-reveal .unprovided{color:#b0a9bf;font-style:italic}
+    @media print{.explanation-reveal{background:#fff!important;border-color:#967ec4}.explanation-reveal p{color:#202b3b!important}}
     /* Integrated 2-part edition */
     .field-input{width:100%;max-width:500px;border:1.5px solid #dedde7;border-radius:11px;padding:17px 18px;background:#fff;color:#202b3b;font:600 16px system-ui,sans-serif;outline:none}
     .field-input:focus{border-color:#4e46b8;box-shadow:0 0 0 3px #edebff}
@@ -479,7 +491,7 @@ h1,h2,.result-question{color:#f3eff9}h1 em{color:var(--accent);text-decoration-c
 
 
 
-  const STORE='marley-online-beta-v1';
+  const STORE='marley-online-beta-v2-explanations';
   const cfg=window.MARLEY_CONFIG||{};
   const db=(window.supabase&&cfg.supabaseUrl&&cfg.supabasePublishableKey && !cfg.supabaseUrl.includes('YOUR-PROJECT'))
     ? window.supabase.createClient(cfg.supabaseUrl,cfg.supabasePublishableKey) : null;
@@ -537,6 +549,22 @@ h1,h2,.result-question{color:#f3eff9}h1 em{color:var(--accent);text-decoration-c
   function textElement(tag, className, value) {
     const node = document.createElement(tag); node.className = className; node.textContent = value; return node;
   }
+
+  function explanationFor(bank,id){const v=bank&&bank.explanations&&bank.explanations[id];return typeof v==='string'?v.trim():'';}
+  function appendExplanationInput(q){
+    if(mode!=='self')return;
+    const wrap=document.createElement('div');wrap.className='explanation-section';
+    const label=document.createElement('label');label.className='explanation-label';label.htmlFor='explain-'+q.id;label.append(document.createTextNode('Explanation '));
+    const opt=document.createElement('span');opt.textContent='(optional)';label.append(opt);
+    const help=textElement('p','explanation-help','Why did you choose this answer? Your explanation is revealed to other players after they lock in their guesses.');
+    const field=document.createElement('textarea');field.className='explanation-field';field.id='explain-'+q.id;field.maxLength=1200;field.rows=4;field.placeholder='Explain your reasoning (optional)…';field.value=explanationFor(ownAnswers,q.id);
+    field.addEventListener('input',()=>{if(!ownAnswers.explanations||typeof ownAnswers.explanations!=='object')ownAnswers.explanations={};if(field.value.trim())ownAnswers.explanations[q.id]=field.value;else delete ownAnswers.explanations[q.id];saveAnswers();});
+    wrap.append(label,help,field);answerPanel.append(wrap);
+  }
+  function appendExplanationReveal(parent,bank,qid,label){
+    const wrap=document.createElement('div');wrap.className='explanation-reveal';const txt=explanationFor(bank,qid);
+    wrap.append(textElement('strong','',label),textElement('p',txt?'':'unprovided',txt||'No explanation provided.'));parent.append(wrap);
+  }
   function renderRanking(q) {
     let picks = Array.isArray(answers[q.id]) ? answers[q.id].filter(x=>jobGroups.some(g=>g.jobs.includes(x))) : [];
     picks = [...new Set(picks)].slice(0,3);
@@ -591,7 +619,7 @@ h1,h2,.result-question{color:#f3eff9}h1 em{color:var(--accent);text-decoration-c
     const q = questions[activeIndex];
     answerPanel.replaceChildren();
     answerPanel.append(textElement('div','fieldlabel',q.answerLabel));
-    if (q.type === 'ranking') { renderRanking(q); return; }
+    if (q.type === 'ranking') { renderRanking(q); appendExplanationInput(q); return; }
     if (q.type === 'prose') {
       const poles = document.createElement('div'); poles.className='literary-poles';
       const a = document.createElement('div'); a.className='pole';
@@ -615,6 +643,7 @@ h1,h2,.result-question{color:#f3eff9}h1 em{color:var(--accent);text-decoration-c
       edges.append(textElement('span','','Strongly disagree'),textElement('span','','Strongly agree'));
       answerPanel.append(edges);
     }
+    appendExplanationInput(q);
   }
 
   function show(view){[coverView,questionView,sheetView,chooseView,scoreView].forEach(e=>e.classList.toggle('hidden',e!==view));}
@@ -636,10 +665,10 @@ h1,h2,.result-question{color:#f3eff9}h1 em{color:var(--accent);text-decoration-c
     clearError();renderAnswerPanel();document.title=(mode==='guess'?'Guess ':'Question ')+(activeIndex+1)+' of 8 · Marley Game';
   }
   function answerText(q,value){return q.type==='ranking'?(Array.isArray(value)?value:[]).map((item,i)=>(i+1)+'. '+item).join('\n'):String(value||'');}
-  function readableSheet(){return ['MARLEY GAME (BETA) — PLAYER ANSWERS','NAME: '+playerName,'',...questions.flatMap((q,i)=>[(i+1)+'. '+q.resultTitle,answerText(q,ownAnswers[q.id]),''])].join('\n');}
+  function readableSheet(){return ['MARLEY GAME (BETA) — PLAYER ANSWERS','NAME: '+playerName,'',...questions.flatMap((q,i)=>[(i+1)+'. '+q.resultTitle,answerText(q,ownAnswers[q.id]),...(explanationFor(ownAnswers,q.id)?['Explanation: '+explanationFor(ownAnswers,q.id)]:[]),''])].join('\n');}
   function dataText(){
-    const data={kind:'marley-alpha-player',version:2,name:playerName,answers:Object.fromEntries(questions.map(q=>[q.id,ownAnswers[q.id]]))};
-    return ['MARLEY GAME (BETA) - PLAYER ANSWERS','NAME: '+playerName,'','--- MARLEY PLAYER DATA START ---',JSON.stringify(data),'--- MARLEY PLAYER DATA END ---','','ANSWERS',...questions.flatMap((q,i)=>[(i+1)+'. '+q.resultTitle,answerText(q,ownAnswers[q.id]),''])].join('\n');
+    const data={kind:'marley-alpha-player',version:2,name:playerName,answers:Object.fromEntries(questions.map(q=>[q.id,ownAnswers[q.id]])),explanations:ownAnswers.explanations||{}};
+    return ['MARLEY GAME (BETA) - PLAYER ANSWERS','NAME: '+playerName,'','--- MARLEY PLAYER DATA START ---',JSON.stringify(data),'--- MARLEY PLAYER DATA END ---','','ANSWERS',...questions.flatMap((q,i)=>[(i+1)+'. '+q.resultTitle,answerText(q,ownAnswers[q.id]),...(explanationFor(ownAnswers,q.id)?['Explanation: '+explanationFor(ownAnswers,q.id)]:[]),''])].join('\n');
   }
   function download(content,filename){const url=URL.createObjectURL(new Blob([content],{type:'text/plain;charset=utf-8'}));const a=document.createElement('a');a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200);}
   function safeFilename(name){return name.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9_-]+/g,'_').replace(/^_+|_+$/g,'').slice(0,35)||'Player';}
@@ -650,7 +679,7 @@ h1,h2,.result-question{color:#f3eff9}h1 em{color:var(--accent);text-decoration-c
       const item=document.createElement('article');item.className='result-item';const header=document.createElement('div');header.className='result-item-header';
       header.append(textElement('span','result-number','Question '+String(i+1).padStart(2,'0')));
       const response=textElement('div','result-answer',answerText(q,ownAnswers[q.id]));response.style.whiteSpace='pre-line';
-      item.append(header,textElement('h2','result-question',q.resultTitle),response);list.append(item);
+      item.append(header,textElement('h2','result-question',q.resultTitle),response);if(explanationFor(ownAnswers,q.id))appendExplanationReveal(item,ownAnswers,q.id,'Your explanation');list.append(item);
     });document.title=playerName+' · My Answer Sheet · Marley Game';
   }
   function renderCover(){show(coverView);$('nickname').value=playerName;const done=questions.filter(q=>validAnswer(q,ownAnswers[q.id])).length;
@@ -711,7 +740,7 @@ h1,h2,.result-question{color:#f3eff9}h1 em{color:var(--accent);text-decoration-c
       const compare=document.createElement('div');compare.className='comparison-grid';const yours=document.createElement('div');yours.className='comparison-cell yours';const theirs=document.createElement('div');theirs.className='comparison-cell';
       yours.append(textElement('div','tag','YOUR GUESS'),textElement('div','val',answerText(q,guesses[q.id])));
       theirs.append(textElement('div','tag',targetName.toUpperCase()+"'S ANSWER"),textElement('div','val',answerText(q,targetAnswers[q.id])));
-      compare.append(yours,theirs);item.append(head,textElement('h2','result-question',q.resultTitle),compare);list.append(item);
+      compare.append(yours,theirs);item.append(head,textElement('h2','result-question',q.resultTitle),compare);appendExplanationReveal(item,targetAnswers,q.id,targetName+"'s explanation");list.append(item);
     });
     $('score-value').textContent=lockedResult.total;$('score-people').textContent=playerName+' GUESSED '+targetName.toUpperCase();
     $('score-headline').textContent=lockedResult.total===100?'A perfect read.':lockedResult.total>=85?'You know them remarkably well.':lockedResult.total>=65?'A pretty good read.':lockedResult.total>=40?'Some good instincts.':'More surprises than expected.';
@@ -784,6 +813,7 @@ h1,h2,.result-question{color:#f3eff9}h1 em{color:var(--accent);text-decoration-c
     if(!db||!userId)throw Error('Not connected to the database.');
     if(!ownComplete())throw Error('Finish all eight questions first.');
     const payload=Object.fromEntries(questions.map(q=>[q.id,ownAnswers[q.id]]));
+    payload.explanations=Object.fromEntries(questions.map(q=>[q.id,explanationFor(ownAnswers,q.id).slice(0,1200)]).filter(x=>x[1]));
     const {error:e}=await db.from('marley_answers').insert({player_id:userId,answers:payload});
     if(e)throw e;
     published=true;saveAnswers();
@@ -841,7 +871,7 @@ h1,h2,.result-question{color:#f3eff9}h1 em{color:var(--accent);text-decoration-c
   $('back-to-sheet').addEventListener('click',()=>navigate('#answers'));
   $('refresh-players').addEventListener('click',refreshRoster);
   $('download-score').addEventListener('click',()=>{if(!lockedResult||!targetAnswers||!guessComplete())return;const scores=questions.map(q=>lockedResult.points[q.id]);
-    const txt=['MARLEY GAME (BETA) - GUESSING SCORECARD',playerName+' guessed '+targetName,'Score: '+scores.reduce((a,b)=>a+b,0)+' / 100','',...questions.flatMap((q,i)=>[(i+1)+'. '+q.resultTitle,'Your guess: '+answerText(q,guesses[q.id]),targetName+"'s answer: "+answerText(q,targetAnswers[q.id]),'Points: '+scores[i]+' / '+(q.type==='ranking'?30:10),''])].join('\n');download(txt,'Marley_Score_'+safeFilename(playerName)+'_vs_'+safeFilename(targetName)+'.txt');
+    const txt=['MARLEY GAME (BETA) - GUESSING SCORECARD',playerName+' guessed '+targetName,'Score: '+scores.reduce((a,b)=>a+b,0)+' / 100','',...questions.flatMap((q,i)=>[(i+1)+'. '+q.resultTitle,'Your guess: '+answerText(q,guesses[q.id]),targetName+"'s answer: "+answerText(q,targetAnswers[q.id]),targetName+"'s explanation: "+(explanationFor(targetAnswers,q.id)||'No explanation provided.'),'Points: '+scores[i]+' / '+(q.type==='ranking'?30:10),''])].join('\n');download(txt,'Marley_Score_'+safeFilename(playerName)+'_vs_'+safeFilename(targetName)+'.txt');
   });
   $('try-another').addEventListener('click',()=>navigate('#choose-player'));
   $('print-score').addEventListener('click',()=>window.print());
