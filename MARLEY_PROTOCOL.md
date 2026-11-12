@@ -107,3 +107,11 @@ The new database was installed on the existing Marley Supabase project using `pa
 Scoring: six five-position preference/agreement questions worth 10 each, one three-paper ranking worth 30, one pizza choice worth 10, for a maximum of 100. Five-position scoring uses the same conviction-aware scale as previous editions: 10 exact / 8 same side / 3 or 1 neutral near/far / 0 opposite sides. Paper ranking awards 10 exact, 3 one position away, 0 two positions away, for each of the three ranked papers. A complete self-comparison scores 100/100.
 
 The relationship-matrix RPC and matrix website now support Edition III with the same complete-player permission rules as Editions I and II. The main collection homepage carries a third understated edition card.
+
+## Relationship Matrix — Third-party guess scorecards
+
+The Relationship Matrix contains clickable score cells for completed guesser → target attempts. Clicking a scored cell opens a comparison of each submitted prediction, the target's actual answer, points for each question, the guesser's optional prediction reasoning, and the target's optional answer explanation.
+
+**Spoiler protection:** Detailed scorecards are served exclusively by the authenticated `public.marley_matrix_guess_detail(text,uuid,uuid)` RPC, installed from [MATRIX_GUESS_DETAILS.sql](MATRIX_GUESS_DETAILS.sql). It allows access only after the viewer has published their own responses in that edition AND either (a) is the target whose answers were guessed, or (b) has themselves submitted a locked guess for the same target. A person may view other people's scores in the matrix but not their detailed answers before guessing the target. The function does not perform any writes, does not change scoring, and supports Editions I, II, and III. `anon` and `PUBLIC` have no execute privileges; the `authenticated` role requires explicit in-function authorization. The browser never reads third-party answers or explanations directly from their tables.
+
+Score cells without a recorded guess remain non-clickable. Locked cells display the score and an explanation of the unlock condition. Always preserve this anti-spoiler access rule when extending the matrix.
