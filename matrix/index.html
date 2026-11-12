@@ -208,6 +208,113 @@ function renderMatrix(data){
  ];
  for(const info of stats){const box=node("div",undefined,"stat");box.append(node("div",info.label,"label"),node("div",info.big,"big"),node("div",info.detail,"detail"));summary.append(box);}
 }
+
+const editionQuestions={
+ I:[
+ ["vietnam","The Vietnam War",10],
+ ["workweek","Ideal work schedule",10],
+ ["waterboarding","Waterboarding",10],
+ ["jobs","Prestigious professions",30],
+ ["prose","Hemingway vs. Joyce",10],
+ ["illiteracy-ray","The illiteracy ray",10],
+ ["science","Scientific literacy",10],
+ ["superpower","Human needs",10]
+ ]
+};
+function getDetailQuestions(edition){
+ if(edition==="I")return editionQuestions.I.map(x=>({id:x[0],short:x[1],points:x[2]}));
+ const info=edition==="II"?window.MARLEY_ED2:window.MARLEY_ED3;
+ return info?.questions?.map(q=>({id:q.id,short:q.short,points:q.points,rankDirection:q.rankDirection}))||[];
+}
+function formatDetailAnswer(q,value){
+ if(Array.isArray(value))return value.map((x,i)=>(q.rankDirection==="least-to-most"?["Least","Middle","Most"][i]:"#"+(i+1))+" — "+x).join("\n");
+ return typeof value==="string"?value:"—";
+}
+function detailExplanation(sheet,id){
+ return typeof sheet?.explanations?.[id]==="string"?sheet.explanations[id].trim():"";
+}
+function closeDetail(){
+ detailRequest++;
+ el("detail-overlay").hidden=true;
+ document.body.classList.remove("detail-open");
+ if(detailOpener&&document.contains(detailOpener))detailOpener.focus();
+ detailOpener=null;
+}
+function displayDetail(guesser,target){
+ detailOpener=document.activeElement;
+ el("detail-title").textContent=guesser.nickname+" guessed "+target.nickname;
+ el("detail-kicker").textContent="MARLEY · EDITION "+currentEdition+" · SCORECARD";
+ el("detail-subtitle").textContent=guesser.nickname+" → "+target.nickname;
+ el("detail-body").replaceChildren();
+ el("detail-overlay").hidden=false;
+ document.body.classList.add("detail-open");
+ el("detail-close").focus();
+}
+function lockedDetail(guesser,target,score){
+ const body=el("detail-body");
+ body.append(node("p",guesser.nickname+" scored "+score+"/100 when guessing "+target.nickname+".","detail-lock"));
+ body.append(node("p","To protect the surprise, their specific answers and explanations become visible after you complete your own guess of "+target.nickname+". If people have guessed YOU, those scorecards are available immediately.","detail-lock"));
+ const link=node("a","Guess "+target.nickname+" in Edition "+currentEdition+" →","detail-action");
+ link.href=currentEdition==="I"?"../part-i/":currentEdition==="II"?"../part-ii/":"../part-iii/";
+ body.append(link);
+}
+function addDetailExplanation(card,heading,value){
+ const section=node("div",undefined,"detail-explanation"+(value?"":" is-empty"));
+ section.append(node("small",heading),node("span",value||"No explanation provided."));
+ card.append(section);
+}
+function renderDetailScorecard(data){
+ const body=el("detail-body");body.replaceChildren();
+ if(!data?.result)throw Error("No saved scorecard was returned.");
+ const r=data.result,actual=r.actual||{},guesses=r.guesses||{},points=r.points||{};
+ const score=node("div",undefined,"detail-score");
+ score.append(document.createTextNode(String(data.score)),node("small"," / 100"));
+ body.append(score);
+ for(const [i,q] of getDetailQuestions(data.edition).entries()){
+   const card=node("article",undefined,"detail-question");
+   const head=node("div",undefined,"detail-qhead");
+   const earned=typeof points[q.id]==="number"?points[q.id]:Number(points[q.id]?.earned||0);
+   head.append(node("span",String(i+1).padStart(2,"0")+". "+q.short),node("span",earned+" / "+q.points+" points","detail-points"));
+   const pair=node("div",undefined,"detail-pair");
+   const guessBox=node("div",undefined,"detail-choice");
+   guessBox.append(node("small",data.guesser.nickname+"'s guess"),node("span",formatDetailAnswer(q,guesses[q.id])));
+   const actualBox=node("div",undefined,"detail-choice");
+   actualBox.append(node("small",data.target.nickname+"'s actual answer"),node("span",formatDetailAnswer(q,actual[q.id])));
+   pair.append(guessBox,actualBox);card.append(head,pair);
+   addDetailExplanation(card,"Why "+data.guesser.nickname+" predicted this",detailExplanation(guesses,q.id));
+   addDetailExplanation(card,data.target.nickname+"'s explanation",detailExplanation(actual,q.id));
+   body.append(card);
+ }
+}
+async function openDetail(guesser,target,score,unlocked){
+ const edition=currentEdition;
+ const request=++detailRequest;
+ displayDetail(guesser,target);
+ if(!unlocked){lockedDetail(guesser,target,score);return;}
+ el("detail-body").append(node("p","Loading the saved scorecard…","detail-lock"));
+ try{
+  const response=await db.rpc("marley_matrix_guess_detail",{p_edition:edition,p_guesser:guesser.id,p_target:target.id});
+  if(request!==detailRequest||edition!==currentEdition)return;
+  if(response.error)throw response.error;
+  renderDetailScorecard(response.data);
+ }catch(err){
+  if(request!==detailRequest)return;
+  el("detail-body").replaceChildren(node("p",err?.message||"Unable to load this scorecard.","detail-lock"));
+ }
+}
+el("detail-close").addEventListener("click",closeDetail);
+el("detail-overlay").addEventListener("click",e=>{if(e.target===el("detail-overlay"))closeDetail();});
+document.addEventListener("keydown",e=>{
+ if(el("detail-overlay").hidden)return;
+ if(e.key==="Escape"){e.preventDefault();closeDetail();}
+ if(e.key==="Tab"){
+  const first=el("detail-close"),nodes=el("detail-dialog").querySelectorAll('button:not(:disabled),a[href]');
+  const last=nodes.length?nodes[nodes.length-1]:first;
+  if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}
+  else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
+ }
+});
+
 el("edition-i").addEventListener("click",()=>setEdition("I"));
 el("edition-ii").addEventListener("click",()=>setEdition("II"));
 el("edition-iii").addEventListener("click",()=>setEdition("III"));
