@@ -60,6 +60,19 @@ begin
       from public.marley_iii_guesses g
       join public.marley_iii_players a on a.id=g.guesser_id and a.completed_at is not null
       join public.marley_iii_players b on b.id=g.target_id and b.completed_at is not null;
+  elsif lower(btrim(p_edition)) in ('iv','4','ed4','edition iv') then
+    selected_edition := 'IV';
+    if not exists (select 1 from public.marley_iv_answers where player_id=viewer) then
+      raise exception 'Complete Edition IV before viewing its relationship matrix' using errcode = '42501';
+    end if;
+    select coalesce(jsonb_agg(jsonb_build_object('id',p.id,'nickname',p.nickname) order by lower(p.nickname),p.id),'[]'::jsonb)
+      into players from public.marley_iv_players p where p.completed_at is not null;
+    select coalesce(jsonb_agg(jsonb_build_object('guesser_id',g.guesser_id,'target_id',g.target_id,'score',g.score)
+      order by g.guesser_id,g.target_id),'[]'::jsonb)
+      into scores
+      from public.marley_iv_guesses g
+      join public.marley_iv_players a on a.id=g.guesser_id and a.completed_at is not null
+      join public.marley_iv_players b on b.id=g.target_id and b.completed_at is not null;
   else
     raise exception 'Unknown Marley edition' using errcode = '22023';
   end if;
