@@ -110,7 +110,7 @@ body.detail-open{overflow:hidden}
 "use strict";
 const cfg=window.MARLEY_CONFIG||{};
 const db=(window.supabase&&cfg.supabaseUrl&&cfg.supabasePublishableKey)?window.supabase.createClient(cfg.supabaseUrl,cfg.supabasePublishableKey):null;
-let currentEdition="I",loading=false,lastData=null,queuedEdition=null;
+let currentEdition="I",loading=false,lastData=null,queuedEdition=null,detailRequest=0,detailOpener=null;
 const el=id=>document.getElementById(id);
 const node=(tag,text,cls)=>{const n=document.createElement(tag);if(text!==undefined)n.textContent=String(text);if(cls)n.className=cls;return n;};
 function status(message,error=false){const box=el("status");box.hidden=!message;box.textContent=message||"";box.classList.toggle("error",error);}
@@ -118,6 +118,7 @@ function clear(elm){elm.replaceChildren();}
 function avg(values){return values.length?Math.round(values.reduce((x,y)=>x+y,0)/values.length):null;}
 function fmt(num){return num===null?"—":num+"/100";}
 function setEdition(edition){
+ closeDetail();
  currentEdition=edition;
  for(const x of ["I","II","III"]){const b=el("edition-"+x.toLowerCase());b.classList.toggle("selected",x===edition);b.setAttribute("aria-pressed",String(x===edition));}
  el("edition-heading").textContent="Edition "+edition;
@@ -170,7 +171,13 @@ function renderMatrix(data){
    const cell=node("td"),key=p.id+"|"+target.id,diagonal=p.id===target.id,recorded=records.has(key);
    const score=recorded?records.get(key):null;
    const cls=diagonal?"diagonal":!recorded?"missing":score>=80?"score-high":score>=50?"score-mid":"score-low";
-   const v=node("div",diagonal?"—":recorded?score:"·","cell "+cls);
+   const unlocked=recorded&&(data.viewer_id===target.id||records.has(data.viewer_id+"|"+target.id));
+   const v=node(recorded?"button":"div",diagonal?"—":recorded?score:"·","cell "+cls+(recorded?" score-button"+(unlocked?"":" locked-cell"):""));
+   if(recorded){
+     v.type="button";
+     v.setAttribute("aria-label",p.nickname+" scored "+score+" of 100 guessing "+target.nickname+". "+(unlocked?"View scorecard.":"Details locked until you guess "+target.nickname+"."));
+     v.addEventListener("click",()=>openDetail(p,target,score,unlocked));
+   }
    if(diagonal)v.title="You cannot guess yourself";
    else if(recorded){v.title=p.nickname+" scored "+score+"/100 guessing "+target.nickname;rowScores.push(score);total+=score;guessesCount++;}
    else v.title=p.nickname+" has not guessed "+target.nickname;
