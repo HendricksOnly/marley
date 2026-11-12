@@ -105,6 +105,31 @@ begin
         on target.id = g.target_id and target.completed_at is not null
       where g.guesser_id=p_guesser and g.target_id=p_target;
 
+  elsif lower(btrim(coalesce(p_edition,''))) in ('iv','4','ed4','edition iv') then
+    edition_name := 'IV';
+    if not exists (
+      select 1 from public.marley_iv_answers where player_id = viewer
+    ) then
+      raise exception 'Complete Edition IV before viewing its scorecards'
+        using errcode = '42501';
+    end if;
+    if viewer <> p_target and not exists (
+      select 1 from public.marley_iv_guesses
+      where guesser_id = viewer and target_id = p_target
+    ) then
+      raise exception 'Guess this target yourself to unlock other predictions about them'
+        using errcode = '42501';
+    end if;
+    select g.score, g.result, g.submitted_at,
+           guesser.nickname as guesser_name, target.nickname as target_name
+      into item
+      from public.marley_iv_guesses g
+      join public.marley_iv_players guesser
+        on guesser.id = g.guesser_id and guesser.completed_at is not null
+      join public.marley_iv_players target
+        on target.id = g.target_id and target.completed_at is not null
+      where g.guesser_id=p_guesser and g.target_id=p_target;
+
   else
     raise exception 'Unknown Marley edition' using errcode = '22023';
   end if;
