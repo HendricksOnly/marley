@@ -363,6 +363,158 @@ document.addEventListener("keydown",e=>{
  }
 });
 
+
+/* Diagnostic browser: answers exposed only by the edition-locked RPC */
+const diagnosticEdI=[
+ {id:"vietnam",short:"The Vietnam War",prompt:"The U.S. war in Vietnam was wrong.",type:"likert"},
+ {id:"workweek",short:"Ideal work schedule",prompt:"Which schedule would you choose for a $250,000 salary?",type:"single"},
+ {id:"waterboarding",short:"The ethics of waterboarding",prompt:"Waterboarding is ethical.",type:"likert"},
+ {id:"jobs",short:"Prestigious professions",prompt:"Rank the three most prestigious professions.",type:"rank"},
+ {id:"prose",short:"Hemingway vs. Joyce",prompt:"Which prose style do you prefer?",type:"preference"},
+ {id:"illiteracy-ray",short:"The illiteracy ray",prompt:"Should the Pope activate the illiteracy ray?",type:"likert"},
+ {id:"science",short:"Scientific literacy",prompt:"Knowledge of science is optional for ordinary people.",type:"likert"},
+ {id:"superpower",short:"Sleep, food or breathing",prompt:"Which human need would you eliminate?",type:"single"}
+];
+let diagnosticEdition="I",diagnosticData=null,diagnosticQuestion=0,diagnosticRequest=0;
+const order=["I","II","III","IV"];
+function diagnosticQuestions(edition){
+ if(edition==="I")return diagnosticEdI;
+ const info=edition==="II"?window.MARLEY_ED2:edition==="III"?window.MARLEY_ED3:window.MARLEY_ED4;
+ return info?.questions||[];
+}
+function diagnosticStatus(message,error=false){
+ const target=el("diag-status");target.hidden=!message;target.textContent=message||"";target.classList.toggle("error",error);
+}
+function setDiagnosticEdition(edition){
+ diagnosticEdition=edition;diagnosticQuestion=0;diagnosticData=null;
+ for(const x of order){const tab=el("diag-"+x.toLowerCase());tab.classList.toggle("selected",edition===x);tab.setAttribute("aria-pressed",String(edition===x));}
+ el("diag-questions").replaceChildren();
+ el("diag-overview").replaceChildren();
+ el("diag-main").replaceChildren(node("div","Loading answer diagnostics…","diagnostics-empty"));
+ loadDiagnostics();
+}
+async function loadDiagnostics(){
+ const request=++diagnosticRequest,edition=diagnosticEdition;
+ diagnosticStatus("Loading Edition "+edition+" answers…");
+ el("diag-refresh").disabled=true;
+ try{
+  const user=await session();
+  if(request!==diagnosticRequest)return;
+  if(!user)throw new Error("Sign in by completing an edition first.");
+  const {data,error}=await db.rpc("marley_answer_diagnostics",{p_edition:edition});
+  if(request!==diagnosticRequest||edition!==diagnosticEdition)return;
+  if(error)throw error;
+  diagnosticData=data;
+  renderDiagnostics();
+  diagnosticStatus("");
+ }catch(err){
+  if(request!==diagnosticRequest)return;
+  diagnosticData=null;
+  el("diag-questions").replaceChildren();el("diag-overview").replaceChildren();
+  el("diag-main").replaceChildren(node("div","Complete Edition "+edition+" on this browser to unlock its Answer Diagnostics. "+(err?.message||""),"diagnostics-empty"));
+  diagnosticStatus(err?.message||"Unable to retrieve answers.",true);
+ }finally{
+  if(request===diagnosticRequest)el("diag-refresh").disabled=false;
+ }
+}
+function diagCount(label,num){
+ const item=node("div",undefined,"diagnostics-count");
+ item.append(node("strong",String(num)),node("span",label));
+ return item;
+}
+function diagAnswerTitle(q,answer){
+ if(q.parts)return q.parts.map(part=>part.label+": "+(answer?.[part.id]||"—")).join("\n");
+ return formatDetailAnswer(q,answer);
+}
+function diagDistribution(box,title,values,options,kind){
+ if(!values.length)return;
+ const label=node("div",title,"diagnostics-subheading");box.append(label);
+ const counts=new Map();
+ for(const value of values){
+  const selected=kind==="ranking"&&Array.isArray(value)?value:[value];
+  for(const item of selected){
+   if(typeof item==="string"&&item)counts.set(item,(counts.get(item)||0)+1);
+  }
+ }
+ const choices=options?.length?options.map(x=>typeof x==="string"?x:x.value):Array.from(counts.keys()).sort((a,b)=>(counts.get(b)||0)-(counts.get(a)||0)||a.localeCompare(b));
+ if(kind==="ranking"&&!options?.length)choices.sort((a,b)=>(counts.get(b)||0)-(counts.get(a)||0));
+ const rows=node("div",undefined,"diagnostics-dist");
+ for(const choice of choices){
+  const count=counts.get(choice)||0,percent=Math.round(100*count/values.length);
+  const line=node("div");
+  const top=node("div",undefined,"diagnostics-choice-label");
+  top.append(node("span",choice),node("span",count+" / "+values.length+" ("+percent+"%)"));
+  const track=node("div",undefined,"diagnostics-bar");
+  const fill=node("div");fill.style.width=percent+"%";track.append(fill);
+  line.append(top,track);rows.append(line);
+ }
+ box.append(rows);
+}
+function diagnosticValues(revealed,id){
+ return revealed.map(x=>x.answers?.[id]).filter(x=>x!==undefined&&x!==null);
+}
+function renderDiagnostics(){
+ if(!diagnosticData)return;
+ const roster=Array.isArray(diagnosticData.players)?diagnosticData.players:[];
+ const revealed=Array.isArray(diagnosticData.revealed)?diagnosticData.revealed:[];
+ const unlocked=new Map(revealed.map(x=>[x.player_id,x.answers]));
+ const overview=el("diag-overview");overview.replaceChildren(
+  diagCount("Completed players",roster.length),
+  diagCount("Answers you can see",revealed.length),
+  diagCount("Still locked",roster.length-revealed.length)
+ );
+ const qs=diagnosticQuestions(diagnosticEdition);
+ const nav=el("diag-questions");nav.replaceChildren();
+ for(const [i,q] of qs.entries()){
+  const b=node("button",undefined,"diagnostics-question");b.type="button";b.role="tab";b.setAttribute("aria-selected",String(i===diagnosticQuestion));
+  b.append(node("small","QUESTION "+String(i+1).padStart(2,"0")),node("span",q.short||q.resultTitle||q.id));
+  b.addEventListener("click",()=>{diagnosticQuestion=i;renderDiagnostics();});
+  nav.append(b);
+ }
+ const area=el("diag-main");area.replaceChildren();
+ if(!qs.length){area.append(node("div","Questions are unavailable for this edition.","diagnostics-empty"));return;}
+ const q=qs[Math.min(diagnosticQuestion,qs.length-1)];
+ area.append(node("h3",q.short||q.resultTitle||q.id,"diagnostics-qtitle"));
+ area.append(node("p",q.prompt||q.resultTitle||"Explore how this question was answered.","diagnostics-prompt"));
+ if(!revealed.length){area.append(node("div","No unlocked responses yet. Complete your own sheet to get started.","diagnostics-empty"));return;}
+ if(q.parts){
+  for(const part of q.parts){
+   const values=revealed.map(x=>x.answers?.[q.id]?.[part.id]).filter(x=>typeof x==="string");
+   diagDistribution(area,part.label+" — "+part.prompt,values,["Strongly disagree","Disagree","Neither agree nor disagree","Agree","Strongly agree"]);
+  }
+ }else{
+  const values=diagnosticValues(revealed,q.id);
+  let options=null;
+  if(q.type==="likert")options=["Strongly disagree","Disagree","Neither agree nor disagree","Agree","Strongly agree"];
+  else if(q.options)options=q.options;
+  else if(q.id==="prose")options=["Strongly minimalist (Hemingway)","Mostly minimalist","A balance of both","Mostly maximalist","Strongly maximalist (Joyce)"];
+  if(q.type==="rank"||q.type==="ranking"){
+   diagDistribution(area,"Ranked choices · selected anywhere in the top three",values,options,"ranking");
+  }else{
+   diagDistribution(area,"Answer breakdown · unlocked players",values,options);
+  }
+ }
+ const h=node("div","Individual answers · "+revealed.length+" unlocked","diagnostics-subheading");area.append(h);
+ for(const player of roster){
+  const sheet=unlocked.get(player.id);
+  if(!sheet){
+   const locked=node("div",player.nickname+" · Locked until you guess this player","diagnostics-locked");
+   area.append(locked);continue;
+  }
+  const response=node("article",undefined,"diagnostics-response");
+  response.append(node("div",player.nickname+(player.id===diagnosticData.viewer_id?" · You":""),"diagnostics-person"));
+  response.append(node("div",diagAnswerTitle(q,sheet[q.id]),"diagnostics-answer"));
+  const explanation=detailExplanation(sheet,q.id);
+  if(explanation){
+   const reason=node("div",undefined,"diagnostics-explanation");
+   reason.append(node("strong","Their explanation"),node("span",explanation));response.append(reason);
+  }
+  area.append(response);
+ }
+}
+for(const x of order)el("diag-"+x.toLowerCase()).addEventListener("click",()=>setDiagnosticEdition(x));
+el("diag-refresh").addEventListener("click",loadDiagnostics);
+
 el("edition-i").addEventListener("click",()=>setEdition("I"));
 el("edition-ii").addEventListener("click",()=>setEdition("II"));
 el("edition-iii").addEventListener("click",()=>setEdition("III"));
@@ -371,4 +523,5 @@ el("refresh").addEventListener("click",loadMatrix);
 const savedEdition=new URLSearchParams(window.location.search).get("edition");
 currentEdition=savedEdition==="iv"?"IV":savedEdition==="iii"?"III":savedEdition==="ii"?"II":"I";
 setEdition(currentEdition);
+setDiagnosticEdition(currentEdition);
 </script></body></html>
