@@ -57,6 +57,32 @@ tbody td{font-size:14px;font-weight:850;font-variant-numeric:tabular-nums}
 .empty h2{font-size:28px;color:var(--ink)}
 .footer{border-top:1px solid var(--line);font-size:11px;color:#9791a7;padding-top:20px;margin-top:54px;display:flex;justify-content:space-between;gap:10px}
 @media(max-width:660px){main{padding:0 15px 60px}nav{padding:17px 0}.navlinks{gap:10px}.navlinks a{font-size:11px}.hero{padding-top:44px}.summary{grid-template-columns:1fr}.matrix-header{display:block}.matrix-header .hint{margin-top:7px}}
+
+.score-button{font:inherit;border:0;cursor:pointer;color:inherit;transition:filter .12s}
+.score-button:hover{filter:brightness(1.24);box-shadow:inset 0 0 0 2px #e7c8ff}
+.score-button:focus-visible{outline:3px solid #ead5ff;outline-offset:-3px;position:relative;z-index:1}
+.score-button.locked-cell::after{content:"•";position:absolute;right:4px;top:1px;font-size:13px;color:#f0cb8e}
+.detail-overlay[hidden]{display:none!important}
+.detail-overlay{position:fixed;inset:0;z-index:100;background:#090916e9;display:flex;align-items:center;justify-content:center;padding:14px}
+.detail-dialog{width:min(830px,100%);max-height:94vh;overflow-y:auto;border-radius:18px;border:1px solid #796591;background:#252431;padding:clamp(18px,4vw,32px);box-shadow:0 30px 90px #0009}
+.detail-bar{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;margin-bottom:17px}
+.detail-close{background:#392e4c;border:1px solid #8067a1;border-radius:9px;color:#eee1fc;padding:11px 15px;font-size:12px;font-weight:850;cursor:pointer}
+.detail-title{font:500 clamp(25px,4vw,37px)/1.15 Georgia,serif;margin:0 0 8px;letter-spacing:-.03em}
+.detail-subtitle{color:#b4a9c5;font-size:12px;line-height:1.6}
+.detail-score{font:500 53px Georgia,serif;color:#d7b6fb;margin:12px 0 22px}
+.detail-score small{font:600 15px Inter,system-ui,sans-serif;color:#b5adc5}
+.detail-question{background:#2d2a3a;border:1px solid #51475f;border-radius:12px;padding:17px;margin:0 0 14px}
+.detail-qhead{display:flex;justify-content:space-between;gap:12px;font-size:13px;font-weight:850;margin-bottom:12px}
+.detail-points{color:#d0affb;white-space:nowrap}
+.detail-pair{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.detail-choice{border-radius:9px;background:#211f2d;padding:13px;color:#f4eff9;font-size:13px;line-height:1.65;white-space:pre-line;overflow-wrap:anywhere}
+.detail-choice small,.detail-explanation small{display:block;color:#cbb4eb;font-size:10px;letter-spacing:.09em;text-transform:uppercase;font-weight:850;margin-bottom:7px}
+.detail-explanation{border-left:3px solid #9274cb;background:#352e44;border-radius:3px;padding:13px 14px;color:#e8ddf2;margin-top:11px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;line-height:1.7}
+.detail-explanation.is-empty{color:#afa7bb;font-style:italic}
+.detail-lock{color:#c9bbd8;line-height:1.8;font-size:14px}
+.detail-action{display:inline-block;background:#685196;color:white;border:1px solid #8065b0;border-radius:10px;padding:12px 16px;text-decoration:none;font-weight:850;font-size:13px;margin-top:14px}
+body.detail-open{overflow:hidden}
+@media(max-width:620px){.detail-pair{grid-template-columns:1fr}.detail-overlay{padding:7px}.detail-dialog{padding:17px}}
 </style></head>
 <body><main>
 <nav><a class="brand" href="../" aria-label="Marley collection"><span class="mark">m.</span><span class="word">marley.<small>the relationship matrix</small></span></a><div class="navlinks"><a href="../">Collection</a><a href="../part-i/">Ed. I</a><a href="../part-ii/">Ed. II</a></div></nav>
@@ -72,12 +98,14 @@ tbody td{font-size:14px;font-weight:850;font-variant-numeric:tabular-nums}
 <span class="legend-item"><span class="swatch score-low"></span>0–49</span>
 <span class="legend-item"><span class="swatch missing"></span>Not guessed yet</span>
 </div>
-<p class="note">Scores are revealed only after a player has completed that edition. The matrix never reveals another player's individual answers or written explanations. A blank cell means no scored attempt exists; it does not mean a score of zero.</p>
+<p class="note">Scores are revealed only after a player has completed that edition. Detailed guesses and explanations unlock when you have guessed that target yourself, or when you are the target. Click any scored cell to view its scorecard. A blank cell means no scored attempt exists; it does not mean a score of zero.</p>
 </div>
 <div class="summary" id="summary" aria-live="polite"></div>
+<div class="detail-overlay" id="detail-overlay" hidden><section class="detail-dialog" role="dialog" aria-modal="true" aria-labelledby="detail-title" id="detail-dialog" tabindex="-1">
+<div class="detail-bar"><div><p class="eyebrow" id="detail-kicker">MARLEY · SCORECARD</p><h2 class="detail-title" id="detail-title">Scorecard</h2><div class="detail-subtitle" id="detail-subtitle"></div></div><button class="detail-close" type="button" id="detail-close">Close ✕</button></div><div id="detail-body"></div></section></div>
 <footer class="footer"><span>Marley © 2026</span><span>Made for knowing other people.</span></footer>
 </main>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="../config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="../config.js"></script><script src="../part-ii/data.js"></script><script src="../part-iii/data.js"></script>
 <script>
 "use strict";
 const cfg=window.MARLEY_CONFIG||{};
