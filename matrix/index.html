@@ -83,6 +83,39 @@ tbody td{font-size:14px;font-weight:850;font-variant-numeric:tabular-nums}
 .detail-action{display:inline-block;background:#685196;color:white;border:1px solid #8065b0;border-radius:10px;padding:12px 16px;text-decoration:none;font-weight:850;font-size:13px;margin-top:14px}
 body.detail-open{overflow:hidden}
 @media(max-width:620px){.detail-pair{grid-template-columns:1fr}.detail-overlay{padding:7px}.detail-dialog{padding:17px}}
+
+/* Answer Diagnostics */
+.diagnostics{margin-top:36px}
+.diagnostics-heading{margin-bottom:18px}
+.diagnostics .lead{font-size:13px;margin:0;max-width:740px}
+.diagnostics-controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:19px 0 18px}
+.diagnostics-overview{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:21px}
+.diagnostics-count{background:#302c40;border:1px solid #544969;border-radius:10px;padding:12px 17px;min-width:140px}
+.diagnostics-count strong{font:500 25px Georgia,serif;color:#dac0ff;display:block}
+.diagnostics-count span{font-size:11px;color:#b6adc7}
+.diagnostics-layout{display:grid;grid-template-columns:minmax(180px,265px) minmax(0,1fr);gap:18px}
+.diagnostics-list{display:flex;flex-direction:column;gap:6px;align-self:start}
+.diagnostics-question{background:#272637;border:1px solid #49435a;text-align:left;border-radius:9px;color:#d1c7dd;padding:12px 13px;font-size:12px;line-height:1.45}
+.diagnostics-question:hover{background:#342d46}
+.diagnostics-question[aria-selected="true"]{background:#49395f;border-color:#b093dc;color:#fff}
+.diagnostics-question small{display:block;text-transform:uppercase;letter-spacing:.1em;color:#b8a1d1;font-size:9px;font-weight:850;margin-bottom:4px}
+.diagnostics-main{min-width:0}
+.diagnostics-qtitle{font:500 27px/1.23 Georgia,serif;margin:0 0 9px}
+.diagnostics-prompt{font-size:13px;color:#b9aecb;line-height:1.65;margin:0 0 21px}
+.diagnostics-subheading{font-size:11px;text-transform:uppercase;letter-spacing:.13em;color:#c3a7e6;font-weight:850;margin:19px 0 13px}
+.diagnostics-dist{display:grid;gap:11px;margin:0 0 24px}
+.diagnostics-choice-label{display:flex;justify-content:space-between;gap:12px;font-size:12px;color:#d5cbe3;margin-bottom:5px}
+.diagnostics-bar{height:8px;background:#373247;border-radius:10px;overflow:hidden}
+.diagnostics-bar div{height:100%;background:#a582d2;border-radius:10px}
+.diagnostics-response{border:1px solid #51465f;background:#292637;border-radius:11px;margin:9px 0;padding:15px 17px}
+.diagnostics-person{font-size:13px;font-weight:850;color:#eadcf7;margin-bottom:8px}
+.diagnostics-answer{font-size:13px;white-space:pre-line;color:#ded6e6;line-height:1.6;overflow-wrap:anywhere}
+.diagnostics-explanation{margin-top:12px;padding-top:10px;border-top:1px solid #554963;font-size:12px;line-height:1.7;color:#c0b3cf;white-space:pre-wrap;overflow-wrap:anywhere}
+.diagnostics-explanation strong{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#cdb3ed;margin-bottom:4px}
+.diagnostics-locked{border:1px dashed #514963;border-radius:10px;padding:13px 15px;color:#ada4ba;font-size:12px;margin:8px 0}
+.diagnostics-empty{color:#c1b7cf;font-size:13px;line-height:1.7;background:#302b3d;border-radius:10px;padding:18px}
+@media(max-width:760px){.diagnostics-layout{grid-template-columns:1fr}.diagnostics-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.diagnostics-question{min-width:0}}
+@media(max-width:430px){.diagnostics-list{grid-template-columns:1fr}}
 </style></head>
 <body><main>
 <nav><a class="brand" href="../" aria-label="Marley collection"><span class="mark">m.</span><span class="word">marley.<small>the relationship matrix</small></span></a><div class="navlinks"><a href="../">Collection</a><a href="../part-i/">Ed. I</a><a href="../part-ii/">Ed. II</a><a href="../part-iii/">Ed. III</a><a href="../part-iv/">Ed. IV</a></div></nav>
@@ -101,6 +134,20 @@ body.detail-open{overflow:hidden}
 <p class="note">Scores are revealed only after a player has completed that edition. Detailed guesses and explanations unlock when you have guessed that target yourself, or when you are the target. Click any scored cell to view its scorecard. A blank cell means no scored attempt exists; it does not mean a score of zero.</p>
 </div>
 <div class="summary" id="summary" aria-live="polite"></div>
+<section class="diagnostics" aria-labelledby="diagnostics-title">
+<div class="diagnostics-heading"><p class="eyebrow">MARLEY · ANSWER DIAGNOSTICS</p><h2 id="diagnostics-title">What did everybody <em>actually say?</em></h2><p class="lead">Explore the answers question by question. See the distribution of responses you’ve unlocked, compare your friends, and read their explanations. Answers remain locked until you've guessed that person.</p></div>
+<div class="diagnostics-controls"><div class="segment" aria-label="Answer diagnostics edition">
+<button type="button" id="diag-i" aria-pressed="true" class="selected">Edition I</button>
+<button type="button" id="diag-ii" aria-pressed="false">Edition II</button>
+<button type="button" id="diag-iii" aria-pressed="false">Edition III</button>
+<button type="button" id="diag-iv" aria-pressed="false">Edition IV</button></div>
+<button class="btn" type="button" id="diag-refresh">Refresh answers</button></div>
+<div class="status" id="diag-status" aria-live="polite" hidden></div>
+<div class="card"><div class="diagnostics-overview" id="diag-overview"></div>
+<div class="diagnostics-layout"><div class="diagnostics-list" role="tablist" aria-label="Questions" id="diag-questions"></div>
+<div class="diagnostics-main" id="diag-main"><div class="diagnostics-empty">Loading answers…</div></div></div></div>
+<p class="note">Statistics describe only the answers you have unlocked, not necessarily everyone who played. Your own answer is always included. Locked players’ responses are never used to calculate these figures.</p>
+</section>
 <div class="detail-overlay" id="detail-overlay" hidden><section class="detail-dialog" role="dialog" aria-modal="true" aria-labelledby="detail-title" id="detail-dialog" tabindex="-1">
 <div class="detail-bar"><div><p class="eyebrow" id="detail-kicker">MARLEY · SCORECARD</p><h2 class="detail-title" id="detail-title">Scorecard</h2><div class="detail-subtitle" id="detail-subtitle"></div></div><button class="detail-close" type="button" id="detail-close">Close ✕</button></div><div id="detail-body"></div></section></div>
 <footer class="footer"><span>Marley © 2026</span><span>Made for knowing other people.</span></footer>
