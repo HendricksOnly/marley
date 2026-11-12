@@ -85,9 +85,9 @@ body.detail-open{overflow:hidden}
 @media(max-width:620px){.detail-pair{grid-template-columns:1fr}.detail-overlay{padding:7px}.detail-dialog{padding:17px}}
 </style></head>
 <body><main>
-<nav><a class="brand" href="../" aria-label="Marley collection"><span class="mark">m.</span><span class="word">marley.<small>the relationship matrix</small></span></a><div class="navlinks"><a href="../">Collection</a><a href="../part-i/">Ed. I</a><a href="../part-ii/">Ed. II</a><a href="../part-iii/">Ed. III</a></div></nav>
+<nav><a class="brand" href="../" aria-label="Marley collection"><span class="mark">m.</span><span class="word">marley.<small>the relationship matrix</small></span></a><div class="navlinks"><a href="../">Collection</a><a href="../part-i/">Ed. I</a><a href="../part-ii/">Ed. II</a><a href="../part-iii/">Ed. III</a><a href="../part-iv/">Ed. IV</a></div></nav>
 <section class="hero"><p class="eyebrow">Marley · Group results</p><h1>Who knows <em>whom?</em></h1><p class="lead">A map of how accurately people predict one another. Read across a row to see whom someone understands; read down a column to see how predictable someone is.</p></section>
-<div class="controls"><div class="segment" aria-label="Select edition"><button id="edition-i" class="selected" aria-pressed="true" type="button">Edition I</button><button id="edition-ii" aria-pressed="false" type="button">Edition II</button><button id="edition-iii" aria-pressed="false" type="button">Edition III</button></div><button id="refresh" class="btn" type="button">Refresh scores</button></div>
+<div class="controls"><div class="segment" aria-label="Select edition"><button id="edition-i" class="selected" aria-pressed="true" type="button">Edition I</button><button id="edition-ii" aria-pressed="false" type="button">Edition II</button><button id="edition-iii" aria-pressed="false" type="button">Edition III</button><button id="edition-iv" aria-pressed="false" type="button">Edition IV</button></div><button id="refresh" class="btn" type="button">Refresh scores</button></div>
 <div id="status" class="status" role="status" aria-live="polite">Checking your Marley session…</div>
 <div class="card">
 <div class="matrix-header"><div><p class="eyebrow" id="edition-heading">Edition I</p><h2>The relationship matrix</h2></div><p class="hint">Rows = guesser · Columns = person guessed</p></div>
@@ -105,7 +105,7 @@ body.detail-open{overflow:hidden}
 <div class="detail-bar"><div><p class="eyebrow" id="detail-kicker">MARLEY · SCORECARD</p><h2 class="detail-title" id="detail-title">Scorecard</h2><div class="detail-subtitle" id="detail-subtitle"></div></div><button class="detail-close" type="button" id="detail-close">Close ✕</button></div><div id="detail-body"></div></section></div>
 <footer class="footer"><span>Marley © 2026</span><span>Made for knowing other people.</span></footer>
 </main>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="../config.js"></script><script src="../part-ii/data.js"></script><script src="../part-iii/data.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="../config.js"></script><script src="../part-ii/data.js"></script><script src="../part-iii/data.js"></script><script src="../part-iv/data.js"></script>
 <script>
 "use strict";
 const cfg=window.MARLEY_CONFIG||{};
@@ -120,7 +120,7 @@ function fmt(num){return num===null?"—":num+"/100";}
 function setEdition(edition){
  closeDetail();
  currentEdition=edition;
- for(const x of ["I","II","III"]){const b=el("edition-"+x.toLowerCase());b.classList.toggle("selected",x===edition);b.setAttribute("aria-pressed",String(x===edition));}
+ for(const x of ["I","II","III","IV"]){const b=el("edition-"+x.toLowerCase());b.classList.toggle("selected",x===edition);b.setAttribute("aria-pressed",String(x===edition));}
  el("edition-heading").textContent="Edition "+edition;
  const url=new URL(window.location.href);url.searchParams.set("edition",edition.toLowerCase());window.history.replaceState(null,"",url);
  loadMatrix();
@@ -223,10 +223,11 @@ const editionQuestions={
 };
 function getDetailQuestions(edition){
  if(edition==="I")return editionQuestions.I.map(x=>({id:x[0],short:x[1],points:x[2]}));
- const info=edition==="II"?window.MARLEY_ED2:window.MARLEY_ED3;
- return info?.questions?.map(q=>({id:q.id,short:q.short,points:q.points,rankDirection:q.rankDirection}))||[];
+ const info=edition==="II"?window.MARLEY_ED2:edition==="III"?window.MARLEY_ED3:window.MARLEY_ED4;
+ return info?.questions?.map(q=>({id:q.id,short:q.short,points:q.points,rankDirection:q.rankDirection,parts:q.parts}))||[];
 }
 function formatDetailAnswer(q,value){
+ if(q.parts)return q.parts.map(p=>p.label+": "+(value&&value[p.id]||"—")).join("\n");
  if(Array.isArray(value))return value.map((x,i)=>(q.rankDirection==="least-to-most"?["Least","Middle","Most"][i]:"#"+(i+1))+" — "+x).join("\n");
  return typeof value==="string"?value:"—";
 }
@@ -318,8 +319,9 @@ document.addEventListener("keydown",e=>{
 el("edition-i").addEventListener("click",()=>setEdition("I"));
 el("edition-ii").addEventListener("click",()=>setEdition("II"));
 el("edition-iii").addEventListener("click",()=>setEdition("III"));
+el("edition-iv").addEventListener("click",()=>setEdition("IV"));
 el("refresh").addEventListener("click",loadMatrix);
 const savedEdition=new URLSearchParams(window.location.search).get("edition");
-currentEdition=savedEdition==="iii"?"III":savedEdition==="ii"?"II":"I";
+currentEdition=savedEdition==="iv"?"IV":savedEdition==="iii"?"III":savedEdition==="ii"?"II":"I";
 setEdition(currentEdition);
 </script></body></html>
